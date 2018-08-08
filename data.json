@@ -1,0 +1,13 @@
+[
+    {
+        "name": "L'Empire",
+        "leader": "brickzebra",
+        "color": "#FF0000",
+        "areas": [
+            {
+                "x": 11,
+                "z": 11
+            }
+        ]
+    }
+]
