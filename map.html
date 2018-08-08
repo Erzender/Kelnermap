@@ -13,8 +13,10 @@
             <div>{{"Z : " + mouseMap.top}}</div>
             <div>{{"x : " + area.x}}</div>
             <div>{{"z : " + area.z}}</div>
-            <div>X<input v-model="search.x" style="width: 70px" type="number"></input>Z<input v-model="search.z" style="width: 70px" type="number"></input></div>
-            <button v-on:click="searchArea(search.x, search.z)">Recherche</button>
+            <form v-on:submit="searchArea(search.x, search.z, $event)">
+              <div>X<input v-model="search.x" style="width: 70px" type="number"></input>Z<input v-model="search.z" style="width: 70px" type="number"></input></div>
+              <button v-on:click="searchArea(search.x, search.z)">Recherche</button>
+            </form>
             <div>{{"Territoire : " + area.name}}</div>
             <div style="width: 20px; height: 20px; border-style: solid;" v-bind:style="{backgroundColor: area.color}"></div>
             <div>{{"Leader : " + area.leader}}</div>
@@ -53,7 +55,8 @@ var app = new Vue({
     }
   },
   methods: {
-    searchArea: function(x, z){
+    searchArea: function(x, z, event){
+      if (event) event.preventDefault()
       var supx = Math.round((x / 512 + 7) / 33 * 40);
       var supz = Math.round((z / 512 + 11) / 33 * 40);
       this.mouseMap = {left: Math.round(x), top: Math.round(z)}
