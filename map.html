@@ -13,11 +13,13 @@
             <div>{{"Z : " + mouseMap.top}}</div>
             <div>{{"x : " + area.x}}</div>
             <div>{{"z : " + area.z}}</div>
-            <button v-on:click="toggleGrid">Grille</button>
-            <button v-on:click="toggleControl">Régions</button>
+            <div>X<input v-model="search.x" style="width: 70px" type="number"></input>Z<input v-model="search.z" style="width: 70px" type="number"></input></div>
+            <button v-on:click="searchArea(search.x, search.z)">Recherche</button>
             <div>{{"Territoire : " + area.name}}</div>
             <div style="width: 20px; height: 20px; border-style: solid;" v-bind:style="{backgroundColor: area.color}"></div>
             <div>{{"Leader : " + area.leader}}</div>
+            <button v-on:click="toggleGrid">Grille</button>
+            <button v-on:click="toggleControl">Régions</button>
         </div>
         <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
             <div id="map" style="min-width: 900px; width: 900px; height: 900px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
@@ -37,6 +39,7 @@
 var app = new Vue({
   el: "#app",
   data: {
+    search: {x: 0, z: 0},
     control: [],
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
@@ -50,6 +53,12 @@ var app = new Vue({
     }
   },
   methods: {
+    searchArea: function(x, z){
+      var supx = Math.round((x / 512 + 7) / 33 * 40);
+      var supz = Math.round((z / 512 + 11) / 33 * 40);
+      this.mouseMap = {left: Math.round(x), top: Math.round(z)}
+      this.updateArea(supx, supz)
+    },
     toggleGrid: function(){
       this.grid = !this.grid
     },
@@ -75,6 +84,9 @@ var app = new Vue({
     getColor: function(x, z) {
       if (!this.displayControl) {
         return "transparent"
+      }
+      if (this.area.x === x && this.area.z === z) {
+        return "white"
       }
       for (empire of this.control) {
         var color = empire.color;
