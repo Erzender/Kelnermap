@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <title>Kelner Map</title>
+    <meta charset="UTF-8">
+    <script src="vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex;">
+        <div style="background-color: #DDDDDD; min-width: 200px; max-width: 200px; display: flex; flex-direction: column; padding: 10px; border-top-left-radius: 20px;">
+            <div>{{"X : " + mouseMap.left}}</div>
+            <div>{{"Z : " + mouseMap.top}}</div>
+            <div>{{"x : " + area.x}}</div>
+            <div>{{"z : " + area.z}}</div>
+            <div>{{area.name}}</div>
+            <div style="width: 20px; height: 20px; border-style: solid;" v-bind:style="{backgroundColor: area.color}"></div>
+            <div>{{"Leader : " + area.leader}}</div>
+        </div>
+        <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
+            <div id="map" style="min-width: 900px; width: 900px; height: 900px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
+                @mousemove="updateMouseMap">
+                <div style="display: flex; flex: 1; flex-direction: column;" v-for="x in map">
+                    <div style="display: flex; flex: 1;" v-for="z in map" v-bind:style="{backgroundColor: getColor(x, z), opacity: 0.2}" @mouseover="updateArea(x, z)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    Array.prototype.fill = function(n, v) {
+  n = n || this.length;
+  for (var i = 0; i < n; i++) this[i] = v === void 0 ? i : v;
+  return this;
+};
+var app = new Vue({
+  el: "#app",
+  data: {
+    control: [],
+    mouseMap: { left: 0, top: 0 },
+    map: Array().fill(40),
+    area: { color: "transparent", name: "???", leader: "aucun" }
+  },
+  methods: {
+    getArea: function(x, z) {
+      for (empire of this.control) {
+        for (area of empire.areas) {
+          if (area.x === x && area.z === z) {
+            return {
+              color: empire.color,
+              name: empire.name,
+              leader: empire.leader,
+              x: x,
+              z: z
+            };
+          }
+        }
+      }
+      return { color: "transparent", name: "???", leader: "aucun", x: x, z: z };
+    },
+    getColor: function(x, z) {
+      for (empire of this.control) {
+        var color = empire.color;
+        for (area of empire.areas) {
+          if (area.x === x && area.z === z) {
+            return color;
+          }
+        }
+      }
+      return "transparent";
+    },
+    updateArea: function(x, z) {
+      this.area = this.getArea(x, z);
+    },
+    updateMouseMap: function(e) {
+      var offset = {
+        left:
+          document.getElementById("map").offsetLeft -
+          document.getElementById("mapCnt").scrollLeft,
+        top:
+          document.getElementById("map").offsetTop -
+          document.getElementById("mapCnt").scrollTop,
+        width: document.getElementById("map").offsetWidth,
+        height: document.getElementById("map").offsetHeight
+      };
+      this.mouseMap = {
+        left: Math.round(
+          ((e.pageX - offset.left) / offset.width * 33 - 7) * 512
+        ),
+        top: Math.round(
+          ((e.pageY - offset.top) / offset.height * 33 - 11) * 512
+        )
+      };
+    }
+  },
+  mounted: function() {
+    fetch("data.json").then(
+      function(response) {
+        response.json().then(
+          function(json) {
+            this.control = json;
+          }.bind(this)
+        );
+      }.bind(this)
+    );
+  }
+});
+</script>
+</body>
