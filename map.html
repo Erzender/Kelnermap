@@ -14,7 +14,7 @@
             <div>{{"x : " + area.x}}</div>
             <div>{{"z : " + area.z}}</div>
             <form v-on:submit="searchArea(search.x, search.z, $event)">
-              <div>X<input v-model="search.x" style="width: 70px" type="number"></input>Z<input v-model="search.z" style="width: 70px" type="number"></input></div>
+              <div>X<input v-model="search.x" style="width: 80px" type="number"></input>Z<input v-model="search.z" style="width: 80px" type="number"></input></div>
               <button v-on:click="searchArea(search.x, search.z)">Recherche</button>
             </form>
             <div>{{"Territoire : " + area.name}}</div>
