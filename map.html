@@ -21,7 +21,7 @@
             <div id="map" style="min-width: 900px; width: 900px; height: 900px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
                 @mousemove="updateMouseMap">
                 <div style="display: flex; flex: 1; flex-direction: column;" v-for="x in map">
-                    <div style="display: flex; flex: 1;" v-for="z in map" v-bind:style="{backgroundColor: getColor(x, z), opacity: 0.2}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z)"></div>
+                    <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="z in map" v-bind:style="{backgroundColor: getColor(x, z), opacity: 0.2}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z)"></div>
                 </div>
             </div>
         </div>
