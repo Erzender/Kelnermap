@@ -13,6 +13,9 @@
             <div>{{"Z : " + mouseMap.top}}</div>
             <div>{{"x : " + area.x}}</div>
             <div>{{"z : " + area.z}}</div>
+            <button v-on:click="toggleGrid">Grille</button>
+            <button v-on:click="toggleControl">Régions</button>
+            <div>{{grid}}</div>
             <div>{{"Territoire : " + area.name}}</div>
             <div style="width: 20px; height: 20px; border-style: solid;" v-bind:style="{backgroundColor: area.color}"></div>
             <div>{{"Leader : " + area.leader}}</div>
@@ -21,7 +24,7 @@
             <div id="map" style="min-width: 900px; width: 900px; height: 900px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
                 @mousemove="updateMouseMap">
                 <div style="display: flex; flex: 1; flex-direction: column;" v-for="x in map">
-                    <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="z in map" v-bind:style="{backgroundColor: getColor(x, z), opacity: 0.4}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z)"></div>
+                    <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="z in map" v-bind:style="{ borderWidth: border, backgroundColor: getColor(x, z), opacity: 0.4}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z)"></div>
                 </div>
             </div>
         </div>
@@ -38,9 +41,22 @@ var app = new Vue({
     control: [],
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
-    area: { color: "transparent", name: "???", leader: "aucun" }
+    area: { color: "transparent", name: "???", leader: "aucun" },
+    grid: true,
+    displayControl: true
+  },
+  computed: {
+    border: function() {
+      return this.grid?"1px":"0px"
+    }
   },
   methods: {
+    toggleGrid: function(){
+      this.grid = !this.grid
+    },
+    toggleControl: function(){
+      this.displayControl = !this.displayControl
+    },
     getArea: function(x, z) {
       for (empire of this.control) {
         for (area of empire.areas) {
@@ -58,6 +74,9 @@ var app = new Vue({
       return { color: "transparent", name: "???", leader: "aucun", x: x, z: z };
     },
     getColor: function(x, z) {
+      if (!this.displayControl) {
+        return "transparent"
+      }
       for (empire of this.control) {
         var color = empire.color;
         for (area of empire.areas) {
