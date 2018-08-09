@@ -2,9 +2,10 @@ var app = new Vue({
   el: "#app",
   data: {
     navBar: ["Map", "Nations"],
-    route: "Map",
+    route: "Nations",
     search: { x: 0, z: 0 },
     control: [],
+    soutiens: [],
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
     area: { color: "transparent", name: "???", leader: "aucun" },
@@ -14,11 +15,22 @@ var app = new Vue({
   computed: {
     border: function() {
       return this.grid ? "1px" : "0px";
+    },
+    nations: function() {
+      return this.control.map(nation => {
+        var cpt = 0;
+        for (soutien of this.soutiens) {
+          if (soutien.soutiens.find((elem) => elem === nation.leader)) {
+            cpt += 1;
+          }
+        }
+        return {...nation, soutiens: cpt}
+      });
     }
   },
   methods: {
     setRoute: function(route) {
-      this.route = route
+      this.route = route;
     },
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,
@@ -34,6 +46,15 @@ var app = new Vue({
         response.json().then(
           function(json) {
             this.control = json;
+          }.bind(this)
+        );
+      }.bind(this)
+    );
+    fetch("soutiens.json").then(
+      function(response) {
+        response.json().then(
+          function(json) {
+            this.soutiens = json;
           }.bind(this)
         );
       }.bind(this)
