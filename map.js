@@ -1,7 +1,7 @@
 var app = new Vue({
   el: "#app",
   data: {
-    navBar: ["Map", "Empires"],
+    navBar: ["Map", "Nations"],
     route: "Map",
     search: { x: 0, z: 0 },
     control: [],
