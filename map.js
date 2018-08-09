@@ -3,6 +3,10 @@ var app = new Vue({
   data: {
     navBar: ["Map", "Nations"],
     route: "Map",
+    navNation: "L'Empire",
+    nav : {
+      nationPanel: 'desc'
+    },
     search: { x: 0, z: 0 },
     control: [],
     soutiens: [],
@@ -13,6 +17,17 @@ var app = new Vue({
     displayControl: true
   },
   computed: {
+    nation: function() {
+      var res = this.control.find(nation => nation.name === this.navNation)
+      var soutiens = []
+      for (soutien of this.soutiens) {
+        var rank = soutien.soutiens.findIndex((elem) => elem === res.leader)
+        if (rank !== undefined) {
+          soutiens.push({name: soutien.player, rank: rank + 1})
+        }
+      }
+      return {...res, description: markdown.toHTML(res?res.description:""), soutiens: soutiens}
+    },
     border: function() {
       return this.grid ? "1px" : "0px";
     },
@@ -31,6 +46,14 @@ var app = new Vue({
   methods: {
     setRoute: function(route) {
       this.route = route;
+    },
+    setNavNation: function(nation) {
+      this.route = "Nation"
+      this.navNation = nation
+      this.nav.nationPanel = "desc"
+    },
+    navNationPanel: function(panel) {
+      this.nav.nationPanel = panel
     },
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,

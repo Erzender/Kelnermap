@@ -7,17 +7,34 @@
 </head>
 
 <body>
-  <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column;">
+  <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; flex: 1;">
     <div style="display: flex; flex: 1; max-height: 40px;">
       <button v-on:click="setRoute(button)" style="display: flex; flex: 1; max-width: 100px; align-items: center; justify-content: center;" v-for="button in navBar">{{button}}</button>
     </div>
     <div v-if="route === 'Nations'" style="display: flex; flex: 1; flex-direction: column; overflow: auto;">
-      <div v-for="nation in nations" style="height: 100px; width: 400px; background-color: #DDDDDD; border-radius: 10px; margin-top: 5px; display: flex; flex-direction: column; overflow: hidden;" >
+      <div v-on:click="setNavNation(nation.name)" v-for="nation in nations" style="height: 100px; width: 400px; background-color: #DDDDDD; border-radius: 10px; margin-top: 5px; display: flex; flex-direction: column; overflow: hidden;" >
         <div v-bind:style="{backgroundColor: nation.color, height: '10px', opacity: 0.7 }"></div>
         <div style="padding: 5px;">
           <div>{{nation.name}}</div>
           <div>Leader : {{nation.leader}}</div>
           <div>Soutiens: {{nation.soutiens}}</div>
+        </div>
+      </div>
+    </div>
+    <div v-if="route === 'Nation' && navNation !== null" style="display: flex; flex: 1; flex-direction: column; background-color: #DDDDDD; border-radius: 20px; overflow: hidden; margin: 5px;">
+      <div v-bind:style="{ backgroundColor: nation.color, opacity: 0.7, minHeight: '20px', maxHeight: '20px', display: 'flex', flex: 1 }"></div>
+      <div style="display: flex; flex: 1; flex-direction: column; overflow: hidden; padding: 10px;">
+        <h1>{{nation.name}}</h1>
+        <div>Leader : {{nation.leader}}</div>
+        <div style="display: flex; flex-direction: column; margin: 20px; flex: 1;">
+          <div><button v-on:click="navNationPanel('desc')">Description</button><button v-on:click="navNationPanel('soutiens')">Soutiens</button></div>
+          <div v-if="nav.nationPanel === 'desc'" v-html="nation.description" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
+          <div v-if="nav.nationPanel === 'soutiens'" style="display: flex; flex: 1; background-color: white;">
+            <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; backgroundColor: #DDDDDD; border-radius: 10px; padding: 10px; height: 50px; margin: 5px; flex-direction: column;">
+              <div>{{soutien.name}}</div>
+              <div>Rang {{soutien.rank}} dans sa liste d'appuis.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,6 +64,7 @@
         </div>
     </div>
   </div>
+  <script type="text/javascript" src="markdown.min.js"></script>
   <script type="text/javascript" src="utils.js"></script>
   <script type="text/javascript" src="methodsMap.js"></script>
   <script type="text/javascript" src="map.js"></script>
