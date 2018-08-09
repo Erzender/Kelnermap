@@ -7,7 +7,14 @@
 </head>
 
 <body>
-    <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex;">
+  <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column;">
+    <div style="display: flex; flex: 1; max-height: 40px;">
+      <button v-on:click="setRoute(button)" style="display: flex; flex: 1; max-width: 100px; align-items: center; justify-content: center;" v-for="button in navBar">{{button}}</button>
+    </div>
+    <div v-if="route === 'Empires'" style="display: flex; flex: 1;">
+      Empires
+    </div>
+    <div v-if="route === 'Map'" style="display: flex; flex: 1;">
         <div style="background-color: #DDDDDD; min-width: 200px; max-width: 200px; display: flex; flex-direction: column; padding: 10px; border-top-left-radius: 20px;">
             <div>{{"X : " + mouseMap.left}}</div>
             <div>{{"Z : " + mouseMap.top}}</div>
@@ -32,6 +39,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="utils.js"></script>
-    <script type="text/javascript" src="map.js"></script>
+  </div>
+  <script type="text/javascript" src="utils.js"></script>
+  <script type="text/javascript" src="methodsMap.js"></script>
+  <script type="text/javascript" src="map.js"></script>
 </body>
