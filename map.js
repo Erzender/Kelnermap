@@ -2,7 +2,7 @@ var app = new Vue({
   el: "#app",
   data: {
     navBar: ["Map", "Nations"],
-    route: "Nations",
+    route: "Map",
     search: { x: 0, z: 0 },
     control: [],
     soutiens: [],
