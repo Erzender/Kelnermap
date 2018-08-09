@@ -3,6 +3,7 @@
         "name": "L'Empire",
         "leader": "brickzebra",
         "color": "#FF0000",
+        "description": "",
         "areas": [
             {
                 "x": 11,
@@ -40,6 +41,7 @@
 	"name": "La Bretagne",
 	"leader": "Erzender",
 	"color": "#000000",
+  "description": "##Ce qu'il faut savoir sur la Bretagne\nC'est merveileeeeuuux !",
 	"areas": [
 	    {"x": 7, "z": 21},
 	    {"x": 8, "z": 21},
@@ -52,6 +54,7 @@
 		"name": "Aqualonde",
 		"leader": "X0ran0",
 		"color": "#0000FF",
+    "description": "",
 		"areas": [
 			{"x": 13, "z": 27},
 			{"x": 14, "z": 27},
