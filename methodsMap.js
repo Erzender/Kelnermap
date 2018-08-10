@@ -29,6 +29,11 @@ methodsMap = {
     return { color: "transparent", name: "???", leader: "aucun", x: x, z: z };
   },
   getColor: function(x, z) {
+    for (area of this.mapEdition) {
+      if (area.x === x && area.z === z) {
+        return "#FFFF00";
+      }
+    }
     if (!this.displayControl) {
       return "transparent";
     }
@@ -45,7 +50,10 @@ methodsMap = {
     }
     return "transparent";
   },
-  updateArea: function(x, z) {
+  updateArea: function(x, z, click) {
+    if (click && this.nav.mapEdit) {
+      this.mapEdition.push(this.getArea(x, z));
+    }
     this.area = this.getArea(x, z);
   },
   updateMouseMap: function(e) {
@@ -60,12 +68,20 @@ methodsMap = {
       height: document.getElementById("map").offsetHeight
     };
     this.mouseMap = {
-      left: Math.round(
-        ((e.pageX - offset.left) / offset.width * 33 - 7) * 512
-      ),
-      top: Math.round(
-        ((e.pageY - offset.top) / offset.height * 33 - 11) * 512
-      )
+      left: Math.round(((e.pageX - offset.left) / offset.width * 33 - 7) * 512),
+      top: Math.round(((e.pageY - offset.top) / offset.height * 33 - 11) * 512)
     };
+  },
+  toggleEdit: function() {
+    if (this.nav.mapEdit) {
+      var copyText = document.getElementById("mapEditInput");
+      copyText.select();
+      document.execCommand("copy");
+      alert(
+        "🌐 La liste des région a été copiée, collez là dans #territoires pour déclarer votre territoire 🌐"
+      );
+      this.mapEdition = [];
+    }
+    this.nav.mapEdit = !this.nav.mapEdit;
   }
-}
+};
