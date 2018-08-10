@@ -22,7 +22,7 @@ var app = new Vue({
       var soutiens = []
       for (soutien of this.soutiens) {
         var rank = soutien.soutiens.findIndex((elem) => elem === res.leader)
-        if (rank !== undefined) {
+        if (rank >= 0) {
           soutiens.push({name: soutien.player, rank: rank + 1})
         }
       }
