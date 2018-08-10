@@ -80,6 +80,9 @@ methodsMap = {
       this.message = "🌐 La liste des région a été copiée, collez là dans #territoires pour déclarer votre territoire 🌐"
       this.mapEdition = [];
     }
+    else {
+      this.message = ""
+    }
     this.nav.mapEdit = !this.nav.mapEdit;
   }
 };
