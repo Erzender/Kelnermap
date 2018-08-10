@@ -16,7 +16,8 @@ var app = new Vue({
     area: { color: "transparent", name: "???", leader: "aucun" },
     grid: true,
     displayControl: true,
-    mapEdition: []
+    mapEdition: [],
+    message: ""
   },
   computed: {
     nation: function() {
