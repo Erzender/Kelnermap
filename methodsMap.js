@@ -77,9 +77,7 @@ methodsMap = {
       var copyText = document.getElementById("mapEditInput");
       copyText.select();
       document.execCommand("copy");
-      alert(
-        "🌐 La liste des région a été copiée, collez là dans #territoires pour déclarer votre territoire 🌐"
-      );
+      this.message = "🌐 La liste des région a été copiée, collez là dans #territoires pour déclarer votre territoire 🌐"
       this.mapEdition = [];
     }
     this.nav.mapEdit = !this.nav.mapEdit;
