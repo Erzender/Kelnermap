@@ -4,8 +4,9 @@ var app = new Vue({
     navBar: ["Map", "Nations"],
     route: "Map",
     navNation: "L'Empire",
-    nav : {
-      nationPanel: 'desc'
+    nav: {
+      nationPanel: "desc",
+      mapEdit: false
     },
     search: { x: 0, z: 0 },
     control: [],
@@ -14,19 +15,24 @@ var app = new Vue({
     map: Array().fill(40),
     area: { color: "transparent", name: "???", leader: "aucun" },
     grid: true,
-    displayControl: true
+    displayControl: true,
+    mapEdition: []
   },
   computed: {
     nation: function() {
-      var res = this.control.find(nation => nation.name === this.navNation)
-      var soutiens = []
+      var res = this.control.find(nation => nation.name === this.navNation);
+      var soutiens = [];
       for (soutien of this.soutiens) {
-        var rank = soutien.soutiens.findIndex((elem) => elem === res.leader)
+        var rank = soutien.soutiens.findIndex(elem => elem === res.leader);
         if (rank >= 0) {
-          soutiens.push({name: soutien.player, rank: rank + 1})
+          soutiens.push({ name: soutien.player, rank: rank + 1 });
         }
       }
-      return {...res, description: markdown.toHTML(res?res.description:""), soutiens: soutiens}
+      return {
+        ...res,
+        description: markdown.toHTML(res ? res.description : ""),
+        soutiens: soutiens
+      };
     },
     border: function() {
       return this.grid ? "1px" : "0px";
@@ -35,12 +41,23 @@ var app = new Vue({
       return this.control.map(nation => {
         var cpt = 0;
         for (soutien of this.soutiens) {
-          if (soutien.soutiens.find((elem) => elem === nation.leader)) {
+          if (soutien.soutiens.find(elem => elem === nation.leader)) {
             cpt += 1;
           }
         }
-        return {...nation, soutiens: cpt}
+        return { ...nation, soutiens: cpt };
       });
+    },
+    textMapEdit: function() {
+      return (
+        "```" +
+        JSON.stringify(
+          this.mapEdition.map(area => {
+            return { x: area.x, z: area.z };
+          })
+        ) +
+        "```"
+      );
     }
   },
   methods: {
@@ -48,12 +65,12 @@ var app = new Vue({
       this.route = route;
     },
     setNavNation: function(nation) {
-      this.route = "Nation"
-      this.navNation = nation
-      this.nav.nationPanel = "desc"
+      this.route = "Nation";
+      this.navNation = nation;
+      this.nav.nationPanel = "desc";
     },
     navNationPanel: function(panel) {
-      this.nav.nationPanel = panel
+      this.nav.nationPanel = panel;
     },
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,
@@ -61,7 +78,8 @@ var app = new Vue({
     getArea: methodsMap.getArea,
     getColor: methodsMap.getColor,
     updateArea: methodsMap.updateArea,
-    updateMouseMap: methodsMap.updateMouseMap
+    updateMouseMap: methodsMap.updateMouseMap,
+    toggleEdit: methodsMap.toggleEdit
   },
   mounted: function() {
     fetch("data.json").then(
