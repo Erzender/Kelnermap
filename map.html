@@ -30,8 +30,8 @@
         <div style="display: flex; flex-direction: column; margin: 20px; flex: 1; overflow: hidden;">
           <div><button v-on:click="navNationPanel('desc')">Description</button><button v-on:click="navNationPanel('soutiens')">Soutiens</button></div>
           <div v-if="nav.nationPanel === 'desc'" v-html="nation.description" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
-          <div v-if="nav.nationPanel === 'soutiens'" style="display: flex; flex: 1; background-color: white;">
-            <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; backgroundColor: #DDDDDD; border-radius: 10px; padding: 10px; height: 50px; margin: 5px; flex-direction: column;">
+          <div v-if="nav.nationPanel === 'soutiens'" style="display: flex; flex: 1; background-color: white; flex-direction: color; overflow: auto;">
+            <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; backgroundColor: #DDDDDD; border-radius: 10px; padding: 10px; max-height: 50px; min-height: 50px; margin: 5px; flex-direction: column;">
               <div>{{soutien.name}}</div>
               <div>Rang {{soutien.rank}} dans sa liste d'appuis.</div>
             </div>
