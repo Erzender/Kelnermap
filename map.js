@@ -77,7 +77,7 @@ var app = new Vue({
           }
         }
         return { ...nation, soutiens: cpt };
-      });
+      }).sort((a, b) => a.soutiens < b.soutiens);
     },
     textMapEdit: function() {
       return (
