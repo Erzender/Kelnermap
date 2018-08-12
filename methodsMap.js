@@ -30,7 +30,14 @@ methodsMap = {
   },
   updateArea: function(x, z, click) {
     if (click && this.nav.mapEdit) {
-      this.mapEdition.push(this.getArea(x, z));
+      var area = this.mapEdition.findIndex(elem => {return elem.x === x && elem.z===z})
+      console.log(area);
+      if (area >= 0) {
+        this.mapEdition.splice(area, 1)
+      }
+      else {
+        this.mapEdition.push(this.getArea(x, z));
+      }
     }
     this.area = this.getArea(x, z);
   },
