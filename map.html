@@ -57,7 +57,6 @@
             <button v-on:click="toggleEdit">{{nav.mapEdit?"Sélection terminée":"Déclarer une région"}}</button>
             <input v-if="nav.mapEdit" type="text" v-model="textMapEdit" id="mapEditInput" style="color: transparent; background-color: transparent; border-style: none;">
             {{message}}
-            {{descriptions}}
         </div>
         <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
             <div id="map" style="min-width: 850px; width: 850px; height: 850px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
