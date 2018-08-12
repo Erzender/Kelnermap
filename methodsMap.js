@@ -28,28 +28,6 @@ methodsMap = {
     }
     return { color: "transparent", name: "???", leader: "aucun", x: x, z: z };
   },
-  getColor: function(x, z) {
-    for (area of this.mapEdition) {
-      if (area.x === x && area.z === z) {
-        return "#FFFF00";
-      }
-    }
-    if (!this.displayControl) {
-      return "transparent";
-    }
-    if (this.area.x === x && this.area.z === z) {
-      return "white";
-    }
-    for (empire of this.control) {
-      var color = empire.color;
-      for (area of empire.areas) {
-        if (area.x === x && area.z === z) {
-          return color;
-        }
-      }
-    }
-    return "transparent";
-  },
   updateArea: function(x, z, click) {
     if (click && this.nav.mapEdit) {
       this.mapEdition.push(this.getArea(x, z));
