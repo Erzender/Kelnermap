@@ -1,14 +1,10 @@
 [
   {
     "player": "Erzender",
-    "soutiens": [
-      "Erzender",
-      "brickzebra",
-      "X0ran0"
-    ]
+    "soutiens": ["Erzender", "brickzebra", "X0ran0"]
   },
   {
     "player": "brickzebra",
-    "soutiens": ["brickzebra", "Erzender"]
+    "soutiens": ["brickzebra", "Erzender", "X0ran0", "Ardamas", "The4clem4"]
   }
 ]
