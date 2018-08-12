@@ -61,8 +61,8 @@
         <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
             <div id="map" style="min-width: 850px; width: 850px; height: 850px; display: flex; background-image: url('map.png'); background-size: 100% 100%;"
                 @mousemove="updateMouseMap">
-                <div style="display: flex; flex: 1; flex-direction: column;" v-for="x in map">
-                    <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="z in map" v-bind:style="{ borderWidth: border, backgroundColor: getColor(x, z), opacity: 0.4}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z, true)"></div>
+                <div style="display: flex; flex: 1; flex-direction: column;" v-for="(line, x) in colors">
+                    <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="(area, z) in line" v-bind:style="{ borderWidth: border, backgroundColor: area, opacity: 0.4}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z, true)"></div>
                 </div>
             </div>
         </div>
