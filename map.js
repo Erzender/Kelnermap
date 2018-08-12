@@ -14,7 +14,7 @@ var app = new Vue({
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
     area: { color: "transparent", name: "???", leader: "aucun" },
-    grid: true,
+    grid: false,
     displayControl: true,
     mapEdition: [],
     message: "",

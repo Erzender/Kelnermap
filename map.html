@@ -4,15 +4,16 @@
     <title>Map</title>
     <meta charset="UTF-8">
     <script src="vue.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
 <body>
-  <div id="app" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; flex: 1;">
+  <div id="app">
     <div style="display: flex; flex: 1; max-height: 40px;">
       <button v-on:click="setRoute(button)" style="display: flex; flex: 1; max-width: 100px; align-items: center; justify-content: center;" v-for="button in navBar">{{button}}</button>
     </div>
     <div v-if="route === 'Nations'" style="display: flex; flex: 1; flex-direction: column; overflow: auto;">
-      <div v-on:click="setNavNation(nation.name)" v-for="nation in nations" style="min-height: 100px; max-height: 100px; width: 400px; background-color: #DDDDDD; border-radius: 10px; margin-top: 5px; display: flex; flex-direction: column; overflow: hidden; cursor: pointer;" >
+      <div id="nationCnt" v-on:click="setNavNation(nation.name)" v-for="nation in nations" >
         <div v-bind:style="{backgroundColor: nation.color, height: '10px', opacity: 0.7 }"></div>
         <div style="padding: 5px;">
           <div>{{nation.name}}</div>
