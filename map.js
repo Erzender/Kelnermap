@@ -8,6 +8,7 @@ var app = new Vue({
       nationPanel: "desc",
       mapEdit: false
     },
+    descEdit: "",
     search: { x: 0, z: 0 },
     control: [],
     soutiens: [],
@@ -100,7 +101,14 @@ var app = new Vue({
       this.nav.nationPanel = "desc";
     },
     navNationPanel: function(panel) {
+      if (panel === "descEdit") {
+        this.descEdit = this.nation.description
+        if (this.nav.nationPanel === "descEdit") {
+          saveData(this.descEdit, "desc.md")
+        }
+      }
       this.nav.nationPanel = panel;
+      console.log(this.descEdit);
     },
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,
@@ -123,7 +131,7 @@ var app = new Vue({
                   function (res) {
                     res.text().then(
                       function(text) {
-                        this.vue.descriptions.push({area: this.nation.desc, text: markdown.toHTML(text)})
+                        this.vue.descriptions.push({area: this.nation.desc, text: text})
                       }.bind(this)
                     )
                   }.bind({nation: nation, vue: this})
