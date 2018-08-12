@@ -17,7 +17,8 @@ var app = new Vue({
     grid: true,
     displayControl: true,
     mapEdition: [],
-    message: ""
+    message: "",
+    descriptions: []
   },
   computed: {
     colors: function() {
@@ -37,7 +38,11 @@ var app = new Vue({
       for (empire of this.control) {
         for (area of empire.areas) {
           if (colors[area.x] && colors[area.x][area.z]) {
-            colors[area.x][area.z] = colors[area.x][area.z]==="white"||colors[area.x][area.z]==="#FFFF00"?colors[area.x][area.z]:this.displayControl?empire.color:"transparent";
+            colors[area.x][area.z] =
+              colors[area.x][area.z] === "white" ||
+              colors[area.x][area.z] === "#FFFF00"
+                ? colors[area.x][area.z]
+                : this.displayControl ? empire.color : "transparent";
           }
         }
       }
@@ -52,9 +57,10 @@ var app = new Vue({
           soutiens.push({ name: soutien.player, rank: rank + 1 });
         }
       }
+      console.log(res.desc);
       return {
         ...res,
-        description: markdown.toHTML(res ? res.description : ""),
+        description: res&&res.desc&&this.descriptions?this.descriptions.find(function(desc) {return desc.area === res.desc}).text:"",
         soutiens: soutiens
       };
     },
@@ -111,6 +117,19 @@ var app = new Vue({
         response.json().then(
           function(json) {
             this.control = json;
+            for (nation of this.control) {
+              if (nation.desc !== undefined) {
+                fetch("descriptions/" + nation.desc + ".md").then(
+                  function (res) {
+                    res.text().then(
+                      function(text) {
+                        this.vue.descriptions.push({area: this.nation.desc, text: markdown.toHTML(text)})
+                      }.bind(this)
+                    )
+                  }.bind({nation: nation, vue: this})
+                )
+              }
+            }
           }.bind(this)
         );
       }.bind(this)
