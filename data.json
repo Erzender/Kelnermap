@@ -2,7 +2,7 @@
   {
     "name": "Le Rohan",
     "leader": "brickzebra",
-    "color": "#FF0000",
+    "color": "#990000",
     "desc": "desc_2",
     "areas": [
       { "x": 8, "z": 12 },
@@ -192,7 +192,7 @@
   {
     "name": "Aqualonde",
     "leader": "X0ran0",
-    "color": "#0000FF",
+    "color": "#000099",
     "areas": [
       { "x": 13, "z": 27 },
       { "x": 14, "z": 27 },
@@ -250,7 +250,7 @@
   {
     "name": "Hydropolis",
     "leader": "Ardamas",
-    "color": "#00FFFF",
+    "color": "#009999",
     "desc": "Hydropolis",
     "areas": [
       { "x": 3, "z": 29 },
@@ -273,7 +273,7 @@
   {
     "name": "The4territoire4",
     "leader": "The4clem4",
-    "color": "#00FF00",
+    "color": "#009900",
     "areas": [
       { "x": 26, "z": 17 },
       { "x": 26, "z": 18 },
@@ -285,7 +285,7 @@
   {
     "name": "Le Royaume de l'Est-Urgeon",
     "leader": "Fifz",
-    "color": "#0077FF",
+    "color": "#005599",
     "areas": [
       { "x": 25, "z": 14 },
       { "x": 24, "z": 14 },
