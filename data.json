@@ -3,7 +3,6 @@
     "name": "Le Rohan",
     "leader": "brickzebra",
     "color": "#FF0000",
-    "description": "",
     "areas": [
       { "x": 8, "z": 12 },
       { "x": 9, "z": 12 },
@@ -180,8 +179,6 @@
     "leader": "Erzender",
     "color": "#000000",
     "desc": "1",
-    "description":
-      "##Ce qu'il faut savoir sur la Bretagne\n\n![wow](https://s2.qwant.com/thumbr/700x0/e/d/2753823ce816c58ef59e54f654d61a68a409b95783214fd9e15aa1b83dd399/cloud-37011_960_720.png?u=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2012%2F04%2F18%2F13%2F22%2Fcloud-37011_960_720.png)",
     "areas": [
       { "x": 7, "z": 21 },
       { "x": 8, "z": 21 },
@@ -195,7 +192,6 @@
     "name": "Aqualonde",
     "leader": "X0ran0",
     "color": "#0000FF",
-    "description": "",
     "areas": [
       { "x": 13, "z": 27 },
       { "x": 14, "z": 27 },
@@ -254,6 +250,7 @@
     "name": "Hydropolis",
     "leader": "Ardamas",
     "color": "#00FFFF",
+    "desc": "Hydropolis",
     "areas": [
       { "x": 3, "z": 29 },
       { "x": 2, "z": 29 },
