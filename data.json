@@ -3,6 +3,7 @@
     "name": "Le Rohan",
     "leader": "brickzebra",
     "color": "#FF0000",
+    "desc": "desc_2",
     "areas": [
       { "x": 8, "z": 12 },
       { "x": 9, "z": 12 },
