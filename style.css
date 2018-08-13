@@ -66,6 +66,7 @@ code {
 button {
   background-color: #333333;
   color: white;
+  border-width: 1px;
 }
 
 .colors1 {
