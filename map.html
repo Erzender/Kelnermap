@@ -40,11 +40,11 @@
         <div>Etendue : {{Math.round(nation.areas.length * 0.178 * 10) / 10}} km2</div>
         <div style="display: flex; flex-direction: column; margin: 20px; flex: 1; overflow: hidden;">
           <div><button v-on:click="navNationPanel('desc')">Description</button><button v-on:click="navNationPanel('soutiens')">Soutiens</button><button v-on:click="navNationPanel('descEdit')" v-bind:style="{color: nav.nationPanel==='descEdit'?'green':'black'}">{{nav.nationPanel!=="descEdit"?"Editer la description":"Sauvegarder"}}</button></div>
-          <div v-if="nav.nationPanel === 'desc'" v-html="markdown.toHTML(nation.description)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
+          <div v-if="nav.nationPanel === 'desc'" v-html="marked(nation.description)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
           <div v-if="nav.nationPanel === 'descEdit'" style="margin: 10px;">Pour modifier la description de votre nation, éditer ici puis sauvegarder le fichier et l'uploader dans #territoires sur Discord. <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Syntaxe markdown : astuces</a></div>
           <div v-if="nav.nationPanel === 'descEdit'" style="display: flex; flex: 1; overflow: hidden;">
             <textarea id="descEditInput" v-model="descEdit" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto; resize: none;"></textarea>
-            <div v-html="markdown.toHTML(descEdit)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
+            <div v-html="marked(descEdit)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto;"></div>
           </div>
           <div v-if="nav.nationPanel === 'soutiens'" style="display: flex; flex: 1; background-color: white; flex-direction: color; overflow: auto;">
             <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; backgroundColor: #DDDDDD; border-radius: 10px; padding: 10px; max-height: 50px; min-height: 50px; margin: 5px; flex-direction: column;">
@@ -84,7 +84,7 @@
         </div>
     </div>
   </div>
-  <script type="text/javascript" src="markdown.min.js"></script>
+  <script src="marked.min.js"></script>
   <script type="text/javascript" src="utils.js"></script>
   <script type="text/javascript" src="methodsMap.js"></script>
   <script type="text/javascript" src="map.js"></script>
