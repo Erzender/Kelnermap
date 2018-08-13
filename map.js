@@ -19,7 +19,10 @@ var app = new Vue({
     displayControl: true,
     mapEdition: [],
     message: "",
-    descriptions: []
+    descriptions: [],
+    editSoutiens: {
+      list: []
+    }
   },
   computed: {
     colors: function() {
@@ -102,13 +105,12 @@ var app = new Vue({
     },
     navNationPanel: function(panel) {
       if (panel === "descEdit") {
-        this.descEdit = this.nation.description
         if (this.nav.nationPanel === "descEdit") {
           saveData(this.descEdit, "desc.md")
         }
+        this.descEdit = this.nation.description
       }
       this.nav.nationPanel = panel;
-      console.log(this.descEdit);
     },
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,
