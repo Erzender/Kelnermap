@@ -179,7 +179,7 @@
     "name": "La Bretagne",
     "leader": "Erzender",
     "color": "#000000",
-    "desc": "1",
+    "desc": "erz",
     "areas": [
       { "x": 7, "z": 21 },
       { "x": 8, "z": 21 },
