@@ -40,7 +40,7 @@
         <div>Etendue : {{Math.round(nation.areas.length * 0.178 * 10) / 10}} km2</div>
         <div style="display: flex; flex-direction: column; margin-top: 20px; margin-bottom: 20px; flex: 1; overflow: hidden;">
           <div><button v-on:click="navNationPanel('desc')">Description</button><button v-on:click="navNationPanel('soutiens')">Soutiens</button><button v-on:click="navNationPanel('descEdit')" v-bind:style="{color: nav.nationPanel==='descEdit'?'#FFAA00':'white'}">{{nav.nationPanel!=="descEdit"?"Editer la description":"Sauvegarder"}}</button></div>
-          <div v-if="nav.nationPanel === 'desc'" v-html="marked(nation.description)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: #444444; overflow: auto;"></div>
+          <div v-if="nav.nationPanel === 'desc'" v-html="marked(nation.description)" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 50px; background-color: #444444; overflow: auto;"></div>
           <div v-if="nav.nationPanel === 'descEdit'" style="margin: 10px;">Pour modifier la description de votre nation, éditer ici puis sauvegarder le fichier et l'uploader dans #territoires sur Discord. <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank"> => Tuto Markdown 🔗</a></div>
           <div v-if="nav.nationPanel === 'descEdit'" style="display: flex; flex: 1; overflow: hidden;">
             <textarea id="descEditInput" v-model="descEdit" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto; resize: none;"></textarea>
