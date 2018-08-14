@@ -44,6 +44,7 @@ blockquote {
   padding-left: 15px;
   border-left: 5px solid #dddddd;
   border-radius: 2px;
+  color: #999999;
 }
 
 hr {
@@ -80,7 +81,7 @@ button {
 }
 
 a {
-  color: #FFBBBB;
+  color: #FFAA00;
 }
 
 #app {
