@@ -10,7 +10,7 @@ La Bretagne est un paisible pays au bord de l'océan.
 
 Hymne national :
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/do9KqKFBy90/0.jpg)](http://www.youtube.com/watch?v=do9KqKFBy90)
+[![Lambé an dro](https://s1.qwant.com/thumbr/0x0/9/a/a9cc3ef945bafa947e621c88e4f231e5b1711ca445b26ba040518fa64750d0/LAMBE.jpg?u=http%3A%2F%2F1.bp.blogspot.com%2F-fgg-TSBZboU%2FTdx39INFjhI%2FAAAAAAAAAE4%2FT7DFJHXf8bU%2Fs1600%2FLAMBE.jpg&q=0&b=1&p=0&a=1)](http://www.youtube.com/watch?v=do9KqKFBy90)
 
 # Nos valeurs
 
