@@ -16,7 +16,8 @@ Hymne national :
 
 La Bretagne revendique des valeurs très sociables et économiques, comme le chouchen, le cidre, les gâteaux au beurre et le **CELTIC METAL**.
 
-Notre devise est la suivante : *Il ne pleuleul que sur les suus.*
+Notre devise est la suivante :
+>*Il ne pleuleul que sur les suus.*
 
 Aussi, la nation Bretonne ne cherchera pas à conquérir une terre quelconque, sauf si cela peut dépanner militairement contre un tyran local, auquel cas notre force est celle des opprimés, camarades ✊ 
 
