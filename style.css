@@ -99,7 +99,7 @@ a {
   border-radius: 10px;
   margin-top: 5px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
   cursor: pointer;
 }
