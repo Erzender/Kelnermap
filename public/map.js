@@ -122,7 +122,7 @@ var app = new Vue({
     toggleEdit: methodsMap.toggleEdit
   },
   mounted: function() {
-    fetch("data.json").then(
+    fetch("data").then(
       function(response) {
         response.json().then(
           function(json) {
