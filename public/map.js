@@ -14,7 +14,7 @@ var app = new Vue({
     soutiens: [],
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
-    area: { color: "transparent", name: "???", leader: "aucun" },
+    area: { color: "transparent", name: "???", player: "aucun" },
     grid: false,
     displayControl: true,
     mapEdition: [],
@@ -56,7 +56,7 @@ var app = new Vue({
       var res = this.control.find(nation => nation.name === this.navNation);
       var soutiens = [];
       for (soutien of this.soutiens) {
-        var rank = soutien.soutiens.findIndex(elem => elem === res.leader);
+        var rank = soutien.soutiens.findIndex(elem => elem === res.player);
         if (rank >= 0) {
           soutiens.push({ name: soutien.player, rank: rank + 1 });
         }
@@ -75,7 +75,7 @@ var app = new Vue({
       return this.control.map(nation => {
         var cpt = 0;
         for (soutien of this.soutiens) {
-          if (soutien.soutiens.find(elem => elem === nation.leader)) {
+          if (soutien.soutiens.find(elem => elem === nation.player)) {
             cpt += 1;
           }
         }
@@ -126,6 +126,7 @@ var app = new Vue({
       function(response) {
         response.json().then(
           function(json) {
+            console.log(json);
             this.control = json;
             for (nation of this.control) {
               if (nation.desc !== undefined) {

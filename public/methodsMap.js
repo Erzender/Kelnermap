@@ -19,14 +19,14 @@ methodsMap = {
           return {
             color: empire.color,
             name: empire.name,
-            leader: empire.leader,
+            player: empire.player,
             x: x,
             z: z
           };
         }
       }
     }
-    return { color: "transparent", name: "???", leader: "aucun", x: x, z: z };
+    return { color: "transparent", name: "???", player: "aucun", x: x, z: z };
   },
   updateArea: function(x, z, click) {
     if (click && this.nav.mapEdit) {
