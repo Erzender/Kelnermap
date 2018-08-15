@@ -2,9 +2,7 @@ const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
 
-creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "localhost:8080", secret: "secret"}
-
-console.log(creds);
+creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "https://localhost:8080", secret: "secret"}
 
 app.use(express.static("public"));
 
