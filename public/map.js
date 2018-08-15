@@ -61,7 +61,6 @@ var app = new Vue({
           soutiens.push({ name: soutien.player, rank: rank + 1 });
         }
       }
-      console.log(res.desc);
       return {
         ...res,
         description: res&&res.desc&&this.descriptions?this.descriptions.find(function(desc) {return desc.area === res.desc}).text:"",
@@ -126,7 +125,6 @@ var app = new Vue({
       function(response) {
         response.json().then(
           function(json) {
-            console.log(json);
             this.control = json;
             for (nation of this.control) {
               if (nation.desc !== undefined) {
