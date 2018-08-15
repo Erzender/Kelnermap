@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
 
+// https://jsonbin.io/
 creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "https://localhost:8080", secret: "secret"}
 
 app.use(express.static("public"));
