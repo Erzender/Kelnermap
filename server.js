@@ -4,6 +4,8 @@ const fetch = require("node-fetch");
 
 creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "localhost:8080", secret: "secret"}
 
+console.log(creds);
+
 app.use(express.static("public"));
 
 app.get("/", function(req, res) {
