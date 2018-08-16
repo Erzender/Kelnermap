@@ -1,7 +1,9 @@
 var app = new Vue({
   el: "#app",
   data: {
-    navBar: ["Map", "Nations"],
+    navBar: [
+      "Map", "Nations"
+    ],
     route: "Map",
     navNation: "L'Empire",
     nav: {
@@ -9,12 +11,22 @@ var app = new Vue({
       mapEdit: false
     },
     descEdit: "",
-    search: { x: 0, z: 0 },
+    search: {
+      x: 0,
+      z: 0
+    },
     control: [],
     soutiens: [],
-    mouseMap: { left: 0, top: 0 },
+    mouseMap: {
+      left: 0,
+      top: 0
+    },
     map: Array().fill(40),
-    area: { color: "transparent", name: "???", player: "aucun" },
+    area: {
+      color: "transparent",
+      name: "???",
+      player: "aucun"
+    },
     grid: false,
     displayControl: true,
     mapEdition: [],
@@ -42,11 +54,11 @@ var app = new Vue({
       for (empire of this.control) {
         for (area of empire.areas) {
           if (colors[area.x] && colors[area.x][area.z]) {
-            colors[area.x][area.z] =
-              colors[area.x][area.z] === "white" ||
-              colors[area.x][area.z] === "#FFFF00"
-                ? colors[area.x][area.z]
-                : this.displayControl ? empire.color : "transparent";
+            colors[area.x][area.z] = colors[area.x][area.z] === "white" || colors[area.x][area.z] === "#FFFF00"
+              ? colors[area.x][area.z]
+              : this.displayControl
+                ? empire.color
+                : "transparent";
           }
         }
       }
@@ -58,17 +70,26 @@ var app = new Vue({
       for (soutien of this.soutiens) {
         var rank = soutien.soutiens.findIndex(elem => elem === res.player);
         if (rank >= 0) {
-          soutiens.push({ name: soutien.player, rank: rank + 1 });
+          soutiens.push({
+            name: soutien.player,
+            rank: rank + 1
+          });
         }
       }
       return {
         ...res,
-        description: res&&res.desc&&this.descriptions?this.descriptions.find(function(desc) {return desc.area === res.desc}).text:"",
+        description: res && res.desc && this.descriptions
+          ? this.descriptions.find(function(desc) {
+            return desc.area === res.desc
+          }).text
+          : "",
         soutiens: soutiens
       };
     },
     border: function() {
-      return this.grid ? "1px" : "0px";
+      return this.grid
+        ? "1px"
+        : "0px";
     },
     nations: function() {
       return this.control.map(nation => {
@@ -78,19 +99,16 @@ var app = new Vue({
             cpt += 1;
           }
         }
-        return { ...nation, soutiens: cpt };
+        return {
+          ...nation,
+          soutiens: cpt
+        };
       }).sort((a, b) => a.soutiens < b.soutiens);
     },
     textMapEdit: function() {
-      return (
-        "```" +
-        JSON.stringify(
-          this.mapEdition.map(area => {
-            return { x: area.x, z: area.z };
-          })
-        ) +
-        "```"
-      );
+      return ("```" + JSON.stringify(this.mapEdition.map(area => {
+        return {x: area.x, z: area.z};
+      })) + "```");
     }
   },
   methods: {
@@ -121,36 +139,24 @@ var app = new Vue({
     toggleEdit: methodsMap.toggleEdit
   },
   mounted: function() {
-    fetch("data").then(
-      function(response) {
-        response.json().then(
-          function(json) {
-            this.control = json;
-            for (nation of this.control) {
-              if (nation.desc !== undefined) {
-                fetch("descriptions/" + nation.desc + ".md").then(
-                  function (res) {
-                    res.text().then(
-                      function(text) {
-                        this.vue.descriptions.push({area: this.nation.desc, text: text})
-                      }.bind(this)
-                    )
-                  }.bind({nation: nation, vue: this})
-                )
-              }
-            }
-          }.bind(this)
-        );
-      }.bind(this)
-    );
-    fetch("soutiens.json").then(
-      function(response) {
-        response.json().then(
-          function(json) {
-            this.soutiens = json;
-          }.bind(this)
-        );
-      }.bind(this)
-    );
+    fetch("data").then(function(response) {
+      response.json().then(function(json) {
+        this.control = json;
+        for (nation of this.control) {
+          if (nation.desc !== undefined) {
+            fetch("descriptions/" + nation.desc + ".md").then(function(res) {
+              res.text().then(function(text) {
+                this.vue.descriptions.push({area: this.nation.desc, text: text})
+              }.bind(this))
+            }.bind({nation: nation, vue: this}))
+          }
+        }
+      }.bind(this));
+    }.bind(this));
+    fetch("soutiens.json").then(function(response) {
+      response.json().then(function(json) {
+        this.soutiens = json;
+      }.bind(this));
+    }.bind(this));
   }
 });
