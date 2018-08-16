@@ -18,7 +18,6 @@ client.login(process.env.KELNER_BOT);
 // https://jsonbin.io/
 creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "https://localhost:8080", secret: "secret"}
 
-app.use(express.static("public"));
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
@@ -36,6 +35,14 @@ app.get("/data", function(req, res) {
       console.log(err);
       res.json([]);
     });
+});
+
+app.get("/descriptions/:id", function(req, res) {
+  res.sendFile(__dirname + "/public/descriptions/" + req.params.id)
+});
+
+app.get("/:id", function(req, res) {
+  res.sendFile(__dirname + "/public/" + req.params.id)
 });
 
 var port = process.env.PORT || 8080;
