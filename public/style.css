@@ -42,21 +42,22 @@ blockquote {
 
 hr {
   width: 100%;
-  min-height: 5px;
-  max-height: 5px;
-  background-color: #DDDDDD;
+  min-height: 2px;
+  max-height: 2px;
+  background-color: #585858;
   border-style: none;
 }
 
 pre {
-  background-color: #EEEEEF;
+  background-color: #585858;
   padding: 10px;
   font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
   font-size: 85%;
+  color: #FFAA00
 }
 
 code {
-  background-color: #EEEEEF;
+  background-color: #585555;
   font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
   font-size: 85%;
 }
