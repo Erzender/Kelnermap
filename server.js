@@ -1,41 +1,56 @@
 const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
+const bodyParser = require("body-parser")
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const bot = require('./bot/bot')
+const data = require('./data')
+const creds = require('./data/creds').creds
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 client.on('ready', () => {
-    console.log('Ready!');
+  console.log('Ready!');
 });
 
 client.on('message', message => {
-    console.log(message.content);
+  bot.processBotMessage(message);
 });
 
-client.login(process.env.KELNER_BOT);
-
-// https://jsonbin.io/
-creds = process.env.KELNER_CRED ? JSON.parse(process.env.KELNER_CRED) : {url: "https://localhost:8080", secret: "secret"}
-
+if (process.env.KELNER_BOT) {
+  client.login(JSON.parse(process.env.KELNER_BOT).id);
+}
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
 app.get("/data", function(req, res) {
-  fetch(creds.url, { method: "GET", headers: {"secret-key": creds.secret}})
-    .then(data => {
-      return data.json();
-    })
-    .then(json => {
-      res.json(json);
-    })
-    .catch(err => {
-      console.log(err);
-      res.json([]);
-    });
+  data.nations.getNations().then(result => {
+    if (result !== null) {
+      return res.json(result.map(nation => {
+        return {name: nation.name, player: nation.player, desc: nation.desc, areas: nation.areas, color: nation.color}
+      }))
+    }
+    return res.status(500).send('Internal error.');
+  })
 });
+
+app.post("/request/territory", function(req, res) {
+  data.requests.addRequest(
+    "TERRITORY", (req.body && req.body.areas)
+    ? req.body.areas
+    : []).then(result => {
+    if (result !== null) {
+      return res.json({id: result})
+    }
+    return res.status(500).send('Internal error.');
+  })
+})
 
 app.get("/descriptions/:id", function(req, res) {
   res.sendFile(__dirname + "/public/descriptions/" + req.params.id)

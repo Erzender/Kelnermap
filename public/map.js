@@ -40,17 +40,17 @@ var app = new Vue({
     colors: function() {
       var colors = this.map.map(x => {
         return this.map.map(z => {
-          for (area of this.mapEdition) {
-            if (area.x === x && area.z === z) {
-              return "#FFFF00";
-            }
-          }
           if (this.area.x === x && this.area.z === z) {
             return "white";
           }
           return "transparent";
         });
       });
+      for (area of this.mapEdition) {
+        if (colors[area.x] && colors[area.x][area.z]) {
+          colors[area.x][area.z] = colors[area.x][area.z] === "white" ? "white" : '#FFFF00'
+        }
+      }
       for (empire of this.control) {
         for (area of empire.areas) {
           if (colors[area.x] && colors[area.x][area.z]) {
