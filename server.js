@@ -8,6 +8,7 @@ const client = new Discord.Client();
 
 const bot = require('./bot/bot')
 const data = require('./data')
+const requests = require('./utils/requests')
 const creds = require('./data/creds').creds
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -40,16 +41,8 @@ app.get("/data", function(req, res) {
   })
 });
 
-app.post("/request/territory", function(req, res) {
-  data.requests.addRequest(
-    "TERRITORY", (req.body && req.body.areas)
-    ? req.body.areas
-    : []).then(result => {
-    if (result !== null) {
-      return res.json({id: result})
-    }
-    return res.status(500).send('Internal error.');
-  })
+app.post("/request/:id", function(req, res) {
+  return requests.newRequest(req, res, req.params.id)
 })
 
 app.get("/descriptions/:id", function(req, res) {

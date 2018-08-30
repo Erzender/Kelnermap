@@ -80,3 +80,20 @@ exports.updateNation = async function(id, payload) {
   ret = await getObject(result)
   return ret !== null ? ret.id : ret
 }
+
+exports.createNation = async function(payload) {
+  try {
+    result = await fetch(creds.url + "/nations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+  } catch (e) {
+    console.error(e);
+    return null
+  }
+  ret = await getObject(result)
+  return ret !== null ? ret.id : ret
+}

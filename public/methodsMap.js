@@ -63,14 +63,11 @@ methodsMap = {
       }).then(function(response) {
         response.json().then(function(json) {
           console.log(json);
+          this.message = "ℹ La liste des régions a été enregistrée, entrer le numéro suivant dans #territoires pour valider la commande : " + json.id
         }.bind(this));
       }.bind(this)).catch(err => {
         console.log(err);
       });
-      var copyText = document.getElementById("mapEditInput");
-      copyText.select();
-      document.execCommand("copy");
-      this.message = "🌐 La liste des régions a été copiée dans le presse-papier, collez-là dans #territoires pour déclarer votre territoire 🌐"
       this.mapEdition = [];
     } else {
       this.message = ""
