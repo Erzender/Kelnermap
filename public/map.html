@@ -70,7 +70,6 @@
             <button v-on:click="toggleGrid">Grille</button>
             <button v-on:click="toggleControl">Régions</button>
             <button v-on:click="toggleEdit">{{nav.mapEdit?"Sélection terminée":"Déclarer une région"}}</button>
-            <input v-if="nav.mapEdit" type="text" v-model="textMapEdit" id="mapEditInput" style="color: transparent; background-color: transparent; border-style: none;">
             <div style="font-size: 20px; margin: 5px; margin-top: 10px;">{{message}}</div>
         </div>
         <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
