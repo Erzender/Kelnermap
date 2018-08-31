@@ -65,7 +65,7 @@ var app = new Vue({
       return colors;
     },
     nation: function() {
-      var res = this.control.find(nation => nation.name === this.navNation);
+      var res = this.control.find(nation => nation.id === this.navNation);
       var soutiens = [];
       for (soutien of this.soutiens) {
         var rank = soutien.soutiens.findIndex(elem => elem === res.player);
