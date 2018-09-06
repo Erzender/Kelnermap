@@ -4,36 +4,6 @@
       "id": 0,
       "type": "TERRITORY",
       "payload": []
-    },
-    {
-      "type": "TERRITORY",
-      "payload": [
-        {
-          "x": 7,
-          "z": 20
-        },
-        {
-          "x": 8,
-          "z": 20
-        },
-        {
-          "x": 9,
-          "z": 20
-        },
-        {
-          "x": 9,
-          "z": 21
-        },
-        {
-          "x": 8,
-          "z": 21
-        },
-        {
-          "x": 7,
-          "z": 21
-        }
-      ],
-      "id": 1
     }
   ],
   "nations": [
@@ -946,6 +916,7 @@
       "name": "Une nation nouvelle",
       "color": "#333333",
       "player": "Erzender",
+      "desc": "# Hello\n\nJ'aime beaucoup la moutarde",
       "areas": [
         {
           "x": 7,
@@ -972,7 +943,15 @@
           "z": 21
         }
       ],
-      "soutiens": []
+      "soutiens": [
+        "261130483667173376",
+        "403941520048390140"
+      ],
+      "image": [
+        "261130483667173376",
+        "403941520048390140"
+      ],
+      "leader": "Erzender"
     }
   ]
 }
