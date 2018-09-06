@@ -34,7 +34,7 @@ app.get("/data", function(req, res) {
   data.nations.getNations().then(result => {
     if (result !== null) {
       return res.json(result.map(nation => {
-        return {id: nation.id, name: nation.name, player: nation.player, desc: nation.desc, areas: nation.areas, color: nation.color, soutiens: nation.soutiens}
+        return {id: nation.id, name: nation.name, player: nation.player, desc: nation.desc, areas: nation.areas, color: nation.color, soutiens: nation.soutiens, image: nation.image}
       }))
     }
     return res.status(500).send('Internal error.');

@@ -17,7 +17,7 @@ const player = function(req, res) {
     return res.status(403).send('Wrong arguments');
   }
   data.requests.addRequest(
-    "PLAYER", {name: req.body.name, nationName: req.body.nationName, desc: req.body.desc, color: req.body.color, soutiens: req.body.soutiens, image: req.body.soutiens}).then(result => {
+    "PLAYER", {name: req.body.name, nationName: req.body.nationName, desc: req.body.desc, color: req.body.color, soutiens: req.body.soutiens, image: req.body.image}).then(result => {
     if (result !== null) {
       return res.json({id: result})
     }
