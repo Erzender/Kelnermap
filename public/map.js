@@ -4,7 +4,7 @@ var app = new Vue({
     navBar: [
       "Map", "Nations", "Options"
     ],
-    route: "Options",
+    route: "Map",
     navNation: "L'Empire",
     nav: {
       nationPanel: "desc",
@@ -70,6 +70,7 @@ var app = new Vue({
         var rank = candidate.soutiens.findIndex(elem => elem === res.id);
         if (rank >= 0) {
           soutiens.push({
+            image: candidate.image || "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1",
             name: candidate.player,
             rank: rank + 1
           });
