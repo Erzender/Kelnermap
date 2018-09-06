@@ -125,12 +125,12 @@ var app = new Vue({
         "method": "POST",
         "headers": {"Content-Type": "application/json"},
         "body": JSON.stringify({
-          name: this.settings.name,
-          soutiens: this.settings.soutiens.map(soutien => soutien.id),
-          color: this.settings.color,
-          desc: this.settings.desc,
-          image: this.settings.image,
-          nationName: this.settings.nationName
+          name: this.settings.name || "",
+          soutiens: this.settings.soutiens.map(soutien => soutien.id) || [],
+          color: this.settings.color || "#333333",
+          desc: this.settings.desc || "",
+          image: this.settings.image || "",
+          nationName: this.settings.nationName || ""
         })
       }).then(function(response) {
         response.json().then(function(json) {
