@@ -12,8 +12,15 @@ const territory = function(req, res) {
   })
 }
 
+const caca = function(totest) {
+  if (totest === undefined || totest === null) {
+    return true
+  }
+  return false
+}
+
 const player = function(req, res) {
-  if (!req.body || !req.body.name || !req.body.nationName || !req.body.desc || !req.body.color || !req.body.soutiens || !req.body.image) {
+  if (!req.body || caca(req.body.name) || caca(req.body.nationName) || caca(req.body.desc) || caca(req.body.color) || caca(req.body.soutiens) || caca(req.body.image)) {
     return res.status(403).send('Wrong arguments');
   }
   data.requests.addRequest(
