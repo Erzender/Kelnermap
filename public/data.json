@@ -4,6 +4,18 @@
       "id": 0,
       "type": "TERRITORY",
       "payload": []
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1"
+      },
+      "id": 1
     }
   ],
   "nations": [
@@ -916,7 +928,7 @@
       "name": "Une nation nouvelle",
       "color": "#333333",
       "player": "Erzender",
-      "desc": "# Hello\n\nJ'aime beaucoup la moutarde",
+      "desc": "",
       "areas": [
         {
           "x": 7,

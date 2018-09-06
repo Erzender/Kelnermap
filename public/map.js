@@ -78,10 +78,7 @@ var app = new Vue({
       }
       return {
         ...res,
-        description: res && res.desc && this.descriptions
-        ? this.descriptions.find(function(desc) {
-          return desc.area === res.desc
-        }).text
+        desc: res && res.desc !== undefined && res.desc !== null? res.desc
         : "",
         soutiens: soutiens
       };
@@ -98,6 +95,7 @@ var app = new Vue({
           for (soutien of candidate.soutiens) {
             if (soutien === nation.id) {
               cpt+=1
+              break
             }
           }
         }
@@ -121,6 +119,7 @@ var app = new Vue({
   },
   methods: {
     settingsSave: function() {
+      console.log(this.settings.desc);
       fetch("request/player", {
         "method": "POST",
         "headers": {"Content-Type": "application/json"},
