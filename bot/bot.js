@@ -43,8 +43,14 @@ const processPlayer = async function(author, fields) {
   if (nation === null) {
     return {success: false, what: "euuuh bug je crois."}
   }
+  var newSoutiens = []
+  for (soutien of fields.soutiens) {
+    if (!newSoutiens.find(elem => elem === soutien)) {
+      newSoutiens.push(soutien)
+    }
+  }
   if (nation.length === 0) {
-    if (await data.nations.createNation({id: author.id, name: fields.nationName, color: fields.color, player: author.username, soutiens: fields.soutiens, image: fields.image, leader: fields.name, desc: fields.desc}) === null) {
+    if (await data.nations.createNation({id: author.id, name: fields.nationName, color: fields.color, player: author.username, soutiens: newSoutiens, image: fields.image, leader: fields.name, desc: fields.desc}) === null) {
       return {success: false, what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"}
     }
     return {success: true}
