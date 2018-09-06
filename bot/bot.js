@@ -38,6 +38,26 @@ const processTerritory = async function(author, areas) {
   return {success: true}
 }
 
+const processPlayer = async function(author, fields) {
+  var nation = await data.nations.getNation(author.id)
+  if (nation === null) {
+    return {success: false, what: "euuuh bug je crois."}
+  }
+  if (!fields.name || !fields.nationName || !fields.color || !fields.soutiens || !fields.desc || !fields.image) {
+    return {success: false, what: "manque des champs dans le requête."}
+  }
+  if (nation.length === 0) {
+    if (await data.nations.createNation({id: author.id, name: fields.nationName, color: fields.color, player: author.username, soutiens: fields.soutiens, image: fields.image, leader: fields.name, desc: fields.desc}) === null) {
+      return {success: false, what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"}
+    }
+    return {success: true}
+  }
+  if (await data.nations.updateNation(author.id, {name: fields.nationName, color: fields.color, player: author.username, soutiens: fields.soutiens, image: fields.image, leader: fields.name, desc: fields.desc}) === null) {
+    return {success: false, what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"}
+  }
+  return {success: true}
+}
+
 const processPurge = async function(message) {
   /*
   if (message.author.id !== JSON.parse(process.env.KELNER_BOT).admin) {
@@ -76,6 +96,14 @@ exports.processBotMessage = async function(message) {
       await data.requests.removeRequest(message.content)
       if (outcome.success) {
         return message.reply("le territoire a été **enregistré**")
+      }
+      return message.reply("nique ta race Frodon : " + outcome.what)
+    }
+    if (res.type==="PLAYER") {
+      outcome = await processPlayer(message.author, res.payload)
+      await data.requests.removeRequest(message.content)
+      if (outcome.success) {
+        return message.reply("le profile a été **mis à jour**")
       }
       return message.reply("nique ta race Frodon : " + outcome.what)
     }
