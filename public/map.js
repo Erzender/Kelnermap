@@ -80,7 +80,7 @@ var app = new Vue({
         ...res,
         desc: res && res.desc !== undefined && res.desc !== null? res.desc
         : "",
-        soutiens: soutiens
+        soutiens: soutiens.sort((a, b) => a.rank > b.rank)
       };
     },
     border: function() {
@@ -91,7 +91,11 @@ var app = new Vue({
     nations: function() {
       return this.control.map(nation => {
         var cpt = 0;
+        var cptHab = 0;
         for (candidate of this.control) {
+          if (candidate.soutiens[0] === nation.id) {
+            cptHab += 1
+          }
           for (soutien of candidate.soutiens) {
             if (soutien === nation.id) {
               cpt+=1
@@ -101,9 +105,10 @@ var app = new Vue({
         }
         return {
           ...nation,
+          inhabitants: cptHab,
           soutiens: cpt
         };
-      }).sort((a, b) => a.soutiens < b.soutiens);
+      }).sort((a, b) => a.inhabitants < b.inhabitants);
     },
     textMapEdit: function() {
       return ("```" + JSON.stringify(this.mapEdition.map(area => {

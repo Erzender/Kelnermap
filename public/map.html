@@ -28,6 +28,7 @@
         <div style="padding: 10px;">
           <div style="text-shadow: 1px 1px 1px white;"><b>{{nation.name}}</b></div>
           <div>Leader : {{nation.player}}</div>
+          <div>Habitants: {{nation.inhabitants}}</div>
           <div>Soutiens: {{nation.soutiens}}</div>
         </div>
       </div>
@@ -45,7 +46,7 @@
           </div>
           <div v-if="nav.nationPanel === 'desc'" v-html="marked(nation.desc)" style="display: flex; flex: 1; flex-direction: column; padding: 50px; background-color: #444444; overflow: auto;"></div>
           <div v-if="nav.nationPanel === 'soutiens'" style="display: flex; flex: 1; background-color: #444444; flex-direction: column; overflow: auto; padding-top: 5px;">
-            <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; backgroundColor: #330000; border-radius: 10px; padding: 10px; max-height: 50px; min-height: 50px; margin: 5px; flex-direction: row;">
+            <div v-for="soutien in nation.soutiens" style="display: flex; flex: 1; background-color: #330000; border-radius: 10px; padding: 10px; max-height: 50px; min-height: 50px; margin: 5px; flex-direction: row;">
               <img v-bind:src="soutien.image" style="width: 50; display: inline-block;"></img>
               <div style="display: flex; flex-direction: column; padding-left: 10px;">
                 <div><b>{{soutien.name}}</b></div>
