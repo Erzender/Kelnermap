@@ -34,9 +34,6 @@ const processTerritory = async function(author, areas) {
         "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
-  if (nation[0].lastClaim !== undefined && moment(nation[0].lastClaim).add(24, "hours").isAfter(moment())) {
-    return { success: false, what: "c'est une seule déclaration chaque 24h." };
-  }
   var alsoUpdate = {};
   for (area of areas) {
     if (
