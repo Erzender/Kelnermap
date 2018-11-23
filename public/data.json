@@ -4,6 +4,64 @@
       "id": 0,
       "type": "TERRITORY",
       "payload": []
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1"
+      },
+      "id": 1
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1"
+      },
+      "id": 2
+    },
+    {
+      "type": "TERRITORY",
+      "payload": [
+        {
+          "x": 7,
+          "z": 20
+        }
+      ],
+      "id": 3
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg"
+      },
+      "id": 4
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg"
+      },
+      "id": 5
     }
   ],
   "nations": [
@@ -72,15 +130,48 @@
       "color": "#333333",
       "player": "Erzender",
       "desc": "",
-      "areas": [],
+      "areas": [
+        {
+          "x": 7,
+          "z": 21
+        },
+        {
+          "x": 8,
+          "z": 21
+        },
+        {
+          "x": 9,
+          "z": 21
+        },
+        {
+          "x": 10,
+          "z": 21
+        },
+        {
+          "x": 10,
+          "z": 20
+        },
+        {
+          "x": 8,
+          "z": 20
+        },
+        {
+          "x": 9,
+          "z": 20
+        },
+        {
+          "x": 7,
+          "z": 20
+        }
+      ],
       "soutiens": [
         "261130483667173376",
         "261639291128643600",
         "228204671725076480"
       ],
-      "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1",
+      "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg",
       "leader": "Erzender",
-      "lastClaim": "2018-11-22T23:24:23.922Z"
+      "lastClaim": "2018-11-23T11:34:43.801Z"
     }
   ]
 }
