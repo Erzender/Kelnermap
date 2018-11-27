@@ -138,7 +138,7 @@ var app = new Vue({
       var ret = {
         nation:
           this.settings.soutiens.length <= 0
-            ? "Aucune"
+            ? "Nulle Part"
             : this.settings.soutiens[0].nation
       };
       return ret;
@@ -186,7 +186,7 @@ var app = new Vue({
             return {
               id: soutien,
               name: soutienP ? soutienP.player : "unknown",
-              nation: soutienP ? soutienP.name : "Nulle part"
+              nation: soutienP ? soutienP.name : "Aucune"
             };
           })
         : [];
@@ -208,7 +208,7 @@ var app = new Vue({
       this.settings.soutiens.push({
         id: this.settings.toAddSoutien,
         name: soutienP ? soutienP.player : "",
-        nation: soutienP ? soutienP.name : "Nulle Part"
+        nation: soutienP ? soutienP.name : "Aucune"
       });
     },
     settingsEditSoutien: function(event, option, id) {
