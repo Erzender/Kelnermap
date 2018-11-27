@@ -186,7 +186,7 @@ var app = new Vue({
             return {
               id: soutien,
               name: soutienP ? soutienP.player : "unknown",
-              nation: soutienP ? soutienP.name : "Aucune"
+              nation: soutienP ? soutienP.name : "Nulle part"
             };
           })
         : [];
