@@ -208,7 +208,7 @@ var app = new Vue({
       this.settings.soutiens.push({
         id: this.settings.toAddSoutien,
         name: soutienP ? soutienP.player : "",
-        nation: soutienP ? soutienP.name : "Aucune"
+        nation: soutienP ? soutienP.name : "Nulle Part"
       });
     },
     settingsEditSoutien: function(event, option, id) {
