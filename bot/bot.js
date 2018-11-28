@@ -152,7 +152,8 @@ const processPlayer = async function(author, fields) {
         soutiens: newSoutiens,
         image: fields.image,
         leader: fields.name,
-        desc: fields.desc
+        desc: fields.desc,
+        areas: []
       })) === null
     ) {
       return {
