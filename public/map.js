@@ -77,6 +77,9 @@ var app = new Vue({
       }
       return colors;
     },
+    activeControl: function() {
+      return this.control.filter(nation => nation.areas.length > 0)
+    },
     nation: function() {
       var res = this.control.find(nation => nation.id === this.navNation);
       var soutiens = [];
