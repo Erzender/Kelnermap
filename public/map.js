@@ -15,6 +15,7 @@ var app = new Vue({
     },
     search: { x: 0, z: 0 },
     control: [],
+    land: [],
     mouseMap: { left: 0, top: 0 },
     map: Array().fill(40),
     area: {
@@ -24,7 +25,9 @@ var app = new Vue({
     },
     grid: false,
     displayControl: true,
+    displaySea: false,
     mapEdition: [],
+    mapSelectedTerritory: 0,
     message: "",
     settings: {
       message: "",
@@ -46,9 +49,13 @@ var app = new Vue({
           if (this.area.x === x && this.area.z === z) {
             return "white";
           }
-          return "transparent";
+          return this.displaySea ? "blue" : "transparent";
         });
       });
+      for (area of this.land) {
+        colors[area.x][area.z] =
+          colors[area.x][area.z] === "white" ? "white" : "transparent";
+      }
       for (area of this.mapEdition) {
         if (colors[area.x] && colors[area.x][area.z]) {
           colors[area.x][area.z] =
@@ -246,9 +253,11 @@ var app = new Vue({
     searchArea: methodsMap.searchArea,
     toggleGrid: methodsMap.toggleGrid,
     toggleControl: methodsMap.toggleControl,
+    toggleSea: methodsMap.toggleSea,
     getArea: methodsMap.getArea,
     getColor: methodsMap.getColor,
     updateArea: methodsMap.updateArea,
+    mapSelectTerritory: methodsMap.selectTerritory,
     updateMouseMap: methodsMap.updateMouseMap,
     toggleEdit: methodsMap.toggleEdit
   },
@@ -257,7 +266,8 @@ var app = new Vue({
       function(response) {
         response.json().then(
           function(json) {
-            this.control = json;
+            this.control = json.control;
+            this.land = json.land;
           }.bind(this)
         );
       }.bind(this)

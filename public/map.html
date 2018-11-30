@@ -118,7 +118,15 @@
         </form>
         <button v-on:click="toggleGrid">Grille</button>
         <button v-on:click="toggleControl">Régions</button>
+        <button v-on:click="toggleSea">Mers</button>
         <button v-on:click="toggleEdit">{{nav.mapEdit?"Sélection terminée":"Déclarer une région"}}</button>
+        <div v-if="nav.mapEdit">Région préselectionnée :</div>
+        <select v-if="nav.mapEdit" v-model="mapSelectedTerritory" v-on:change="mapSelectTerritory()">
+          <option disable value="0">Aucune</option>
+          <option v-for="nation in control" v-bind:value="nation.id">
+            {{ nation.name }}
+          </option>
+        </select>
         <div style="font-size: 20px; margin: 5px; margin-top: 10px;">{{message}}</div>
       </div>
       <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
