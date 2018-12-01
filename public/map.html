@@ -130,7 +130,7 @@
         <div style="font-size: 20px; margin: 5px; margin-top: 10px;">{{message}}</div>
       </div>
       <div id="mapCnt" style="overflow: auto; display: flex; flex: 1;">
-        <div id="map" style="min-width: 850px; width: 850px; height: 850px; display: flex; background-image: url('http://82.225.26.131:54979/share/g7mTAxiqXQXJKhdz/map.png'); background-size: 100% 100%;" @mousemove="updateMouseMap">
+        <div id="map" style="min-width: 850px; width: 850px; height: 850px; display: flex; background-image: url('https://erzender.freeboxos.fr:56995/share/6ojAasbWB-MT5jaR/mapPaper.png'); background-size: 100% 100%;" @mousemove="updateMouseMap">
           <div style="display: flex; flex: 1; flex-direction: column;" v-for="(line, x) in colors">
             <div style="display: flex; flex: 1; border-width: 1px; border-style: solid; border-color: white;" v-for="(area, z) in line" v-bind:style="{ borderWidth: border, backgroundColor: area, opacity: 0.4}" @mouseover="updateArea(x, z)" v-on:click="updateArea(x, z, true)"></div>
           </div>
