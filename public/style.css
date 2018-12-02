@@ -23,7 +23,7 @@ th {
 }
 
 tr {
-  color: white
+  color: white;
 }
 
 tr:nth-child(even) {
@@ -37,7 +37,7 @@ input {
   border-bottom-width: 1px;
   font-weight: bold;
   color: white;
-  border-color: #dddddd
+  border-color: #dddddd;
 }
 
 blockquote {
@@ -61,25 +61,32 @@ hr {
 pre {
   background-color: #585858;
   padding: 10px;
-  font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
   font-size: 85%;
-  color: #FFAA00
+  color: #ffaa00;
 }
 
 code {
   background-color: #585555;
-  font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
   font-size: 85%;
 }
 
 button {
-  background-color: #333333;
+  background-color: #585555;
+  margin: 1px;
   color: white;
-  border-width: 1px;
+  border-width: 0px;
   border-top-right-radius: 10px;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   user-select: none;
   min-height: 30px;
+}
+
+button:active {
+  background-color: #666666;
 }
 
 .colors1 {
@@ -87,7 +94,7 @@ button {
 }
 
 a {
-  color: #FFAA00;
+  color: #ffaa00;
 }
 
 #app {
@@ -99,7 +106,7 @@ a {
   display: flex;
   flex-direction: column;
   flex: 1;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   color: white;
 }
 

@@ -47,26 +47,26 @@ var app = new Vue({
       var colors = this.map.map(x => {
         return this.map.map(z => {
           if (this.area.x === x && this.area.z === z) {
-            return "white";
+            return "FF0000";
           }
           return this.displaySea ? "blue" : "transparent";
         });
       });
       for (area of this.land) {
         colors[area.x][area.z] =
-          colors[area.x][area.z] === "white" ? "white" : "transparent";
+          colors[area.x][area.z] === "FF0000" ? "FF0000" : "transparent";
       }
       for (area of this.mapEdition) {
         if (colors[area.x] && colors[area.x][area.z]) {
           colors[area.x][area.z] =
-            colors[area.x][area.z] === "white" ? "white" : "#FFFF00";
+            colors[area.x][area.z] === "FF0000" ? "FF0000" : "#FFFF00";
         }
       }
       for (empire of this.control) {
         for (area of empire.areas) {
           if (colors[area.x] && colors[area.x][area.z]) {
             colors[area.x][area.z] =
-              colors[area.x][area.z] === "white" ||
+              colors[area.x][area.z] === "FF0000" ||
               colors[area.x][area.z] === "#FFFF00"
                 ? colors[area.x][area.z]
                 : this.displayControl
