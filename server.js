@@ -12,8 +12,11 @@ const requests = require("./utils/requests");
 const creds = require("./data/creds").creds;
 const config = require("./config.json");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
 
 client.on("ready", () => {
   console.log("Ready!");
@@ -27,11 +30,23 @@ if (process.env.KELNER_BOT) {
   client.login(JSON.parse(process.env.KELNER_BOT).id);
 }
 
-app.get("/", function(req, res) {
+app.get('/', function (req, res) {
+  res.render('index', {
+    route: "home"
+  });
+});
+
+app.get('/login', function (res, res) {
+  res.render('index', {
+    route: "login"
+  })
+})
+
+app.get("/map", function (req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
-app.get("/data", function(req, res) {
+app.get("/data", function (req, res) {
   data.nations.getNations().then(result => {
     if (result !== null) {
       return res.json({
@@ -54,15 +69,15 @@ app.get("/data", function(req, res) {
   });
 });
 
-app.post("/request/:id", function(req, res) {
+app.post("/request/:id", function (req, res) {
   return requests.newRequest(req, res, req.params.id);
 });
 
-app.get("/descriptions/:id", function(req, res) {
+app.get("/descriptions/:id", function (req, res) {
   res.sendFile(__dirname + "/public/descriptions/" + req.params.id);
 });
 
-app.get("/:id", function(req, res) {
+app.get("/:id", function (req, res) {
   res.sendFile(__dirname + "/public/" + req.params.id);
 });
 

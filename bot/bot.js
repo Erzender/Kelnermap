@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const data = require("../data");
 const moment = require("moment");
 
-const checkUnlimittedPower = async function(idRequesting, idRequested) {
+const checkUnlimittedPower = async function (idRequesting, idRequested) {
   var nations = await data.nations.getNations();
   var soutiensRequesting = 0;
   var soutiensRequested = 0;
@@ -24,14 +24,13 @@ const checkUnlimittedPower = async function(idRequesting, idRequested) {
   return soutiensRequested < soutiensRequesting;
 };
 
-const processTerritory = async function(author, areas) {
+const processTerritory = async function (author, areas) {
   var nation = await data.nations.getNation(author.id);
   var flat = await data.nations.getMap();
   if (nation === null || flat === null) {
     return {
       success: false,
-      what:
-        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
   var alsoUpdate = {};
@@ -55,8 +54,7 @@ const processTerritory = async function(author, areas) {
     if (flat.map[area.x][area.z].control === false) {
       return {
         success: false,
-        what:
-          "un bout du territoire déclaré est à la flotte, comme ta requête 🎅 "
+        what: "un bout du territoire déclaré est à la flotte, comme ta requête 🎅 "
       };
     }
     flat.map[area.x][area.z].ids = [author.id];
@@ -88,11 +86,12 @@ const processTerritory = async function(author, areas) {
     ) {
       return {
         success: false,
-        what:
-          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
-    return { success: true };
+    return {
+      success: true
+    };
   }
   for (update of Object.keys(alsoUpdate)) {
     if (
@@ -102,8 +101,7 @@ const processTerritory = async function(author, areas) {
     ) {
       return {
         success: false,
-        what:
-          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
   }
@@ -115,26 +113,30 @@ const processTerritory = async function(author, areas) {
   ) {
     return {
       success: false,
-      what:
-        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
   if (Object.keys(alsoUpdate).length > 0) {
     return {
       success: true,
-      what:
-        ". C'est une invasion redoutable qui a fait sombrer **" +
+      what: ". C'est une invasion redoutable qui a fait sombrer **" +
         Object.keys(alsoUpdate).length +
         "** civilisation(s) 💀"
     };
   }
-  return { success: true, what: "" };
+  return {
+    success: true,
+    what: ""
+  };
 };
 
-const processPlayer = async function(author, fields) {
+const processPlayer = async function (author, fields) {
   var nation = await data.nations.getNation(author.id);
   if (nation === null) {
-    return { success: false, what: "euuuh bug je crois." };
+    return {
+      success: false,
+      what: "euuuh bug je crois."
+    };
   }
   var newSoutiens = [];
   for (soutien of fields.soutiens) {
@@ -158,11 +160,12 @@ const processPlayer = async function(author, fields) {
     ) {
       return {
         success: false,
-        what:
-          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
-    return { success: true };
+    return {
+      success: true
+    };
   }
   if (
     (await data.nations.updateNation(author.id, {
@@ -177,14 +180,16 @@ const processPlayer = async function(author, fields) {
   ) {
     return {
       success: false,
-      what:
-        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
-  return { success: true, what: "" };
+  return {
+    success: true,
+    what: ""
+  };
 };
 
-const processPurge = async function(message) {
+const processPurge = async function (message) {
   /*
   if (message.author.id !== JSON.parse(process.env.KELNER_BOT).admin) {
     return null
@@ -205,17 +210,16 @@ const processPurge = async function(message) {
   return null;
 };
 
-exports.processBotMessage = async function(message) {
-  if (
-    !(
-      message.channel.id === JSON.parse(process.env.KELNER_BOT).channel &&
-      message.channel.guild.id === JSON.parse(process.env.KELNER_BOT).guild
-    )
-  ) {
+exports.processBotMessage = async function (message) {
+  if (!(message.channel.id === JSON.parse(process.env.KELNER_BOT).channel && message.channel.guild.id === JSON.parse(process.env.KELNER_BOT).guild)) {
     return null;
   }
   if (message.content === "purge") {
     return processPurge(message);
+  }
+  content = message.content.split(" ")
+  if (content.length > 2 && content[0] === "okGlados" && content[1] === "login")  {
+    return message.reply(content[2])
   }
   if (Number(message.content) > 0) {
     res = await data.requests.getRequest(message.content);
