@@ -157,7 +157,7 @@ var app = new Vue({
   methods: {
     settingsSave: function() {
       console.log(this.settings.desc);
-      fetch("request/player", {
+      fetch("/lekelner/request/player", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -265,7 +265,7 @@ var app = new Vue({
     toggleEdit: methodsMap.toggleEdit
   },
   mounted: function() {
-    fetch("data").then(
+    fetch("/lekelner/data").then(
       function(response) {
         response.json().then(
           function(json) {

@@ -1,8 +1,9 @@
 const fetch = require("node-fetch");
 const data = require("../data");
 const moment = require("moment");
+const jwt = require("jsonwebtoken");
 
-const checkUnlimittedPower = async function (idRequesting, idRequested) {
+const checkUnlimittedPower = async function(idRequesting, idRequested) {
   var nations = await data.nations.getNations();
   var soutiensRequesting = 0;
   var soutiensRequested = 0;
@@ -24,13 +25,14 @@ const checkUnlimittedPower = async function (idRequesting, idRequested) {
   return soutiensRequested < soutiensRequesting;
 };
 
-const processTerritory = async function (author, areas) {
+const processTerritory = async function(author, areas) {
   var nation = await data.nations.getNation(author.id);
   var flat = await data.nations.getMap();
   if (nation === null || flat === null) {
     return {
       success: false,
-      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what:
+        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
   var alsoUpdate = {};
@@ -54,7 +56,8 @@ const processTerritory = async function (author, areas) {
     if (flat.map[area.x][area.z].control === false) {
       return {
         success: false,
-        what: "un bout du territoire déclaré est à la flotte, comme ta requête 🎅 "
+        what:
+          "un bout du territoire déclaré est à la flotte, comme ta requête 🎅 "
       };
     }
     flat.map[area.x][area.z].ids = [author.id];
@@ -86,7 +89,8 @@ const processTerritory = async function (author, areas) {
     ) {
       return {
         success: false,
-        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what:
+          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
     return {
@@ -101,7 +105,8 @@ const processTerritory = async function (author, areas) {
     ) {
       return {
         success: false,
-        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what:
+          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
   }
@@ -113,13 +118,15 @@ const processTerritory = async function (author, areas) {
   ) {
     return {
       success: false,
-      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what:
+        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
   if (Object.keys(alsoUpdate).length > 0) {
     return {
       success: true,
-      what: ". C'est une invasion redoutable qui a fait sombrer **" +
+      what:
+        ". C'est une invasion redoutable qui a fait sombrer **" +
         Object.keys(alsoUpdate).length +
         "** civilisation(s) 💀"
     };
@@ -130,7 +137,7 @@ const processTerritory = async function (author, areas) {
   };
 };
 
-const processPlayer = async function (author, fields) {
+const processPlayer = async function(author, fields) {
   var nation = await data.nations.getNation(author.id);
   if (nation === null) {
     return {
@@ -160,7 +167,8 @@ const processPlayer = async function (author, fields) {
     ) {
       return {
         success: false,
-        what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+        what:
+          "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
       };
     }
     return {
@@ -174,13 +182,13 @@ const processPlayer = async function (author, fields) {
       player: author.username,
       soutiens: fields.soutiens,
       image: fields.image,
-      leader: fields.name,
       desc: fields.desc
     })) === null
   ) {
     return {
       success: false,
-      what: "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
+      what:
+        "le serveur est ptetre cassé. Au secours @Erzender , vous êtes mon seul espoir"
     };
   }
   return {
@@ -189,7 +197,7 @@ const processPlayer = async function (author, fields) {
   };
 };
 
-const processPurge = async function (message) {
+const processPurge = async function(message) {
   /*
   if (message.author.id !== JSON.parse(process.env.KELNER_BOT).admin) {
     return null
@@ -210,16 +218,44 @@ const processPurge = async function (message) {
   return null;
 };
 
-exports.processBotMessage = async function (message) {
-  if (!(message.channel.id === JSON.parse(process.env.KELNER_BOT).channel && message.channel.guild.id === JSON.parse(process.env.KELNER_BOT).guild)) {
+const processLogin = async function(message) {
+  var nation = await data.nations.getNation(message.author.id);
+  if (nation === null) {
+    try {
+      data.nations.createNation({
+        id: message.author.id,
+        name: "une nation nouvelle",
+        color: "#333333",
+        player: message.author.username,
+        soutiens: [],
+        image: "",
+        desc: "",
+        areas: []
+      });
+    } catch (err) {
+      console.error(err);
+      await message.author.send("ça a chié dans la colle");
+    }
+  }
+  var token = jwt.sign({ player: message.author.id }, "shhhhh", { expiresIn: '1h' });
+  await message.author.send("Ouais go te co là : " + token);
+  return;
+};
+
+exports.processBotMessage = async function(message) {
+  if (
+    !(
+      message.channel.id === JSON.parse(process.env.KELNER_BOT).channel &&
+      message.channel.guild.id === JSON.parse(process.env.KELNER_BOT).guild
+    )
+  ) {
     return null;
   }
   if (message.content === "purge") {
     return processPurge(message);
   }
-  content = message.content.split(" ")
-  if (content.length > 2 && content[0] === "okGlados" && content[1] === "login")  {
-    return message.reply(content[2])
+  if (message.content === "login") {
+    return processLogin(message);
   }
   if (Number(message.content) > 0) {
     res = await data.requests.getRequest(message.content);

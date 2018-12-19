@@ -12,11 +12,13 @@ const requests = require("./utils/requests");
 const creds = require("./data/creds").creds;
 const config = require("./config.json");
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
 app.use(bodyParser.json());
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 client.on("ready", () => {
   console.log("Ready!");
@@ -27,26 +29,32 @@ client.on("message", message => {
 });
 
 if (process.env.KELNER_BOT) {
-  client.login(JSON.parse(process.env.KELNER_BOT).id);
+  try {
+    client.login(JSON.parse(process.env.KELNER_BOT).id);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-app.get('/', function (req, res) {
-  res.render('index', {
+var routes = express.Router()
+
+routes.get("/", function(req, res) {
+  res.render("index", {
     route: "home"
   });
 });
 
-app.get('/login', function (res, res) {
-  res.render('index', {
+routes.get("/login", function(res, res) {
+  res.render("index", {
     route: "login"
-  })
-})
+  });
+});
 
-app.get("/map", function (req, res) {
+routes.get("/map", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
-app.get("/data", function (req, res) {
+routes.get("/data", function(req, res) {
   data.nations.getNations().then(result => {
     if (result !== null) {
       return res.json({
@@ -69,17 +77,24 @@ app.get("/data", function (req, res) {
   });
 });
 
-app.post("/request/:id", function (req, res) {
+routes.post("/request/:id", function(req, res) {
   return requests.newRequest(req, res, req.params.id);
 });
 
-app.get("/descriptions/:id", function (req, res) {
+routes.get("/descriptions/:id", function(req, res) {
   res.sendFile(__dirname + "/public/descriptions/" + req.params.id);
 });
 
-app.get("/:id", function (req, res) {
+routes.get("/:id", function(req, res) {
   res.sendFile(__dirname + "/public/" + req.params.id);
 });
+
+app.use("/lekelner", routes)
+
+
+app.get("/", function(req, res) {
+  res.send("Le site tourne sur /lekelner")
+})
 
 var port = process.env.PORT || 8080;
 console.log("listening on port " + port);
