@@ -1,0 +1,14 @@
+<a style="display: flex; flex: 1; flex-direction: column; color: #FFFFFF; overflow: auto;">
+<% nations.forEach(function(nation){ %>
+    <div id="nationCnt">
+        <div style="background-color: <%- nation.color -%>; width: 5; opacity: 0.7;">
+        </div>
+            <div style="padding: 10px; font-size: 15">
+            <div style="text-shadow: 1px 1px 1px white; font-size: 17"><b><%= nation.name %></b></div>
+            <div>Leader : <%= nation.player %></div>
+            <div>Habitants : <%= nation.inhabitants %></div>
+            <div>Soutiens : <%= nation.soutiens %></div>
+        </div>
+    </div>
+<% }); %>
+</a>
