@@ -222,7 +222,7 @@ const processLogin = async function(message) {
   var nation = await data.nations.getNation(message.author.id);
   if (nation === null) {
     try {
-      data.nations.createNation({
+      await data.nations.createNation({
         id: message.author.id,
         name: "une nation nouvelle",
         color: "#333333",
@@ -237,8 +237,8 @@ const processLogin = async function(message) {
       await message.author.send("ça a chié dans la colle");
     }
   }
-  var token = jwt.sign({ player: message.author.id }, "shhhhh", { expiresIn: '1h' });
-  await message.author.send("Ouais go te co là : " + token);
+  var token = jwt.sign({ player: message.author.id }, "shhhhh", { expiresIn: '120000' }); // 2 minutes
+  await message.author.send("Ouais go te co là : http://localhost:8080/lekelner/login?token=" + token);
   return;
 };
 

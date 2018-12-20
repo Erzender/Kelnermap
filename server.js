@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const session = require("express-session");
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -11,7 +13,9 @@ const data = require("./data");
 const requests = require("./utils/requests");
 const creds = require("./data/creds").creds;
 const config = require("./config.json");
+const views = require("./pres/views");
 
+app.use(session({ secret: "some-random-text" }));
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -36,22 +40,23 @@ if (process.env.KELNER_BOT) {
   }
 }
 
-var routes = express.Router()
+var routes = express.Router();
 
-routes.get("/", function(req, res) {
-  res.render("index", {
-    route: "home"
-  });
-});
+routes.get("/", views.home);
 
-routes.get("/login", function(res, res) {
-  res.render("index", {
-    route: "login"
-  });
-});
+routes.get("/login", views.login);
 
 routes.get("/map", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
+});
+
+routes.get("/mapview", views.map)
+
+routes.get("/logout", function(req, res) {
+  if (req.session.player) {
+    req.session.player = undefined;
+  }
+  res.redirect("/lekelner/login");
 });
 
 routes.get("/data", function(req, res) {
@@ -89,12 +94,11 @@ routes.get("/:id", function(req, res) {
   res.sendFile(__dirname + "/public/" + req.params.id);
 });
 
-app.use("/lekelner", routes)
-
+app.use("/lekelner", routes);
 
 app.get("/", function(req, res) {
-  res.send("Le site tourne sur /lekelner")
-})
+  res.send("Le site tourne sur /lekelner");
+});
 
 var port = process.env.PORT || 8080;
 console.log("listening on port " + port);
