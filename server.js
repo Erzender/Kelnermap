@@ -52,6 +52,8 @@ routes.get("/map", function(req, res) {
 
 routes.get("/mapview", views.map)
 
+routes.get("/nations", views.nations)
+
 routes.get("/logout", function(req, res) {
   if (req.session.player) {
     req.session.player = undefined;
