@@ -42,26 +42,26 @@ if (process.env.KELNER_BOT) {
 
 var routes = express.Router();
 
-routes.get("/", views.home);
+app.get("/", views.home);
 
-routes.get("/login", views.login);
+app.get("/login", views.login);
 
-routes.get("/map", function(req, res) {
+app.get("/map", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
-routes.get("/mapview", views.map)
+app.get("/mapview", views.map)
 
-routes.get("/nations", views.nations)
+app.get("/nations", views.nations)
 
-routes.get("/logout", function(req, res) {
+app.get("/logout", function(req, res) {
   if (req.session.player) {
     req.session.player = undefined;
   }
-  res.redirect("/lekelner/login");
+  res.redirect("/login");
 });
 
-routes.get("/data", function(req, res) {
+app.get("/data", function(req, res) {
   data.nations.getNations().then(result => {
     if (result !== null) {
       return res.json({
@@ -84,22 +84,16 @@ routes.get("/data", function(req, res) {
   });
 });
 
-routes.post("/request/:id", function(req, res) {
+app.post("/request/:id", function(req, res) {
   return requests.newRequest(req, res, req.params.id);
 });
 
-routes.get("/descriptions/:id", function(req, res) {
+app.get("/descriptions/:id", function(req, res) {
   res.sendFile(__dirname + "/public/descriptions/" + req.params.id);
 });
 
-routes.get("/:id", function(req, res) {
+app.get("/:id", function(req, res) {
   res.sendFile(__dirname + "/public/" + req.params.id);
-});
-
-app.use("/lekelner", routes);
-
-app.get("/", function(req, res) {
-  res.send("Le site tourne sur /lekelner");
 });
 
 var port = process.env.PORT || 8080;
