@@ -16,7 +16,7 @@ exports.login = async function(req, res) {
   }
   if (decoded && decoded.player) {
     req.session.player = decoded.player;
-    return res.redirect("/lekelner");
+    return res.redirect("/");
   }
   res.render("index", {
     route: "login",
