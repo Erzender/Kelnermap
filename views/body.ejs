@@ -5,10 +5,16 @@
     <% if (route === "login") { %>
         <% include login %>
     <% } %>
+    <% if (route === "register") { %>
+        <% include register %>
+    <% } %>
     <% if (route === "map") { %>
         <% include map %>
     <% } %>
     <% if (route === "nations") { %>
         <% include nations %>
+    <% } %>
+    <% if (route === "redirection") { %>
+        <% include redirection %>
     <% } %>
 </div>
