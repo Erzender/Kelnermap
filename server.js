@@ -61,6 +61,16 @@ app.get("/mapview", views.map.map);
 
 app.get("/nations", views.nations.nations);
 
+app.get("/profile", (req, res) =>
+  views.profile.profile(
+    req,
+    res,
+    req.session.player ? req.session.player.id : 0
+  )
+);
+
+app.get("/settings", views.settings.settings);
+
 app.get("/logout", function(req, res) {
   if (req.session.player) {
     req.session.player = undefined;
