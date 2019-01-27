@@ -15,6 +15,9 @@ const creds = require("./data/creds").creds;
 const config = require("./config.json");
 const views = require("./pres/views");
 
+const db = require("./data/_init");
+const datastuff = require("./data/_model")
+
 app.use(session({ secret: "some-random-text" }));
 app.use(
   bodyParser.urlencoded({
@@ -50,9 +53,9 @@ app.get("/map", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
-app.get("/mapview", views.map)
+app.get("/mapview", views.map);
 
-app.get("/nations", views.nations)
+app.get("/nations", views.nations);
 
 app.get("/logout", function(req, res) {
   if (req.session.player) {
@@ -96,6 +99,8 @@ app.get("/:id", function(req, res) {
   res.sendFile(__dirname + "/public/" + req.params.id);
 });
 
-var port = process.env.PORT || 8080;
-console.log("listening on port " + port);
-app.listen(port);
+db.sequelize.sync().then(() => {
+  const port = process.env.PORT || 8080
+  console.log("listening on port " + port);
+  app.listen(port);
+});
