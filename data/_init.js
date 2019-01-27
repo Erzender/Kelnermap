@@ -1,6 +1,5 @@
 require("dotenv").load();
 const Sequelize = require("sequelize");
-console.log(process.env.DB_TYPE)
 const db = {
 	type: process.env.DB_TYPE || "sqlite",
 	sqlitePath: process.env.DB_SQLITE_PATH || "./database.sqlite",
