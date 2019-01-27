@@ -5,7 +5,7 @@ exports.nations = async function(req, res) {
   nations = await data.nations.getNations();
   res.render("index", {
     route: "nations",
-    player: !!req.session.player,
+    player: req.session.player || false,
     T:
       dictionnary[
         req.locale ||

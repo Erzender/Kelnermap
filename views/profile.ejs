@@ -1,0 +1,11 @@
+<div style="height: 100%; min-width: 950px; max-width: 1100px; margin: auto; overflow: auto;">
+    <div style="display: flex; flex-direction: row">
+        <div style="display: flex; align-items: center; width: 250px; height: 250px; min-width: 250px: min-height: 250px; max-height: 250px; max-width: 250px; background-color: #333333;">
+            <% if (profileInfo.picture.length > 0) { %><img src="<%- profileInfo.picture -%>" style="width: 250; display: inline-block;" /><% } %>
+        </div>
+        <div style="display: flex; flex: 1; align-self: flex-end; flex-direction: column">
+            <div style="font-size: 25; font-weight: bold; margin-left: 5"><%= profileInfo.name %> <% if (profileInfo.edit === true) { %><a style="text-decoration: none" href="/settings">📝</a><% } %></div>
+            <hr style="flex: 1">
+        </div>
+    </div>
+</div>

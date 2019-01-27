@@ -7,7 +7,10 @@
         <a href="/login" class="menu">👤 <%= T("Account") %></a>
     <% }%>
     <% if (player) { %>
-        <a href="/profile" class="menu" style="max-width: 40px; min-height: 40px; min-width: 40px; max-height: 40px; overflow: hidden; border-width: 1px; padding: 0; align-items: center; display: flex; background-color: #222222"><img src="<%- player.picture -%>" style="width: 40; display: inline-block;" /></a>
+        <a href="/profile" class="menu" style="display: flex; flex-direction: row; align-items: center">
+            <div style="max-width: 40px; min-height: 40px; min-width: 40px; max-height: 40px; overflow: hidden; border-width: 1px; padding: 0; align-items: center; display: flex; background-color: #222222; margin-right: 5"><img src="<%- player.picture -%>" style="width: 40; display: inline-block;" /></div>
+            <%= player.name%>
+        </a>
         <a href="/logout" class="menu">🚪 <%= T("Disconnect") %></a>
     <% }%>
 </div>

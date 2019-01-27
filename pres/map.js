@@ -4,7 +4,7 @@ const data = require("../data");
 exports.map = async function(req, res) {
   res.render("index", {
     route: "map",
-    player: !req.session.player,
+    player: req.session.player || false,
     T:
       dictionnary[
         req.locale ||
