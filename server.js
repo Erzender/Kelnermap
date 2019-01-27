@@ -13,10 +13,10 @@ const data = require("./data");
 const requests = require("./utils/requests");
 const creds = require("./data/creds").creds;
 const config = require("./config.json");
-const views = require("./pres/views");
+const views = require("./pres");
 
 const db = require("./data/_init");
-const datastuff = require("./data/_model")
+const datastuff = require("./data/_model");
 
 app.use(session({ secret: "some-random-text" }));
 app.use(
@@ -45,17 +45,21 @@ if (process.env.KELNER_BOT) {
 
 var routes = express.Router();
 
-app.get("/", views.home);
+app.get("/", views.home.home);
 
-app.get("/login", views.login);
+app.get("/login", views.login.login);
+app.post("/login", views.login.post);
+
+app.get("/register", views.register.register);
+app.post("/register", views.register.post);
 
 app.get("/map", function(req, res) {
   res.sendFile(__dirname + "/public/map.html");
 });
 
-app.get("/mapview", views.map);
+app.get("/mapview", views.map.map);
 
-app.get("/nations", views.nations);
+app.get("/nations", views.nations.nations);
 
 app.get("/logout", function(req, res) {
   if (req.session.player) {
@@ -100,7 +104,7 @@ app.get("/:id", function(req, res) {
 });
 
 db.sequelize.sync().then(() => {
-  const port = process.env.PORT || 8080
+  const port = process.env.PORT || 8080;
   console.log("listening on port " + port);
   app.listen(port);
 });

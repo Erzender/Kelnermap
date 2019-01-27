@@ -1,0 +1,17 @@
+{
+  "Connect": "Connexion",
+  "New account": "Nouveau compte",
+  "Username": "Nom du joueur",
+  "Password": "Mot de passe",
+  "Account": "Compte",
+  "Disconnect": "Déconnexion",
+  "Create Account": "Créer le profile",
+  "Missing fields": "Faut remplir les champs wesh",
+  "Password too short": "Mot de passe trop court",
+  "Username used already": "Le nom d'utilisateur n'est pas disponible",
+  "User created": "Compte créé avec succès !",
+  "Back to login": "Revenir à la page de connexion",
+  "Panic": "KATASTROPHE LE SITE EST KAPUT ET MAL CODE AHAHAAHAH",
+  "The player doesn't exist": "Ptdr ce pseudo il existe pas",
+  "Wrong password": "Pas le bon mdp ouloul"
+}

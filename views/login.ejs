@@ -1,3 +1,13 @@
-<form style="display: flex; flex: 1; align-items: center; justify-content: center; flex-direction: column;">
-    <div>💡 Taper <code>login</code> dans le channel #territoires de Discord pour recevoir un lien de connexion</div>
-</form>
+<div style="display: flex; flex: 1; align-items: center; justify-content: center; flex-direction: column;">
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <form method="post" action="/login" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <%= T("Username") %>:
+            <input name="username" style="margin: 10px; text-align: center" />
+            <%= T("Password") %>:
+            <input name="password" style="margin: 10px; text-align: center" type="password" />
+            <button type="submit"><%= T("Connect") %></button>
+            <div style="color: red;"><%= T(message) %></div>
+        </form>
+        <a href="/register"><%= T("New account") %></a>
+    </div>
+</div>

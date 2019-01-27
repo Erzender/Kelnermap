@@ -1,0 +1,10 @@
+<div style="display: flex; flex: 1; align-items: center; justify-content: center">
+    <form method="post" action="/register" style="display: flex; flex-direction: column; align-items: center;">
+        <%= T("Username") %>:
+        <input name="username" style="margin: 10px; text-align: center" />
+        <%= T("Password") %>:
+        <input name="password" style="margin: 10px; text-align: center" type="password" />
+        <button type="submit"><%= T("Create Account") %> ✓</button>
+        <div style="color: red;"><%= T(message) %></div>
+    </form>
+</div>
