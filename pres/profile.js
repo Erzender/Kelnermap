@@ -1,18 +1,21 @@
 const dictionnary = require("./dictionnary");
 const data = require("../data/_model");
 
-exports.profile = async function(req, res, id) {
+exports.profile = async function(req, res) {
   let profile = { edit: false, picture: "", name: "" };
-  if (id) {
-    let player = await data.Player.findById(id);
+  if (req.params.id || req.session.player) {
+    let player = await data.Player.findById(req.params.id || req.session.player.id);
     profile.picture = player.dataValues.picture || ""
     profile.name = player.dataValues.name
+  }
+  if (!req.params.id && !req.session.player) {
+    return res.redirect("/login");
   }
   res.render("index", {
     route: "profile",
     player: req.session.player || false,
     profileInfo: {
-      edit: req.session.player && id === req.session.player.id,
+      edit: !req.params.id || req.session.player && req.params.id === req.session.player.id,
       name: profile.name,
       picture: profile.picture
     },

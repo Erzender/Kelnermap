@@ -1,2 +1,19 @@
-<div style="display: flex; align-items: center; width: 250px; height: 250px; min-width: 250px: min-height: 250px; max-height: 250px; max-width: 250px; background-color: #333333;">
-</div>
+<html>
+  <head>
+    <% include header %>
+    <script src="vue.min.js"></script>
+   </head>
+
+  <body>
+    <div id="app" style="flex: 1; display: flex; background-color: #222222; padding-left: 20"><form method="post" action="/settings">
+        <div style="display: flex; flex-direction: row"><h1><a style="text-decoration: none" href="/profile" style="">❌</a> Profile et paramètres</h1></div>
+        <div v-bind:style="{display: 'flex'}" style="display: none; align-items: center; width: 250px; height: 250px; min-width: 250px: min-height: 250px; max-height: 250px; max-width: 250px; background-color: #333333; overflow:hidden;">
+            <img v-bind:src="pic"  />
+        </div>
+        <div><%= T("Picture") %> : <input id="formPicture" name="picture" v-model="pic" value="<%= profileInfo.picture %>" /></div>
+        <button style="marginTop: 10" type="submit"><%= T("Submit") %></button>
+        <div style="color: red;"><%= T(message) %></div>
+    </form></div>
+  </body>
+  <script src="settingsView.js"></script>
+</html>
