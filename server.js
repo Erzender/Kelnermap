@@ -18,7 +18,7 @@ const views = require("./pres");
 const db = require("./data/_init");
 const datastuff = require("./data/_model");
 
-app.use(session({ secret: "some-random-text" }));
+app.use(session({ secret: process.env.SECRET || "some-random-text" }));
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -61,15 +61,12 @@ app.get("/mapview", views.map.map);
 
 app.get("/nations", views.nations.nations);
 
-app.get("/profile", (req, res) =>
-  views.profile.profile(
-    req,
-    res,
-    req.session.player ? req.session.player.id : 0
-  )
-);
+app.get("/profile", views.profile.profile);
+
+app.get("/profile/:id", views.profile.profile);
 
 app.get("/settings", views.settings.settings);
+app.post("/settings", views.settings.post)
 
 app.get("/logout", function(req, res) {
   if (req.session.player) {
