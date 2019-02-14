@@ -6,18 +6,20 @@
    </head>
 
   <body>
-    <div id="app" style="flex: 1; display: flex; overflow: auto; background-color: #222222; padding-left: 20"><form method="post" action="/settings" id="settings">
+    <div id="app" style="flex: 1; display: flex; overflow: auto; background-color: #222222; padding-left: 20">
+      <form method="post" action="/settings" id="settings">
         <div style="display: flex; flex-direction: row"><h1><a style="text-decoration: none" href="/profile" style="">❌</a> Profile et paramètres</h1></div>
+        <h1 style="color: white;"><%= profileInfo.name %></h1>
         <div v-bind:style="{display: 'flex'}" style="display: none; align-items: center; width: 250px; height: 250px; min-width: 250px: min-height: 250px; max-height: 250px; max-width: 250px; background-color: #333333; overflow:hidden;">
             <img v-bind:src="pic" style="width: 250; display: inline-block;" />
         </div>
         <div><%= T("Picture") %> : <input id="formPicture" name="picture" v-model="pic" value="<%= profileInfo.picture %>" /></div>
 	
       	<h2>Description</h2>
-	<div style="display: flex; flex: 1; overflow: hidden; min-height: 300px; max-height: 300px;">
+	      <div style="display: flex; flex: 1; overflow: hidden; min-height: 300px; max-height: 300px;">
           <textarea form="settings" id="formDesc" name="desc" v-model="desc" style="display: flex; flex: 1; flex-direction: column; word-break: break-all; padding: 10px; background-color: white; overflow: auto; resize: none;"><%= profileInfo.desc %></textarea>
           <div v-html="marked(desc)" v-bind:style="{display: 'flex'}" style="display: none; flex: 1; flex-direction: column; padding: 10px; background-color: #444444; overflow: auto; padding-left: 10px; padding-right: 10px;"></div>
-	</div>
+	      </div>
         <button style="marginTop: 10" type="submit"><%= T("Submit") %></button>
         <div style="color: red;"><%= T(message) %></div>
       </form>
