@@ -12,7 +12,8 @@ const dict = req =>
 
 exports.register = async function(req, res) {
   res.render("index", {
-    route: "register",
+      route: "register",
+      player: false,
     T: dict(req),
     message: ""
   });
