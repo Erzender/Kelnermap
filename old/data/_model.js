@@ -18,7 +18,8 @@ const Nation = db.sequelize.define("nation", {
 
 const Tile = db.sequelize.define("tile", {
   x: Sequelize.INTEGER,
-  z: Sequelize.INTEGER
+  z: Sequelize.INTEGER,
+  resource: Sequelize.STRING
 });
 
 const City = db.sequelize.define("city", {
@@ -73,14 +74,14 @@ const Translation = db.sequelize.define("translation", {
 
 // Player -> Nation -> Tiles
 Nation.belongsTo(Player);
-Player.hasOne(Nation);
 Nation.hasMany(Tile);
-Tile.belongsTo(Nation);
 
 // Player -> Soutiens
-Player.hasMany(Nation, { as: "Soutiens" });
+Player.hasMany(Nation, { as: "Soutien" });
+Player.hasMany(Nation, { as: "Enemy" });
 
-// Cities -> Buildings -> Arts
+// Tiles -> Cities -> Buildings -> Arts
+City.belongsTo(Tile);
 City.hasMany(Building);
 Building.hasMany(Art);
 // Building -> Shops
@@ -90,24 +91,18 @@ Building.hasMany(Shop);
 Craft.hasMany(Order);
 
 // Player -> Buildings | Arts | Crafts | Orders
-Player.hasMany(Building);
 Building.belongsTo(Player);
-Player.hasMany(Art);
 Art.belongsTo(Player);
-Player.hasMany(Craft);
 Craft.belongsTo(Player);
-Player.hasMany(Order);
 Order.belongsTo(Player);
 
 // Thread -> Messages -> Translations
 Thread.hasMany(Message);
-Message.belongsTo(Thread);
 Message.hasMany(Translation);
-Translation.belongsTo(Message);
 
 // Player -> Messages | Translations
-Message.hasOne(Player, { as: "Author" });
-Translation.hasOne(Player, { as: "Author" });
+Message.belongsTo(Player, { as: "Author" });
+Translation.belongsTo(Player, { as: "Author" });
 
 exports.Player = Player;
 exports.Nation = Nation;
