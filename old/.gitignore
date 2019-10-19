@@ -1,0 +1,4 @@
+node_modules/
+public/data.json
+setenv.ps1
+database.sqlite
