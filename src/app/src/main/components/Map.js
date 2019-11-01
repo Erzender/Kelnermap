@@ -4,6 +4,8 @@ import config from "../../config.json";
 
 import Grid from "./Grid";
 import Overlay from "./Overlay";
+import Cities from "./Cities";
+import Modal from "./Modal.js";
 
 const styles = {
   container: {
@@ -21,7 +23,7 @@ const styles = {
   tilesCnt: {
     width: config.mapSize.x,
     height: config.mapSize.z,
-    transition: "margin 1s"
+    transition: window.innerWidth > 800 ? "margin 1s" : "none"
   },
   grid: {
     zindex: 1,
@@ -30,7 +32,7 @@ const styles = {
     position: "absolute",
     top: 0,
     left: 0,
-    transition: "margin 1s",
+    transition: window.innerWidth > 800 ? "margin 1s" : "none",
     display: "flex"
   }
 };
@@ -44,7 +46,10 @@ const Map = ({ margins }) => (
         marginTop: margins.z
       }}
     >
-      <img style={styles.mapImage} src={config.api + "/lekelner/map"} />
+      <img
+        style={styles.mapImage}
+        src={config.api + "/lekelner/asset/map.jpg"}
+      />
       <div
         style={{
           ...styles.grid,
@@ -53,9 +58,11 @@ const Map = ({ margins }) => (
         }}
       >
         <Grid />
+        <Cities />
       </div>
     </div>
     <Overlay />
+    <Modal />
   </div>
 );
 

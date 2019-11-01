@@ -5,6 +5,8 @@ const cors = require("cors");
 
 const db = require("./_data");
 const bot = require("./bot/_entry");
+const regionInfo = require("./regionInfo.json");
+const nationUtils = require("./utils/nations");
 
 try {
   client.login(JSON.parse(process.env.KELNER_BOT).id);
@@ -14,28 +16,39 @@ try {
 
 app.use(cors());
 
-app.get("/lekelner/", function(req, res) {
+const router = express.Router();
+
+router.get("/", function(req, res) {
   res.sendFile(__dirname + "/app/index.html");
 });
 
-app.get("/lekelner/build.js", function(req, res, next) {
+router.get("/build.js", function(req, res, next) {
   // res.set('Cache-Control', 'public, max-age=31557600'); // one year
   res.sendFile(__dirname + "/app/dist/build.js");
 });
 
-app.get("/lekelner/styles", function(req, res, next) {
+router.get("/styles", function(req, res, next) {
   // res.set('Cache-Control', 'public, max-age=31557600'); // one year
   res.sendFile(__dirname + "/app/styles.css");
 });
 
-app.get("/lekelner/map", function(req, res, next) {
-  // res.set('Cache-Control', 'public, max-age=31557600'); // one year
-  res.sendFile(__dirname + "/assets/map.jpg");
-});
-
-app.get("/lekelner/asset/:id", function(req, res, next) {
+router.get("/asset/:id", function(req, res, next) {
   res.sendFile(__dirname + "/assets/" + req.params.id);
 });
+
+router.get("/mapInfo", async function(req, res, next) {
+  let info = {
+    regionInfo: regionInfo,
+    nations: await nationUtils.getNationRawList()
+  };
+  res.json(info);
+});
+
+router.get("/nation/:id", async function(req, res, next) {
+  res.json(await nationUtils.nationDesc());
+});
+
+app.use("/lekelner", router);
 
 db.sequelize.sync().then(() => {
   const port = process.env.PORT || 8081;

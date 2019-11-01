@@ -8,7 +8,6 @@ const styles = {
     margin: 10,
     height: 180,
     width: 180,
-    backgroundColor: "red",
     overflow: "hidden",
     cursor: "crosshair"
   }
@@ -16,7 +15,7 @@ const styles = {
 
 const Zoom = ({ mapStyle, clickZoom }) => (
   <div id="zoom" onClick={clickZoom} style={styles.container}>
-    <img style={mapStyle} src={config.api + "/lekelner/map"} />
+    <img style={mapStyle} src={config.api + "/lekelner/asset/map.jpg"} />
   </div>
 );
 

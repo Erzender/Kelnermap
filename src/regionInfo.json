@@ -122,7 +122,7 @@
   "F": {
     "n": "Salines"
   },
-  "G":{
+  "G": {
     "n": "Creuse-Vente"
   },
   "H": {
@@ -137,10 +137,18 @@
   "L": {
     "n": "Ménisque"
   },
-  "M":  {
+  "M": {
     "n": "Sudanne"
   },
   "N": {
     "n": "Baie-Illumine"
+  },
+  "O": {
+    "n": "Lambé",
+    "suze": "8"
+  },
+  "P": {
+    "n": "Jaaj",
+    "suze": "4"
   }
 }

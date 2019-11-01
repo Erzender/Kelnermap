@@ -5,7 +5,7 @@ const client = new Discord.Client();
 const commands = {
   $profil: require("./profile"),
   $nation: require("./nation"),
-  $bataille: require("./battle")
+  $région: require("./region")
 };
 
 client.on("ready", () => {

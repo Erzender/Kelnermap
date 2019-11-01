@@ -28,7 +28,7 @@ const styles = {
   }
 };
 
-const Grid = ({ clickTile, selectedTile, selectedRegion }) => (
+const Grid = ({ clickTile, selectedTile, selectedRegion, regionColors }) => (
   <div style={styles.container}>
     {tab.map((line, i) => (
       <div key={i} style={{ display: "flex", flex: 1 }}>
@@ -44,9 +44,12 @@ const Grid = ({ clickTile, selectedTile, selectedRegion }) => (
                 selectedTile.z === i && selectedTile.x === j
                   ? "thick solid #330000"
                   : "none",
+              opacity: regions[i][j] === selectedRegion ? 1 : 0.3,
               backgroundColor:
                 regions[i][j] === selectedRegion
                   ? "rgba(100, 50, 0, 0.5)"
+                  : regionColors
+                  ? regionColors[i][j]
                   : "rgba(0, 0, 0, 0)"
             }}
           />
@@ -64,7 +67,8 @@ const mapStateToProps = state => ({
     (state.root.selectedTile &&
       regions[state.root.selectedTile.z][state.root.selectedTile.x] !== "0" &&
       regions[state.root.selectedTile.z][state.root.selectedTile.x]) ||
-    null
+    null,
+  regionColors: state.root.settings.nations && state.root.nationColorMap
 });
 
 const mapDispatchToProps = dispatch => ({

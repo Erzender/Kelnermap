@@ -2,3 +2,22 @@
   font-family: "Enchanted Land";
   src: url("/lekelner/asset/Enchanted Land.otf");
 }
+
+.city:hover {
+  box-shadow: 0px 4px 1px white;
+  background-color: "white";
+}
+
+@keyframes loadingSword {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+h1 {
+  font-family: "Enchanted Land";
+  font-size: 50px;
+}

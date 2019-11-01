@@ -19,11 +19,13 @@ const Nation = db.sequelize.define("nation", {
   desc: { type: Sequelize.TEXT, defaultValue: "" },
   pic: Sequelize.STRING,
   stronghold: Sequelize.STRING,
-  reputationPool: { type: Sequelize.INTEGER, defaultValue: 0 }
+  reputationPool: { type: Sequelize.INTEGER, defaultValue: 0 },
+  regions: { type: Sequelize.STRING, defaultValue: "" },
+  regionTarget: { type: Sequelize.STRING, defaultValue: "" }
 });
 
 const Battle = db.sequelize.define("battle", {
-  next: Sequelize.BOOLEAN,
+  next: Sequelize.BOOLEAN
 });
 
 Player.hasOne(Nation, { as: "Identity" });
