@@ -29,12 +29,12 @@ exports.fonder = async (client, message, args, player) => {
         nation.dataValues.name +
         "."
     );
-    voir(
-      client,
-      message,
-      [null, null, (await player.getIdentity()).dataValues.id],
-      player
-    );
+  voir(
+    client,
+    message,
+    [null, null, (await player.getIdentity()).dataValues.id],
+    player
+  );
 };
 
 exports.brexit = async (client, message, args, player) => {
@@ -132,6 +132,8 @@ exports.changer = async (client, message, args, player) => {
   try {
     if (args[2] === "couleur" && /^#(?:[0-9a-f]{3}){1,2}$/i.test(args[3])) {
       await player.dataValues.Identity.update({ color: args[3] });
+    } else if (args[2] === "nom") {
+      await player.dataValues.Identity.update({ name: args[3] });
     } else if (args[2] === "image") {
       await player.dataValues.Identity.update({ pic: args[3] });
     } else if (args[2] == "description") {
@@ -180,4 +182,51 @@ exports.lister = async (client, message, args, player) => {
     .setTitle("Nations")
     .setDescription(format);
   message.channel.send(embed);
+};
+
+exports.naturaliser = async (client, message, args, player) => {
+  if (args.length < 3) {
+    return message.channel.send("Pas compris.");
+  }
+  if (!checkIsNationCitizen(player)) {
+    return message.channel.send("You have no power here.");
+  }
+  let targetPlayer = await data.Player.findByPk(args[2]);
+  if (targetPlayer === null) {
+    return message.channel.send("Joueur inconnu.");
+  }
+  await targetPlayer.addCitizenship(player.Identity);
+  message.channel.send(
+    "<@" +
+      args[2] +
+      "> peut désormais obtenir la nationalité de **" +
+      player.Identity.dataValues.name +
+      "**"
+  );
+};
+
+exports.radier = async (client, message, args, player) => {
+  if (args.length < 3) {
+    return message.channel.send("Pas compris.");
+  }
+  if (!checkIsNationCitizen(player)) {
+    return message.channel.send("You have no power here.");
+  }
+  if (args[2] === player.dataValues.discord) {
+    return message.channel.send(
+      "Nan ça c'est toi, essaye avec `$nation brexit`"
+    );
+  }
+  let targetPlayer = await data.Player.findByPk(args[2]);
+  if (targetPlayer === null) {
+    return message.channel.send("Joueur inconnu.");
+  }
+  await targetPlayer.removeCitizenship(player.Identity);
+  message.channel.send(
+    "<@" +
+      args[2] +
+      "> n'est plus citoyen de **" +
+      player.Identity.dataValues.name +
+      "**"
+  );
 };

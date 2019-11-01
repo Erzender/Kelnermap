@@ -15,7 +15,7 @@ const styles = {
   }
 };
 
-const Router = ({ test }) => (
+const Router = ({}) => (
   <div style={styles.container}>
     <Map />
   </div>
