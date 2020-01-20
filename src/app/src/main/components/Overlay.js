@@ -23,7 +23,7 @@ const styles = {
     flex: 1,
     width: "100%",
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-end",
     flexDirection: "column"
   },
   bottomView: {
@@ -67,8 +67,9 @@ const styles = {
     marginRight: 5
   },
   menuButton: {
+    marginRight: 30,
     borderRadius: 30,
-    fontSize: 20,
+    fontSize: 30,
     backgroundColor: "#222222",
     color: "white",
     height: 40,
@@ -98,10 +99,10 @@ const Overlay = ({
       <div style={styles.upperView}>
         <Menu />
         <div
-          style={{ ...styles.menuButton, marginTop: menu ? -300 : 10 }}
+          style={{ ...styles.menuButton, marginTop: menu ? -300 : 30 }}
           onClick={menuClick}
         >
-          ▼
+          ⚙
         </div>
       </div>
       <div style={styles.bottomView}>
