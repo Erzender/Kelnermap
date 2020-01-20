@@ -20,19 +20,21 @@ const Nation = db.sequelize.define("nation", {
   pic: Sequelize.STRING,
   stronghold: Sequelize.STRING,
   reputationPool: { type: Sequelize.INTEGER, defaultValue: 0 },
-  regions: { type: Sequelize.STRING, defaultValue: "" },
-  regionTarget: { type: Sequelize.STRING, defaultValue: "" }
+  regions: { type: Sequelize.STRING, defaultValue: "" }
 });
 
 const Battle = db.sequelize.define("battle", {
-  next: Sequelize.BOOLEAN
+  status: { type: Sequelize.STRING, defaultValue: "initialized" }, // initialized, victory, defeat
+  regionTarget: Sequelize.STRING,
+  stronghold: Sequelize.STRING
 });
 
 Player.hasOne(Nation, { as: "Identity" });
 Player.hasMany(Nation, { as: "Citizenship" });
-Battle.belongsTo(Nation, { as: "Belligerent" });
-Battle.belongsTo(Nation, { as: "Target" });
-Player.hasOne(Nation, { as: "Favour" });
+Battle.hasOne(Nation, { as: "Belligerent" });
+Battle.hasOne(Nation, { as: "Target" });
+Battle.belongsToMany(Player, { as: "Invaders", through: "Invasion" });
+Battle.belongsToMany(Player, { as: "Defenders", through: "Defense" });
 
 exports.Player = Player;
 exports.Nation = Nation;

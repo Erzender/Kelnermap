@@ -48,17 +48,17 @@ exports.revendiquer = async (client, message, args, player) => {
       regions: player.Identity.dataValues.regions + regions[args[2]].keys
     });
     return message.channel.send(
-      `**${player.Identity.dataValues.name}** compte une nouvelle région dans son territoire : **${regions[args[2]].n}**`
+      `**${
+        player.Identity.dataValues.name
+      }** compte une nouvelle région dans son territoire : **${
+        regions[args[2]].n
+      }**`
     );
   }
 
   if (owner && (args.length <= 3 || args[3] != "--force")) {
     return message.channel.send(
-      `**${
-        owner.dataValues.name
-      }** détient ce territoire, il faudra le revendiquer avec \`$région revendiquer ${
-        args[2]
-      } --force\``
+      `**${owner.dataValues.name}** détient **${regions[args[2]].n}**, il faudra revendiquer ce territoire avec \`$région revendiquer ${args[2]} --force\``
     );
   }
 
@@ -86,21 +86,74 @@ exports.revendiquer = async (client, message, args, player) => {
     });
 
     return message.channel.send(
-      `**${owner.dataValues.name}** n'a pas de forteresse définie. Par conséquent, vous gagnez la région par chaos technique.
+      `**${owner.dataValues.name}** n'a pas de bastion défini. Par conséquent, vous gagnez la région par chaos technique.
       ${citizens}, lolrekt.`
     );
   }
 
-  if (player.Identity.dataValues.regionTarget !== "") {
-    return message.channel
-      .send(`La cible est déjà verouillée : **${regions[player.Identity.dataValues.regionTarget].n}**
-Va falloir attendre qu'il décongèle.`);
+  let battle = await data.Battle.findOne({ where: { status: "initialized" } });
+  if (battle) {
+    return message.channel.send(
+      `Impossible, il y a déjà une bataille validée pour cette semaine.`
+    );
   }
+
+  battle = await data.Battle.create({
+    regionTarget: args[2],
+    stronghold: owner.dataValues.stronghold
+  });
+
+  await battle.setBelligerent(player.Identity);
+  await battle.setTarget(owner);
 
   let citizens = await getNationCitizens(owner);
   citizens = "<@" + citizens.join("><@") + ">";
   player.Identity.update({ regionTarget: args[2] });
   message.channel.send(`Cible verouillée : **${regions[args[2]].n}**
-rassemblez vos guerriers, la bataille pour ce territoire aura lieu lundi à 19h au bastion de **${owner.dataValues.name}**.
-${citizens}, préparez-vous à la défense.`);
+${citizens}, citoyens de **${
+    owner.dataValues.name
+  }**, votre nation risque de perdre son territoire si vous ne répondez pas de cet affront !`);
+};
+
+exports.invasion = async (client, message, args, player) => {
+  if (args.length < 3) return message.channel.send("Pas compris.");
+  let battle = await data.Battle.findOne({ where: { status: "initialized" } });
+  if (battle === null)
+    return message.channel.send("Imbécile, il n'y a pas de bataille.");
+  if (args[2] !== "rejoindre" && args[2] !== "combattre")
+    return message.channel.send(
+      "Il faut combattre ou rejoindre l'invasion, en fait"
+    );
+  await battle.removeInvader(player);
+  await battle.removeDefender(player);
+  if (args[2] === "rejoindre") await battle.addInvader(player);
+  else await battle.addDefender(player);
+  let invaders = await battle
+    .getInvaders()
+    .map(invader => "<@" + invader.dataValues.discord + "> ");
+  invaders = invaders.length > 0 ? invaders : "Personne ?";
+  let defenders = await battle
+    .getDefenders()
+    .map(defender => "<@" + defender.dataValues.discord + "> ");
+  defenders = defenders.length > 0 ? defenders : "Personne ?";
+
+  const embed = new Discord.RichEmbed()
+    .setColor(
+      checkIsNationCitizen(player)
+        ? player.Identity.dataValues.color
+        : "#777777"
+    )
+    .setDescription(
+      "Nouvelle configuration de bataille ! Rejoignez la bataille avec `$région invasion rejoindre` ou `$région invasion combattre`. Elle aura lieu mercredi à 21h ! " +
+        "Il s'agit de la région de **" +
+        regions1[await battle.dataValues.regionTarget].n +
+        "** que **" +
+        (await battle.getBelligerent()).dataValues.name +
+        "** voudrait amputer à **" +
+        (await battle.getTarget()).dataValues.name +
+        "**."
+    )
+    .addField("Envahisseurs", invaders)
+    .addField("Défenseurs", defenders);
+  message.channel.send(embed);
 };
