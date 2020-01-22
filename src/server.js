@@ -2,11 +2,14 @@ const express = require("express");
 const app = express();
 const client = require("./bot/_entry").client;
 const cors = require("cors");
+const cron = require("node-cron");
 
 const db = require("./_data");
 const bot = require("./bot/_entry");
 const regionInfo = require("./regionInfo.json");
 const nationUtils = require("./utils/nations");
+const regionUtils = require("./utils/regions");
+const cronUtils = require("./utils/cron");
 
 try {
   client.login(JSON.parse(process.env.KELNER_BOT).id);
@@ -39,6 +42,7 @@ router.get("/asset/:id", function(req, res, next) {
 router.get("/mapInfo", async function(req, res, next) {
   let info = {
     regionInfo: regionInfo,
+    war: await regionUtils.getWar(),
     nations: await nationUtils.getNationRawList()
   };
   res.json(info);
@@ -54,4 +58,5 @@ db.sequelize.sync().then(() => {
   const port = process.env.PORT || 8081;
   console.log("listening on port " + port);
   app.listen(port);
+  cron.schedule("0 * * * *", cronUtils.battles);
 });

@@ -4,19 +4,21 @@ import { connect } from "react-redux";
 import config from "../../config.json";
 import cities from "../../cities.json";
 
-const coors = Object.keys(cities).map(city => ({
+const geoToImage = (x, z) => ({
   x:
-    (config.mapSize.x *
-      (cities[city].x - config.mapCorners.start.X * config.cali.x)) /
+    (config.mapSize.x * (x - config.mapCorners.start.X * config.cali.x)) /
     (Math.abs(config.mapCorners.end.X - config.mapCorners.start.X) *
       config.cali.x),
   z:
-    (config.mapSize.z *
-      (cities[city].z - config.mapCorners.start.Z * config.cali.z)) /
+    (config.mapSize.z * (z - config.mapCorners.start.Z * config.cali.z)) /
     (Math.abs(config.mapCorners.end.Z - config.mapCorners.start.Z) *
-      config.cali.z),
-  id: city
-}));
+      config.cali.z)
+});
+
+const coors = Object.keys(cities).map(city => {
+  let geo = geoToImage(cities[city].x, cities[city].z);
+  return { x: geo.x, z: geo.z, id: city };
+});
 
 const styles = {
   container: {
@@ -40,7 +42,7 @@ const styles = {
   }
 };
 
-const Cities = ({ clickCity, selected }) => (
+const Cities = ({ clickCity, clickBattle, selected, battle }) => (
   <div style={styles.container}>
     {coors.map(coor => (
       <img
@@ -56,19 +58,35 @@ const Cities = ({ clickCity, selected }) => (
         src={config.api + "/lekelner/asset/city.png"}
       />
     ))}
+    {battle && (
+      <img
+        onClick={e => clickBattle(e)}
+        className="city"
+        style={{
+          ...styles.icon,
+          top: battle.z - 35,
+          left: battle.x - 10
+        }}
+        src={config.api + "/lekelner/asset/battle.png"}
+      />
+    )}
   </div>
 );
 
 const mapStateToProps = state => ({
-  selected: state.root.selectedCity
+  selected: state.root.selectedCity,
+  battle: state.root.war
+    ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
+    : null
 });
 
 const mapDispatchToProps = dispatch => ({
   clickCity: (city, e) =>
-    dispatch({ type: "CLICK_CITY", city, pos: { x: e.clientX, z: e.clientY } })
+    dispatch({ type: "CLICK_CITY", city }) &&
+    dispatch({ type: "MOVE_POSITION", pos: { x: e.clientX, z: e.clientY } }),
+  clickBattle: e =>
+    dispatch({ type: "CLICK_BATTLE" }) &&
+    dispatch({ type: "MOVE_POSITION", pos: { x: e.clientX, z: e.clientY } })
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Cities);
+export default connect(mapStateToProps, mapDispatchToProps)(Cities);

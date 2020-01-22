@@ -28,13 +28,9 @@ const styles = {
 
 const Menu = ({ open, clickClose, settings, checkNations }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
-    <div style={styles.settings}>
+    <div onClick={checkNations} style={styles.settings}>
       Nations{" "}
-      <input
-        type="checkbox"
-        checked={settings.nations}
-        onChange={checkNations}
-      />
+      <input onChange={() => {}} type="checkbox" checked={settings.nations} />
     </div>
     <div
       style={{ ...styles.closeWindow, top: open ? 5 : -205 }}
@@ -55,7 +51,4 @@ const mapDispatchToProps = dispatch => ({
   checkNations: () => dispatch({ type: "TOGGLE_SETTING", which: "nations" })
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

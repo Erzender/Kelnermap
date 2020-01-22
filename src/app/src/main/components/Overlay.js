@@ -88,7 +88,7 @@ const Overlay = ({
   tileInfo,
   coor,
   isZoom,
-  isCity,
+  image,
   menuClick,
   menu,
   clickNation
@@ -107,12 +107,7 @@ const Overlay = ({
       </div>
       <div style={styles.bottomView}>
         {isZoom && <Zoom />}
-        {isCity && (
-          <img
-            style={styles.cityImage}
-            src={config.api + "/lekelner/asset/city.png"}
-          />
-        )}
+        {image && <img style={styles.cityImage} src={image} />}
         <div style={styles.infoBox}>
           <div>{coor}</div>
           {tileInfo && <div style={styles.title}>{tileInfo.name}</div>}
@@ -149,11 +144,18 @@ const mapStateToProps = state => {
       : state.root.selectedCity &&
         state.root.regionInfo[state.root.selectedCity]
       ? state.root.regionInfo[state.root.selectedCity]
+      : state.root.selectedBattle
+      ? { n: "Bataille le " + state.root.war.date }
       : null;
   return {
     menu: state.root.menuOpened,
     isZoom: window.innerWidth >= 800 && state.root.selectedTile,
-    isCity: window.innerWidth >= 800 && state.root.selectedCity,
+    image:
+      window.innerWidth >= 800 && state.root.selectedCity
+        ? config.api + "/lekelner/asset/city.png"
+        : window.innerWidth >= 800 && state.root.selectedBattle
+        ? config.api + "/lekelner/asset/battle.png"
+        : null,
     tileInfo: info && {
       name: info.n,
       nationId: info.nation && info.nation.id,
@@ -178,6 +180,8 @@ const mapStateToProps = state => {
       ? cities[state.root.selectedCity].x +
         ", " +
         cities[state.root.selectedCity].z
+      : state.root.selectedBattle
+      ? state.root.war.stronghold.x + ", " + state.root.war.stronghold.z
       : ""
   };
 };
@@ -187,7 +191,4 @@ const mapDispatchToProps = dispatch => ({
   clickNation: id => dispatch(getNationInfo(id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Overlay);
+export default connect(mapStateToProps, mapDispatchToProps)(Overlay);

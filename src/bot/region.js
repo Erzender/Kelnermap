@@ -1,8 +1,10 @@
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Discord = require("discord.js");
+const moment = require("moment");
 
 const data = require("../_model");
+const regionUtils = require("../utils/regions");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 const getNationCitizens = require("../utils/citizenship").getNationCitizens;
@@ -58,7 +60,11 @@ exports.revendiquer = async (client, message, args, player) => {
 
   if (owner && (args.length <= 3 || args[3] != "--force")) {
     return message.channel.send(
-      `**${owner.dataValues.name}** détient **${regions[args[2]].n}**, il faudra revendiquer ce territoire avec \`$région revendiquer ${args[2]} --force\``
+      `**${owner.dataValues.name}** détient **${
+        regions[args[2]].n
+      }**, il faudra revendiquer ce territoire avec \`$région revendiquer ${
+        args[2]
+      } --force\``
     );
   }
 
@@ -94,13 +100,17 @@ exports.revendiquer = async (client, message, args, player) => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (battle) {
     return message.channel.send(
-      `Impossible, il y a déjà une bataille validée pour cette semaine.`
+      `Impossible, il y a déjà une bataille de programmée.`
     );
   }
 
   battle = await data.Battle.create({
     regionTarget: args[2],
-    stronghold: owner.dataValues.stronghold
+    stronghold: owner.dataValues.stronghold,
+    date: moment()
+      .day(3)
+      .startOf("day")
+      .add(21, "hours")
   });
 
   await battle.setBelligerent(player.Identity);
@@ -112,22 +122,25 @@ exports.revendiquer = async (client, message, args, player) => {
   message.channel.send(`Cible verouillée : **${regions[args[2]].n}**
 ${citizens}, citoyens de **${
     owner.dataValues.name
-  }**, votre nation risque de perdre son territoire si vous ne répondez pas de cet affront !`);
+  }**, votre nation risque de perdre son territoire si vous ne répondez pas de cet affront !
+Il faut utilser \`$région invasion\`, là`);
 };
 
 exports.invasion = async (client, message, args, player) => {
-  if (args.length < 3) return message.channel.send("Pas compris.");
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (battle === null)
     return message.channel.send("Imbécile, il n'y a pas de bataille.");
-  if (args[2] !== "rejoindre" && args[2] !== "combattre")
+  if (
+    args.length < 3 ||
+    (args[2] !== "rejoindre" && args[2] !== "combattre" && args[2] !== "fuir")
+  )
     return message.channel.send(
-      "Il faut combattre ou rejoindre l'invasion, en fait"
+      "Il faut combattre ou rejoindre l'invasion, en fait. Ou la fuir haha."
     );
   await battle.removeInvader(player);
   await battle.removeDefender(player);
   if (args[2] === "rejoindre") await battle.addInvader(player);
-  else await battle.addDefender(player);
+  else if (args[2] === "combattre") await battle.addDefender(player);
   let invaders = await battle
     .getInvaders()
     .map(invader => "<@" + invader.dataValues.discord + "> ");
@@ -144,7 +157,9 @@ exports.invasion = async (client, message, args, player) => {
         : "#777777"
     )
     .setDescription(
-      "Nouvelle configuration de bataille ! Rejoignez la bataille avec `$région invasion rejoindre` ou `$région invasion combattre`. Elle aura lieu mercredi à 21h ! " +
+      "Nouvelle configuration de bataille ! Rejoignez la bataille avec `$région invasion rejoindre` ou `$région invasion combattre`. Elle aura lieu " +
+        regionUtils.getDateFormatted(battle.dataValues.date) +
+        " ! " +
         "Il s'agit de la région de **" +
         regions1[await battle.dataValues.regionTarget].n +
         "** que **" +
