@@ -2,7 +2,7 @@ const data = require("../_model");
 const moment = require("moment");
 
 moment.locale("fr");
-const getDateFormatted = date => moment(date).format("dddd d MMMM à LT");
+const getDateFormatted = date => moment(date).format("dddd D MMMM à LT");
 
 exports.getDateFormatted = getDateFormatted;
 

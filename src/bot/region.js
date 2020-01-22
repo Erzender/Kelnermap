@@ -104,13 +104,18 @@ exports.revendiquer = async (client, message, args, player) => {
     );
   }
 
+  let date = moment()
+    .day(3)
+    .startOf("day")
+    .add(21, "hours");
+  if (moment().isAfter(date))
+    return message.channel.send(
+      "C'est trop tôt pur déclarer une bataille, attendez demain vers 1:00 !"
+    );
   battle = await data.Battle.create({
     regionTarget: args[2],
     stronghold: owner.dataValues.stronghold,
-    date: moment()
-      .day(3)
-      .startOf("day")
-      .add(21, "hours")
+    date
   });
 
   await battle.setBelligerent(player.Identity);
