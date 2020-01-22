@@ -3,9 +3,11 @@ import regions from "../../regions.json";
 const initialState = {
   selectedTile: null,
   selectedCity: null,
+  selectedBattle: false,
   mapMargins: { x: 0, z: 0 },
   posZoom: { x: 0, z: 0 },
   regionInfo: null,
+  war: null,
   menuOpened: false,
   settings: { nations: true },
   nationColorMap: null,
@@ -30,6 +32,7 @@ const root = (state = initialState, action) => {
       );
       return {
         ...state,
+        war: action.res.war,
         regionInfo,
         nationColorMap: colorMap
       };
@@ -42,18 +45,31 @@ const root = (state = initialState, action) => {
           z: state.mapMargins.z - action.pos.z + (window.innerHeight - 200) / 2
         },
         selectedTile: action.tile,
-        selectedCity: null
+        selectedCity: null,
+        selectedBattle: null
+      };
+    case "MOVE_POSITION":
+      return {
+        ...state,
+        mapMargins: {
+          x: state.mapMargins.x - action.pos.x + window.innerWidth / 2,
+          z: state.mapMargins.z - action.pos.z + (window.innerHeight - 200) / 2
+        }
       };
     case "CLICK_CITY":
       return {
         ...state,
         menuOpened: false,
         selectedTile: null,
-        mapMargins: {
-          x: state.mapMargins.x - action.pos.x + window.innerWidth / 2,
-          z: state.mapMargins.z - action.pos.z + (window.innerHeight - 200) / 2
-        },
         selectedCity: action.city
+      };
+    case "CLICK_BATTLE":
+      return {
+        ...state,
+        menuOpened: false,
+        selectedTile: null,
+        selectedCity: null,
+        selectedBattle: true
       };
     case "POS_ZOOM":
       return {
