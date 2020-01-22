@@ -6,7 +6,13 @@ const regions = require("../regioninfo.json");
 exports.battles = async () => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (!battle) return;
-  let channel = bot.channels.get(JSON.parse(process.env.KELNER_BOT).pvpchannel);
+  try {
+    let channel = bot.channels.get(
+      JSON.parse(process.env.KELNER_BOT).pvpchannel
+    );
+  } catch (err) {
+    return;
+  }
   if (
     moment()
       .add(1, "hour")
@@ -27,7 +33,8 @@ exports.battles = async () => {
         "pour la conquête de la région de **" +
         regions[battle.dataValues.regionTarget].n +
         "**\nVous pouvez toujours la rejoindre en tapant `$région invasion` dans <#" +
-        bot.channels.get(JSON.parse(process.env.KELNER_BOT).channel).id +">"
+        bot.channels.get(JSON.parse(process.env.KELNER_BOT).channel).id +
+        ">"
     );
   if (moment().isBefore(battle.dataValues.date)) return;
   battle.status = "started";
