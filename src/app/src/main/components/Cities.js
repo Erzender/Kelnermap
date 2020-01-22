@@ -36,28 +36,29 @@ const styles = {
     borderRadius: 10,
     zIndex: 1,
     position: "absolute",
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     cursor: "url(" + config.api + "/lekelner/asset/sword.png), auto"
   }
 };
 
-const Cities = ({ clickCity, clickBattle, selected, battle }) => (
+const Cities = ({ clickCity, clickBattle, selected, battle, cities }) => (
   <div style={styles.container}>
-    {coors.map(coor => (
-      <img
-        onClick={e => clickCity(coor.id, e)}
-        key={coor.id}
-        className="city"
-        style={{
-          ...styles.icon,
-          top: coor.z - 35,
-          left: coor.x - 10,
-          background: coor.id === selected ? "#550000" : "none"
-        }}
-        src={config.api + "/lekelner/asset/city.png"}
-      />
-    ))}
+    {cities &&
+      coors.map(coor => (
+        <img
+          onClick={e => clickCity(coor.id, e)}
+          key={coor.id}
+          className="city"
+          style={{
+            ...styles.icon,
+            top: coor.z - 35,
+            left: coor.x - 10,
+            background: coor.id === selected ? "#550000" : "none"
+          }}
+          src={config.api + "/lekelner/asset/city.png"}
+        />
+      ))}
     {battle && (
       <img
         onClick={e => clickBattle(e)}
@@ -75,9 +76,11 @@ const Cities = ({ clickCity, clickBattle, selected, battle }) => (
 
 const mapStateToProps = state => ({
   selected: state.root.selectedCity,
-  battle: state.root.war
-    ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
-    : null
+  battle:
+    state.root.settings.battle && state.root.war
+      ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
+      : null,
+  cities: state.root.settings.cities
 });
 
 const mapDispatchToProps = dispatch => ({

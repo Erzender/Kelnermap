@@ -9,7 +9,7 @@ const initialState = {
   regionInfo: null,
   war: null,
   menuOpened: false,
-  settings: { nations: true },
+  settings: { nations: true, cities: true, battle: true },
   nationColorMap: null,
   modal: null
 };

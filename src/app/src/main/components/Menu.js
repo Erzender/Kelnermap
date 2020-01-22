@@ -26,11 +26,26 @@ const styles = {
   settings: { margin: 20 }
 };
 
-const Menu = ({ open, clickClose, settings, checkNations }) => (
+const Menu = ({
+  open,
+  clickClose,
+  settings,
+  checkNations,
+  checkCities,
+  checkBattle
+}) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
     <div onClick={checkNations} style={styles.settings}>
-      Nations{" "}
+      Nations
       <input onChange={() => {}} type="checkbox" checked={settings.nations} />
+    </div>
+    <div onClick={checkCities} style={styles.settings}>
+      Villes
+      <input onChange={() => {}} type="checkbox" checked={settings.cities} />
+    </div>
+    <div onClick={checkBattle} style={styles.settings}>
+      Bataille
+      <input onChange={() => {}} type="checkbox" checked={settings.battle} />
     </div>
     <div
       style={{ ...styles.closeWindow, top: open ? 5 : -205 }}
@@ -48,7 +63,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   clickClose: () => dispatch({ type: "TOGGLE_MENU" }),
-  checkNations: () => dispatch({ type: "TOGGLE_SETTING", which: "nations" })
+  checkNations: () => dispatch({ type: "TOGGLE_SETTING", which: "nations" }),
+  checkCities: () => dispatch({ type: "TOGGLE_SETTING", which: "cities" }),
+  checkBattle: () => dispatch({ type: "TOGGLE_SETTING", which: "battle" })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
