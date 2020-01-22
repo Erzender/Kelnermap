@@ -8,9 +8,21 @@ const commands = {
   $région: require("./region")
 };
 
-client.on("ready", () => {
-  console.log("Ready!");
-});
+try {
+  client.on("ready", () => {
+    console.log("Ready!");
+  });
+} catch (err) {
+  console.log(err);
+}
+
+try {
+  client.on("error", () => {
+    console.log("Discord error ?");
+  });
+} catch (err) {
+  console.log(err);
+}
 
 try {
   client.on("message", message => {
@@ -20,15 +32,19 @@ try {
   console.log(err);
 }
 
-client.on("disconnect", () => {
-  setTimeout(() => {
-    try {
-      client.login(JSON.parse(process.env.KELNER_BOT).id);
-    } catch (err) {
-      console.log(err);
-    }
-  }, 60000);
-});
+try {
+  client.on("disconnect", () => {
+    setTimeout(() => {
+      try {
+        client.login(JSON.parse(process.env.KELNER_BOT).id);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 60000);
+  });
+} catch (err) {
+  console.log(err);
+}
 
 exports.client = client;
 
