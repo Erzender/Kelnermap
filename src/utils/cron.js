@@ -3,16 +3,10 @@ const data = require("../_model");
 const bot = require("../bot/_entry").client;
 const regions = require("../regioninfo.json");
 
-exports.battles = async () => {
+const initializedBattles = async channel => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (!battle) return;
-  try {
-    let channel = bot.channels.get(
-      JSON.parse(process.env.KELNER_BOT).pvpchannel
-    );
-  } catch (err) {
-    return;
-  }
+
   if (
     moment()
       .add(1, "hour")
@@ -54,4 +48,42 @@ exports.battles = async () => {
       regions[battle.dataValues.regionTarget].n +
       "**\nBon courage."
   );
+};
+
+const forgottenBattles = async channel => {
+  let battle = await data.Battle.findOne({ where: { status: "started" } });
+  if (
+    !battle ||
+    moment().isBefore(moment(battle.dataValues.date).add(1, "day"))
+  )
+    return;
+  let winner = await battle.getTarget();
+  let reputation = 10 * (await battle.getInvaders()).length + 10;
+  await winner.update({
+    reputationPool: winner.dataValues.reputationPool + reputation
+  });
+  await battle.update({ status: "defeat" });
+  await battle.removeInvaders(await battle.getInvaders());
+  await battle.removeDefenders(await battle.getDefenders());
+  channel.send(
+    "Je crois qu'il y a une bataille pas validée mdr, du coup on va dire que c'est **" +
+      winner.dataValues.name +
+      "** qui s'en tire avec " +
+      reputation +
+      " points de réputation et qui conserve la région de **" +
+      regions[battle.dataValues.regionTarget].n +
+      "**. Voilà !"
+  );
+};
+
+exports.battles = async () => {
+  let channel;
+  try {
+    channel = bot.channels.get(JSON.parse(process.env.KELNER_BOT).pvpchannel);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  forgottenBattles(channel);
+  initializedBattles(channel);
 };

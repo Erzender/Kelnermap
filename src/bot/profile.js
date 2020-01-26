@@ -3,9 +3,18 @@ const data = require("../_model");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 
+/*
+$profil voir [<identifiant discord>]
+$profil changer [image, description] <nouvelle valeur>
+*/
+
 const voir = async (client, message, args, player) => {
   if (args.length >= 3) {
-    player = await data.Player.findByPk(args[2], {
+    let discordId = args[2];
+//      args[2].length > 4 && args[2][0] === "<"
+//        ? args[2].split("<@!")[1].split(">")[0]
+//        : args[2];
+    player = await data.Player.findByPk(discordId, {
       include: [
         {
           model: data.Nation,
@@ -15,7 +24,7 @@ const voir = async (client, message, args, player) => {
       ]
     });
     if (player === null) {
-      return message.channel.send("Connais pas.");
+      return message.channel.send("Connais pas. Copie bien l'identifiant discord, pas le nom");
     }
   }
   const nation =
@@ -68,10 +77,5 @@ exports.changer = async (client, message, args, player) => {
     return message.channel.send("Le Kelner.exe a cessé de fonctionner.");
   }
   message.channel.send("Voilà voilà.");
-  voir(
-    client,
-    message,
-    [null, null],
-    player
-  )
+  voir(client, message, [null, null], player);
 };

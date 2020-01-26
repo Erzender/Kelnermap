@@ -46,7 +46,7 @@ const root = (state = initialState, action) => {
         },
         selectedTile: action.tile,
         selectedCity: null,
-        selectedBattle: null
+        selectedBattle: false
       };
     case "MOVE_POSITION":
       return {
@@ -61,7 +61,8 @@ const root = (state = initialState, action) => {
         ...state,
         menuOpened: false,
         selectedTile: null,
-        selectedCity: action.city
+        selectedCity: action.city,
+        selectedBattle: false
       };
     case "CLICK_BATTLE":
       return {

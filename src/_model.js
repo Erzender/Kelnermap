@@ -24,7 +24,7 @@ const Nation = db.sequelize.define("nation", {
 });
 
 const Battle = db.sequelize.define("battle", {
-  status: { type: Sequelize.STRING, defaultValue: "initialized" }, // initialized, started
+  status: { type: Sequelize.STRING, defaultValue: "initialized" }, // initialized, started, victory, defeat
   regionTarget: Sequelize.STRING,
   stronghold: Sequelize.STRING,
   date: Sequelize.DATE

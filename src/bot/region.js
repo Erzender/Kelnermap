@@ -10,6 +10,11 @@ const checkIsNationCitizen = require("../utils/citizenship")
 const getNationCitizens = require("../utils/citizenship").getNationCitizens;
 const regions1 = require("../regionInfo.json");
 
+/*
+$région revendiquer [<numéro région>] [--force]
+$région invasion [rejoindre, combattre, fuir]
+*/
+
 let regions = {};
 Object.keys(regions1).forEach(region => {
   regions[region] = {
@@ -97,7 +102,9 @@ exports.revendiquer = async (client, message, args, player) => {
     );
   }
 
-  let battle = await data.Battle.findOne({ where: { status: "initialized" } });
+  let battle = await data.Battle.findOne({
+    where: { status: { [Op.in]: ["initialized", "started"] } }
+  });
   if (battle) {
     return message.channel.send(
       `Impossible, il y a déjà une bataille de programmée.`
@@ -110,7 +117,7 @@ exports.revendiquer = async (client, message, args, player) => {
     .add(21, "hours");
   if (moment().isAfter(date))
     return message.channel.send(
-      "C'est trop tôt pur déclarer une bataille, attendez demain vers 1:00 !"
+      "C'est trop tôt pour déclarer une bataille, attendez demain vers 1:00 !"
     );
   battle = await data.Battle.create({
     regionTarget: args[2],
@@ -176,4 +183,78 @@ exports.invasion = async (client, message, args, player) => {
     .addField("Envahisseurs", invaders)
     .addField("Défenseurs", defenders);
   message.channel.send(embed);
+};
+
+exports.envahie = async (client, message, args, player) => {
+  if (!player.Identity || !checkIsNationCitizen(player))
+    return message.channel.send("Euh beh non, t'as pas de nation.");
+  let battle = await data.Battle.findOne({ where: { status: "started" } });
+  if (battle === null)
+    return message.channel.send(
+      "L'issue de la dernière bataille est déjà scellée."
+    );
+  if (player.Identity.id !== (await battle.getBelligerent()).dataValues.id)
+    return message.channel.send(
+      "Hum mais il faut être de la nation qui envahit."
+    );
+
+  let owner = await battle.getTarget();
+  let desowned = owner.dataValues.regions;
+  regions[battle.dataValues.regionTarget].keys
+    .split("")
+    .forEach(key => (desowned = desowned.replace(key, "")));
+  await owner.update({
+    regions: desowned
+  });
+  let winner = await battle.getBelligerent();
+  let reputation = 10 * (await battle.getDefenders()).length + 10;
+  await winner.update({
+    regions:
+      winner.dataValues.regions + regions[battle.dataValues.regionTarget].keys,
+    reputationPool: winner.dataValues.reputationPool + reputation
+  });
+  await battle.update({ status: "victory" });
+  await battle.removeInvaders(await battle.getInvaders());
+  await battle.removeDefenders(await battle.getDefenders());
+  return message.channel.send(
+    "Victoire déclarée ! **" +
+      winner.dataValues.name +
+      "** a conquis la région de **" +
+      regions[battle.dataValues.regionTarget].n +
+      "**.\n" +
+      reputation +
+      " points de réputation, bim."
+  );
+};
+
+exports.défendue = async (client, message, args, player) => {
+  if (!player.Identity || !checkIsNationCitizen(player))
+    return message.channel.send("Euh beh non, t'as pas de nation.");
+  let battle = await data.Battle.findOne({ where: { status: "started" } });
+  if (battle === null)
+    return message.channel.send(
+      "L'issue de la dernière bataille est déjà scellée."
+    );
+  if (player.Identity.id !== (await battle.getTarget()).dataValues.id)
+    return message.channel.send(
+      "Hum mais il faut être de la nation qui défend."
+    );
+
+  let winner = await battle.getTarget();
+  let reputation = 10 * (await battle.getInvaders()).length + 10;
+  await winner.update({
+    reputationPool: winner.dataValues.reputationPool + reputation
+  });
+  await battle.update({ status: "defeat" });
+  await battle.removeInvaders(await battle.getInvaders());
+  await battle.removeDefenders(await battle.getDefenders());
+  return message.channel.send(
+    "C'est la défaite ! **" +
+      winner.dataValues.name +
+      "** conserve la région de **" +
+      regions[battle.dataValues.regionTarget].n +
+      "**.\nEt ça leur fait " +
+      reputation +
+      " points de réput'"
+  );
 };
