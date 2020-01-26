@@ -1,2 +1,4 @@
 node_modules
 database.sqlite
+src/app/src/regions.json
+src/regionInfo.json

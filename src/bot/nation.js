@@ -4,6 +4,16 @@ const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 const strongholdUpdate = require("../utils/stronghold").update;
 
+/*
+$nation fonder <Nom>
+$nation brexit [--force]
+$nation lister
+$nation voir <numéro nation>
+$nation changer [nom, couleur, decription, image, bastion] <nouvelle valeur>
+$nation naturaliser <identifiant discord>
+$nation radier <identifiant discord>
+*/
+
 exports.fonder = async (client, message, args, player) => {
   if (args.length < 3) {
     return message.channel.send("Pas compris.");

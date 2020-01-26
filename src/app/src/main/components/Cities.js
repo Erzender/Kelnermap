@@ -42,7 +42,7 @@ const styles = {
   }
 };
 
-const Cities = ({ clickCity, clickBattle, selected, battle, cities }) => (
+const Cities = ({ clickCity, clickBattle, selected, battle, cities, battleSelected }) => (
   <div style={styles.container}>
     {cities &&
       coors.map(coor => (
@@ -66,7 +66,8 @@ const Cities = ({ clickCity, clickBattle, selected, battle, cities }) => (
         style={{
           ...styles.icon,
           top: battle.z - 35,
-          left: battle.x - 10
+          left: battle.x - 10,
+          background: battleSelected ? "#550000" : "none"
         }}
         src={config.api + "/lekelner/asset/battle.png"}
       />
@@ -80,7 +81,8 @@ const mapStateToProps = state => ({
     state.root.settings.battle && state.root.war
       ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
       : null,
-  cities: state.root.settings.cities
+  cities: state.root.settings.cities,
+  battleSelected: !!state.root.selectedBattle
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,0 +1,154 @@
+{
+  "1": {
+    "n": "Fleuve d'Angle"
+  },
+  "2": {
+    "n": "Marais d'Angle"
+  },
+  "3": {
+    "n": "Rives-Mortes"
+  },
+  "4": {
+    "n": "Pointe d'Honneur"
+  },
+  "5": {
+    "n": "L'Enclave"
+  },
+  "6": {
+    "n": "Pays Austre"
+  },
+  "7": {
+    "n": "Irrilande"
+  },
+  "8": {
+    "n": "Côtes Franches"
+  },
+  "9": {
+    "n": "L'Estocade"
+  },
+  "a": {
+    "n": "Flanc d'Occident"
+  },
+  "b": {
+    "n": "Archipel du Nord"
+  },
+  "c": {
+    "n": "Miettes-de-Vlappers"
+  },
+  "d": {
+    "n": "Couronne d'Austre"
+  },
+  "e": {
+    "n": "Déclin"
+  },
+  "f": {
+    "n": "Suidalie"
+  },
+  "g": {
+    "n": "Ceinturée"
+  },
+  "h": {
+    "n": "Île de la Chandeleur"
+  },
+  "i": {
+    "n": "Fierté Nord"
+  },
+  "j": {
+    "n": "Fierté Sud"
+  },
+  "k": {
+    "n": "Nevelande"
+  },
+  "l": {
+    "n": "Midi"
+  },
+  "m": {
+    "n": "Pointe Salvatrice"
+  },
+  "n": {
+    "n": "Pays Nymphosien"
+  },
+  "o": {
+    "n": "Les Fluxées"
+  },
+  "p": {
+    "n": "Ark"
+  },
+  "q": {
+    "n": "Sápmi"
+  },
+  "r": {
+    "n": "Himmelsrand"
+  },
+  "s": {
+    "n": "Rohan"
+  },
+  "t": {
+    "n": "La Sierra Nevada"
+  },
+  "u": {
+    "n": "La Garde"
+  },
+  "v": {
+    "n": "Roches Cernées"
+  },
+  "w": {
+    "n": "Nords d'Etrennes"
+  },
+  "x": {
+    "n": "Animisée"
+  },
+  "y": {
+    "n": "Sables d'Animisée"
+  },
+  "z": {
+    "n": "Flanc-Est"
+  },
+  "A": {
+    "n": "Mesa Suffit"
+  },
+  "B": {
+    "n": "Pyronèse"
+  },
+  "C": {
+    "n": "Lit-de-Nil"
+  },
+  "D": {
+    "n": "Désert d'Outre-Nil"
+  },
+  "E": {
+    "n": "Auvergne"
+  },
+  "F": {
+    "n": "Salines"
+  },
+  "G": {
+    "n": "Creuse-Vente"
+  },
+  "H": {
+    "n": "Sauce"
+  },
+  "I": {
+    "n": "Premier-Rempart"
+  },
+  "K": {
+    "n": "Vallées Promises"
+  },
+  "L": {
+    "n": "Ménisque"
+  },
+  "M": {
+    "n": "Sudanne"
+  },
+  "N": {
+    "n": "Baie-Illumine"
+  },
+  "O": {
+    "n": "Lambé",
+    "suze": "8"
+  },
+  "P": {
+    "n": "Jaaj",
+    "suze": "4"
+  }
+}

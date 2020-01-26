@@ -58,5 +58,6 @@ db.sequelize.sync().then(() => {
   const port = process.env.PORT || 8081;
   console.log("listening on port " + port);
   app.listen(port);
+  setTimeout(cronUtils.battles, 5000);
   cron.schedule("0 * * * *", cronUtils.battles);
 });
