@@ -91,13 +91,20 @@ const Overlay = ({
   image,
   menuClick,
   menu,
-  clickNation
+  clickNation,
+  pvpClick
 }) => {
   const onClickNation = () => clickNation(tileInfo.nationId);
   return (
     <div style={styles.container}>
       <div style={styles.upperView}>
         <Menu />
+        <div
+          style={{ ...styles.menuButton, marginTop: menu ? -300 : 30 }}
+          onClick={pvpClick}
+        >
+          ⚔️
+        </div>
         <div
           style={{ ...styles.menuButton, marginTop: menu ? -300 : 30 }}
           onClick={menuClick}
@@ -188,7 +195,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   menuClick: () => dispatch({ type: "TOGGLE_MENU" }),
-  clickNation: id => dispatch(getNationInfo(id))
+  clickNation: id => dispatch(getNationInfo(id)),
+  pvpClick: () => dispatch({ type: "TOGGLE_PVP" })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overlay);

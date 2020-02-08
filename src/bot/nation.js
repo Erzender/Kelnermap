@@ -3,6 +3,7 @@ const data = require("../_model");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 const strongholdUpdate = require("../utils/stronghold").update;
+const botProfile = require("./profile");
 
 /*
 $nation fonder <Nom>
@@ -12,6 +13,7 @@ $nation voir <numéro nation>
 $nation changer [nom, couleur, decription, image, bastion] <nouvelle valeur>
 $nation naturaliser <identifiant discord>
 $nation radier <identifiant discord>
+$nation distribuer <points de réputation> <identifiant discord>
 */
 
 exports.fonder = async (client, message, args, player) => {
@@ -24,7 +26,7 @@ exports.fonder = async (client, message, args, player) => {
   let nation = null;
   try {
     nation = await data.Nation.create({ name: args[2] });
-    await player.addCitizenship(nation);
+    await player.addHomeland(nation);
     await player.setIdentity(nation);
   } catch (err) {
     console.log(err);
@@ -56,7 +58,7 @@ exports.brexit = async (client, message, args, player) => {
     citizens = await data.Player.findAll({
       include: {
         model: data.Nation,
-        as: "Citizenship",
+        as: "Homelands",
         where: { id: player.Identity.dataValues.id }
       }
     });
@@ -91,7 +93,9 @@ exports.brexit = async (client, message, args, player) => {
 
 const voir = async (client, message, args, player) => {
   if (args.length < 3) {
-    return message.channel.send("T'as pas dit quelle nation.");
+    return message.channel.send(
+      "T'as pas dit quelle nation. Essaye `$nation lister` d'abord"
+    );
   }
   const nation = await data.Nation.findByPk(args[2]);
   if (nation === null) {
@@ -101,7 +105,7 @@ const voir = async (client, message, args, player) => {
     include: [
       {
         model: data.Nation,
-        as: "Citizenship",
+        as: "Homelands",
         where: { id: nation.dataValues.id }
       },
       {
@@ -205,7 +209,7 @@ exports.naturaliser = async (client, message, args, player) => {
   if (targetPlayer === null) {
     return message.channel.send("Joueur inconnu.");
   }
-  await targetPlayer.addCitizenship(player.Identity);
+  await targetPlayer.addHomeland(player.Identity);
   message.channel.send(
     "<@" +
       args[2] +
@@ -231,12 +235,41 @@ exports.radier = async (client, message, args, player) => {
   if (targetPlayer === null) {
     return message.channel.send("Joueur inconnu.");
   }
-  await targetPlayer.removeCitizenship(player.Identity);
+  await targetPlayer.removeHomeland(player.Identity);
   message.channel.send(
     "<@" +
       args[2] +
       "> n'est plus citoyen de **" +
       player.Identity.dataValues.name +
       "**"
+  );
+};
+
+exports.distribuer = async (client, message, args, player) => {
+  if (args.length < 3) {
+    return message.channel.send("Pas compris.");
+  }
+  if (!checkIsNationCitizen(player)) {
+    return message.channel.send("You have no power here.");
+  }
+  let amount = parseInt(args[2]);
+  if (amount > player.dataValues.Identity.reputationPool)
+    return message.channel.send(
+      "Il n'y a pas autant de réputation disponible, espèce d'andouille dégarnie notoire"
+    );
+  let receiver = await data.Player.findByPk(args[3]);
+  if (receiver === null) return message.channel.send("Connais pas ce type");
+  await receiver.update({
+    reputation: receiver.dataValues.reputation + amount
+  });
+  await player.dataValues.Identity.update({
+    reputationPool: player.dataValues.Identity.reputationPool - amount
+  });
+  message.channel.send("Et " + amount + " réput', " + amount + " !");
+  botProfile.voir(
+    client,
+    message,
+    [null, null, receiver.dataValues.discord],
+    player
   );
 };

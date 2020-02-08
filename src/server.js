@@ -43,6 +43,7 @@ router.get("/mapInfo", async function(req, res, next) {
   let info = {
     regionInfo: regionInfo,
     war: await regionUtils.getWar(),
+    pvp: await regionUtils.getLeaderBoard(),
     nations: await nationUtils.getNationRawList()
   };
   res.json(info);
@@ -58,6 +59,6 @@ db.sequelize.sync().then(() => {
   const port = process.env.PORT || 8081;
   console.log("listening on port " + port);
   app.listen(port);
-  setTimeout(cronUtils.battles, 5000);
+  //setTimeout(cronUtils.battles, 5000);
   cron.schedule("0 * * * *", cronUtils.battles);
 });

@@ -92,7 +92,7 @@ const processCommand = async (client, message, args) => {
           model: data.Nation,
           as: "Identity"
         },
-        { model: data.Nation, as: "Citizenship" }
+        { model: data.Nation, as: "Homelands", through: "Citizenship" }
       ]
     });
     if (player === null) {

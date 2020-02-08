@@ -13,6 +13,8 @@ const regions1 = require("../regionInfo.json");
 /*
 $région revendiquer [<numéro région>] [--force]
 $région invasion [rejoindre, combattre, fuir]
+$région envahie
+$région défendue
 */
 
 let regions = {};
@@ -63,6 +65,10 @@ exports.revendiquer = async (client, message, args, player) => {
     );
   }
 
+  if (owner.dataValues.id === player.Identity.dataValues.id) {
+    return message.channel.send("Tu veux t'envahir toi-même. Idiot bête.");
+  }
+
   if (owner && (args.length <= 3 || args[3] != "--force")) {
     return message.channel.send(
       `**${owner.dataValues.name}** détient **${
@@ -89,7 +95,7 @@ exports.revendiquer = async (client, message, args, player) => {
           model: data.Nation,
           as: "Identity"
         },
-        { model: data.Nation, as: "Citizenship" }
+        { model: data.Nation, as: "Homelands" }
       ]
     });
     await player.Identity.update({

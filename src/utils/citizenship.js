@@ -3,9 +3,9 @@ const data = require("../_model");
 exports.checkIsNationCitizen = player => {
   return (
     player.Identity !== null &&
-    Object.keys(player.Citizenship).length > 0 &&
-    Object.keys(player.Citizenship).map(
-      i => player.Citizenship[i].dataValues.id === player.Identity.dataValues.id
+    Object.keys(player.Homelands).length > 0 &&
+    Object.keys(player.Homelands).map(
+      i => player.Homelands[i].dataValues.id === player.Identity.dataValues.id
     )
   );
 };
@@ -15,7 +15,7 @@ exports.getNationCitizens = async nation => {
     include: [
       {
         model: data.Nation,
-        as: "Citizenship",
+        as: "Homelands",
         where: { id: nation.dataValues.id }
       },
       {

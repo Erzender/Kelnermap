@@ -11,28 +11,33 @@ $profil changer [image, description] <nouvelle valeur>
 const voir = async (client, message, args, player) => {
   if (args.length >= 3) {
     let discordId = args[2];
-//      args[2].length > 4 && args[2][0] === "<"
-//        ? args[2].split("<@!")[1].split(">")[0]
-//        : args[2];
+    //      args[2].length > 4 && args[2][0] === "<"
+    //        ? args[2].split("<@!")[1].split(">")[0]
+    //        : args[2];
     player = await data.Player.findByPk(discordId, {
       include: [
         {
           model: data.Nation,
           as: "Identity"
         },
-        { model: data.Nation, as: "Citizenship" }
+        { model: data.Nation, as: "Homelands" }
       ]
     });
     if (player === null) {
-      return message.channel.send("Connais pas. Copie bien l'identifiant discord, pas le nom");
+      return message.channel.send(
+        "Connais pas. Copie bien l'identifiant discord, pas le nom"
+      );
     }
   }
   const nation =
     player.Identity === null ? "Aucune" : player.Identity.dataValues.name;
-  const citizen = Object.keys(player.dataValues.Citizenship).map(
-    v => player.dataValues.Citizenship[v].dataValues.name
+  const citizen = Object.keys(player.dataValues.Homelands).map(
+    v => player.dataValues.Homelands[v].dataValues.name
   );
 
+  let discordProfile = await message.guild.fetchMember(
+    player.dataValues.discord
+  );
   const embed = new Discord.RichEmbed()
     .setColor(
       checkIsNationCitizen(player)
@@ -40,7 +45,9 @@ const voir = async (client, message, args, player) => {
         : "#777777"
     )
     .setAuthor(
-      message.author.username,
+      discordProfile.nickname
+        ? discordProfile.nickname
+        : discordProfile.user.username,
       player.Identity !== null ? player.Identity.pic : null
     )
     .setDescription(player.dataValues.desc)

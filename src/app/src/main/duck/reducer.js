@@ -8,6 +8,7 @@ const initialState = {
   posZoom: { x: 0, z: 0 },
   regionInfo: null,
   war: null,
+  pvp: [],
   menuOpened: false,
   settings: { nations: true, cities: true, battle: true },
   nationColorMap: null,
@@ -33,6 +34,7 @@ const root = (state = initialState, action) => {
       return {
         ...state,
         war: action.res.war,
+        pvp: action.res.pvp,
         regionInfo,
         nationColorMap: colorMap
       };
@@ -82,6 +84,8 @@ const root = (state = initialState, action) => {
         ...state,
         menuOpened: !state.menuOpened
       };
+    case "TOGGLE_PVP":
+      return { ...state, modal: { type: "pvp" } };
     case "TOGGLE_SETTING":
       return {
         ...state,
@@ -96,6 +100,21 @@ const root = (state = initialState, action) => {
         modal: { type: "loading" }
       };
     case "NATION_INFO_SUCCESS":
+      console.log(
+        Object.keys(state.regionInfo)
+          .filter(
+            reg =>
+              state.regionInfo[reg].nation &&
+              state.regionInfo[reg].nation.id === action.res.id
+          )
+          .map(reg =>
+            regions.reduce(
+              (total, row) => total + row.filter(tile => tile === reg).length,
+              0
+            )
+          )
+          .reduce((total, cur) => total + cur, 0)
+      );
       return {
         ...state,
         modal: { type: "nation", info: action.res }

@@ -30,8 +30,8 @@ const Battle = db.sequelize.define("battle", {
   date: Sequelize.DATE
 });
 
-Player.hasOne(Nation, { as: "Identity" });
-Player.hasMany(Nation, { as: "Citizenship" });
+Player.belongsTo(Nation, { as: "Identity" });
+Player.belongsToMany(Nation, { as: "Homelands", through: "Citizenship" });
 Battle.hasOne(Nation, { as: "Belligerent" });
 Battle.hasOne(Nation, { as: "Target" });
 Battle.belongsToMany(Player, { as: "Invaders", through: "Invasion" });
