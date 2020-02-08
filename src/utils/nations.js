@@ -17,7 +17,7 @@ exports.nationDesc = async id => {
     include: [
       {
         model: data.Nation,
-        as: "Citizenship",
+        as: "Homelands",
         where: { id: nation.dataValues.id }
       },
       {
@@ -34,6 +34,6 @@ exports.nationDesc = async id => {
     color: nation.dataValues.color,
     pic: nation.dataValues.pic,
     stronghold: nation.dataValues.stronghold,
-    citizens: citizens.length
+    citizens: citizens.map(citizen => citizen.dataValues.picture)
   };
 };

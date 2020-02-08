@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import config from "../../config.json";
 import Nation from "./ModalNation";
+import ModalPVP from "./ModalPVP";
 
 const styles = {
   container: {
@@ -43,7 +44,7 @@ const styles = {
   content: { display: "flex", flex: 1, transition: "opacity 1s", margin: 10 }
 };
 
-const Modal = ({ open, loading, clickClose, isNation }) => (
+const Modal = ({ open, loading, clickClose, isNation, isPVP }) => (
   <div
     style={{
       ...styles.container,
@@ -59,6 +60,7 @@ const Modal = ({ open, loading, clickClose, isNation }) => (
       }}
     >
       {isNation && <Nation />}
+      {isPVP && <ModalPVP />}
     </div>
     {loading && (
       <div style={styles.loading}>
@@ -80,14 +82,12 @@ const Modal = ({ open, loading, clickClose, isNation }) => (
 const mapStateToProps = state => ({
   open: state.root.modal !== null,
   loading: state.root.modal && state.root.modal.type === "loading",
-  isNation: state.root.modal && state.root.modal.type === "nation"
+  isNation: state.root.modal && state.root.modal.type === "nation",
+  isPVP: state.root.modal && state.root.modal.type === "pvp"
 });
 
 const mapDispatchToProps = dispatch => ({
   clickClose: () => dispatch({ type: "CLOSE_MODAL" })
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modal);
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

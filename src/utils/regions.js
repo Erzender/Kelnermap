@@ -22,3 +22,24 @@ exports.getWar = async () => {
       }
     : null;
 };
+
+exports.getLeaderBoard = async () => {
+  let players = await data.Player.findAll({
+    include: [
+      {
+        model: data.Nation,
+        as: "Identity"
+      }
+    ]
+  });
+  let leaderBoard = players
+    .map(player => ({
+      picture: player.dataValues.picture,
+      desc: player.dataValues.desc,
+      reputation: player.dataValues.reputation,
+      nation: player.Identity && player.Identity.dataValues.pic,
+      nationId: player.Identity && player.Identity.dataValues.id
+    }))
+    .sort((p1, p2) => p1.reputation < p2.reputation);
+  return leaderBoard;
+};
