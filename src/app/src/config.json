@@ -1,5 +1,5 @@
 {
-  "api": "http://localhost:8081",
+  "api": "",
   "mapSize": { "x": 1662, "z": 1260 },
   "cali": { "x": 502, "z": 508, "xOf": -220, "zOf": 180 },
   "mapCorners": { "start": { "X": -12, "Z": -12 }, "end": { "X": 34, "Z": 22 } }
