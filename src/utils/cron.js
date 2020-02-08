@@ -1,7 +1,7 @@
 const moment = require("moment");
 const data = require("../_model");
 const bot = require("../bot/_entry").client;
-const regions = require("../regioninfo.json");
+const regions = require("../regionInfo.json");
 
 const initializedBattles = async channel => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
