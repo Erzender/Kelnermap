@@ -55,6 +55,10 @@ router.get("/nation/:id", async function(req, res, next) {
 
 app.use("/lekelner", router);
 
+app.get("/", async function(req, res, next) {
+  res.redirect("/lekelner");
+});
+
 db.sequelize.sync().then(() => {
   const port = process.env.PORT || 8081;
   console.log("listening on port " + port);
