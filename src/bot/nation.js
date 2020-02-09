@@ -7,6 +7,7 @@ const botProfile = require("./profile");
 
 /*
 $nation fonder <Nom>
+$nation rejoindre <numéro nation>
 $nation brexit [--force]
 $nation lister
 $nation voir <numéro nation>
@@ -49,6 +50,26 @@ exports.fonder = async (client, message, args, player) => {
   );
 };
 
+exports.rejoindre = async (client, message, args, player) => {
+  if (args.length < 3) {
+    return message.channel.send("Pas compris.");
+  }
+  if (player.Identity !== null) {
+    return message.channel.send("T'as déjà une nation fdp.");
+  }
+  let nation = await data.Nation.findByPk(args[2]);
+  if (nation === null)
+    return message.channel.send("Pas trouvé, essaye de `$nation lister` déjà.");
+  await player.setIdentity(nation);
+  message.channel.send(
+    "<@" +
+      player.dataValues.discord +
+      "> se revendique désormais de **" +
+      nation.dataValues.name +
+      "**."
+  );
+};
+
 exports.brexit = async (client, message, args, player) => {
   if (player.Identity === null) {
     return message.channel.send("Vous brexitez.");
@@ -58,7 +79,7 @@ exports.brexit = async (client, message, args, player) => {
     citizens = await data.Player.findAll({
       include: {
         model: data.Nation,
-        as: "Homelands",
+        as: "Identity",
         where: { id: player.Identity.dataValues.id }
       }
     });
