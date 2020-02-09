@@ -50,7 +50,7 @@ router.get("/mapInfo", async function(req, res, next) {
 });
 
 router.get("/nation/:id", async function(req, res, next) {
-  res.json(await nationUtils.nationDesc(id));
+  res.json(await nationUtils.nationDesc(req.params.id));
 });
 
 app.use("/lekelner", router);
