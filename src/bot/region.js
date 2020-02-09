@@ -12,6 +12,7 @@ const regions1 = require("../regionInfo.json");
 
 /*
 $région revendiquer [<numéro région>] [--force]
+$région céder <numéro région>
 $région invasion [rejoindre, combattre, fuir]
 $région envahie
 $région défendue
@@ -128,11 +129,10 @@ exports.revendiquer = async (client, message, args, player) => {
   battle = await data.Battle.create({
     regionTarget: args[2],
     stronghold: owner.dataValues.stronghold,
-    date
+    date,
+    BelligerentId: player.Identity.dataValues.id,
+    TargetId: owner.dataValues.id
   });
-
-  await battle.setBelligerent(player.Identity);
-  await battle.setTarget(owner);
 
   let citizens = await getNationCitizens(owner);
   citizens = "<@" + citizens.join("><@") + ">";
@@ -142,6 +142,51 @@ ${citizens}, citoyens de **${
     owner.dataValues.name
   }**, votre nation risque de perdre son territoire si vous ne répondez pas de cet affront !
 Il faut utilser \`$région invasion\`, là`);
+};
+
+exports.céder = async (client, message, args, player) => {
+  if (!player.Identity) {
+    return message.channel.send("Mais t'as pas de nation oh.");
+  }
+  if (!checkIsNationCitizen(player)) {
+    return message.channel.send("Il faut être citoyen de sa nation pour ça.");
+  }
+  if (args.length <= 2) {
+    return message.channel.send("Oui m'enfin quelle région ?");
+  }
+
+  if (
+    !getClaimableRegions().find(region => region === args[2]) ||
+    player.Identity.dataValues.regions.search(args[2]) < 0
+  )
+    return message.channel.send(
+      "Ah oui mais là, je crois que ça va pas être possible."
+    );
+
+  let battle = data.Battle.findOne({
+    where: {
+      status: { [Op.in]: ["initialized", "started"] },
+      regionTarget: args[2]
+    }
+  });
+  if (battle !== null)
+    return message.channel.send("Oh bah non hé y'a une bataille dessus.");
+
+  let desowned = player.Identity.dataValues.regions;
+  regions[args[2]].keys
+    .split("")
+    .forEach(key => (desowned = desowned.replace(key, "")));
+  await player.Identity.update({
+    regions: desowned
+  });
+
+  message.channel.send(
+    "**" +
+      player.Identity.dataValues.name +
+      "** abdique la région de **" +
+      regions[args[2]].n +
+      "**"
+  );
 };
 
 exports.invasion = async (client, message, args, player) => {

@@ -74,21 +74,25 @@ const mapStateToProps = state => ({
     desc: state.root.modal.info.desc || ""
   },
   territory:
-    0.23 *
-      Object.keys(state.root.regionInfo)
-        .filter(
-          reg =>
-            state.root.regionInfo[reg].nation &&
-            state.root.regionInfo[reg].nation.id === state.root.modal.info.id
-        )
-        .map(reg =>
-          regions.reduce(
-            (total, row) => total + row.filter(tile => tile === reg).length,
-            0
+    Math.round(
+      0.23 *
+        Object.keys(state.root.regionInfo)
+          .filter(
+            reg =>
+              state.root.regionInfo[reg].nation &&
+              state.root.regionInfo[reg].nation.id === state.root.modal.info.id
           )
-        )
-        .reduce((total, cur) => total + cur, 0) +
-    "km²"
+          .map(reg =>
+            regions.reduce(
+              (total, row) => total + row.filter(tile => tile === reg).length,
+              0
+            )
+          )
+          .reduce((total, cur) => total + cur, 0) *
+        10
+    ) /
+      10 +
+    " km²"
 });
 
 const mapDispatchToProps = dispatch => ({});

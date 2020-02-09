@@ -32,8 +32,20 @@ const Battle = db.sequelize.define("battle", {
 
 Player.belongsTo(Nation, { as: "Identity" });
 Player.belongsToMany(Nation, { as: "Homelands", through: "Citizenship" });
-Battle.hasOne(Nation, { as: "Belligerent" });
-Battle.hasOne(Nation, { as: "Target" });
+Battle.belongsTo(Nation, {
+  as: "Belligerent",
+  onDelete: "cascade",
+  foreignKey: {
+    allowNull: false
+  }
+});
+Battle.belongsTo(Nation, {
+  as: "Target",
+  onDelete: "cascade",
+  foreignKey: {
+    allowNull: false
+  }
+});
 Battle.belongsToMany(Player, { as: "Invaders", through: "Invasion" });
 Battle.belongsToMany(Player, { as: "Defenders", through: "Defense" });
 
