@@ -44,7 +44,7 @@ const Grid = ({ clickTile, selectedTile, selectedRegion, regionColors }) => (
                 selectedTile.z === i && selectedTile.x === j
                   ? "thick solid #330000"
                   : "none",
-              opacity: regions[i][j] === selectedRegion ? 1 : 0.3,
+              opacity: regions[i][j] === selectedRegion ? 1 : 0.5,
               backgroundColor:
                 regions[i][j] === selectedRegion
                   ? "rgba(100, 50, 0, 0.5)"

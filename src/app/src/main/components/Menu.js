@@ -6,6 +6,7 @@ import config from "../../config.json";
 const styles = {
   container: {
     display: "flex",
+    flexDirection: "column",
     width: "100%",
     backgroundColor: "#222222",
     zIndex: 2,
@@ -23,7 +24,20 @@ const styles = {
     cursor: "pointer",
     userSelect: "none"
   },
-  settings: { margin: 20 }
+  settings: { margin: 5, cursor: "pointer" },
+  foxIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5
+  },
+  settingList: { display: "flex", flexDirection: "row", userSelect: "none", marginBottom: 20 },
+  firefouf: {
+    display: "flex",
+    margin: 5,
+    fontSize: 12,
+    alignItems: "center",
+    color: "#DDDDDD"
+  }
 };
 
 const Menu = ({
@@ -35,18 +49,33 @@ const Menu = ({
   checkBattle
 }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
-    <div onClick={checkNations} style={styles.settings}>
-      Nations
-      <input onChange={() => {}} type="checkbox" checked={settings.nations} />
+    <div style={styles.settingList}>
+      <div onClick={checkNations} style={styles.settings}>
+        Nations
+        <input onChange={() => {}} type="checkbox" checked={settings.nations} />
+      </div>
+      <div onClick={checkCities} style={styles.settings}>
+        Villes
+        <input onChange={() => {}} type="checkbox" checked={settings.cities} />
+      </div>
+      <div onClick={checkBattle} style={styles.settings}>
+        Bataille
+        <input onChange={() => {}} type="checkbox" checked={settings.battle} />
+      </div>
     </div>
-    <div onClick={checkCities} style={styles.settings}>
-      Villes
-      <input onChange={() => {}} type="checkbox" checked={settings.cities} />
-    </div>
-    <div onClick={checkBattle} style={styles.settings}>
-      Bataille
-      <input onChange={() => {}} type="checkbox" checked={settings.battle} />
-    </div>
+    <a target="blank" href="https://www.mozilla.org/fr/firefox/new/" style={styles.firefouf}>
+      <img
+        style={styles.foxIcon}
+        src={config.api + "/lekelner/asset/fox.png"}
+      />
+      Application testée sur Firefox
+    </a><a target="blank" href="https://github.com/Erzender/Kelnermap" style={styles.firefouf}>
+      <img
+        style={styles.foxIcon}
+        src={config.api + "/lekelner/asset/github.png"}
+      />
+      Code source
+    </a>
     <div
       style={{ ...styles.closeWindow, top: open ? 5 : -205 }}
       onClick={clickClose}
