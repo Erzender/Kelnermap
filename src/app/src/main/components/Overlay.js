@@ -67,6 +67,8 @@ const styles = {
     marginRight: 5
   },
   menuButton: {
+    userSelect: "none",
+    overflow: "hidden",
     marginRight: 30,
     borderRadius: 30,
     fontSize: 30,
