@@ -11,7 +11,7 @@ exports.getNationRawList = async () => {
 };
 
 exports.nationDesc = async id => {
-  const nation = await data.Nation.findOne(id);
+  const nation = await data.Nation.findByPk(id);
   if (!nation) return null;
   const citizens = await data.Player.findAll({
     include: [
