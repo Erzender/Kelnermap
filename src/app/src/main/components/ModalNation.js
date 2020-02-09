@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Paragraphs from "@render-props/paragraphs";
 
 import config from "../../config.json";
 import regions from "../../regions.json";
@@ -63,7 +62,9 @@ const Nation = ({ nationInfo, territory }) => (
     </div>
     <hr />
     <br />
-    <Paragraphs children={({ text }) => text} text={nationInfo.desc} />
+    {nationInfo.desc.map((desc, i) => (
+      <p key={"p" + i}>{desc}</p>
+    ))}
   </div>
 );
 
@@ -71,7 +72,7 @@ const mapStateToProps = state => ({
   nationInfo: {
     ...state.root.modal.info,
     pic: state.root.modal.info.pic || config.api + "/lekelner/asset/nation.png",
-    desc: state.root.modal.info.desc || ""
+    desc: state.root.modal.info.desc.split("\n") || []
   },
   territory:
     Math.round(
