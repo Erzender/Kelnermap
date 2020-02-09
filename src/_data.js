@@ -6,7 +6,7 @@ const db = {
   database: "lekelner"
 };
 
-exports.sequelize = new Sequelize(db.database, "", "", {
+const sequelize = new Sequelize(db.database, "", "", {
   dialect: db.type,
 
   pool: {
@@ -20,3 +20,7 @@ exports.sequelize = new Sequelize(db.database, "", "", {
 
   operatorsAliases: false
 });
+
+sequelize.query("PRAGMA case_sensitive_like=ON;");
+
+exports.sequelize = sequelize;
