@@ -24,19 +24,31 @@ const styles = {
     cursor: "pointer",
     userSelect: "none"
   },
-  settings: { margin: 5, cursor: "pointer" },
+  settings: { fontWeight: "bold", margin: 10, cursor: "pointer" },
   foxIcon: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     marginRight: 5
   },
-  settingList: { display: "flex", flexDirection: "row", userSelect: "none", marginBottom: 20 },
+  settingList: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    userSelect: "none",
+    marginBottom: 20
+  },
   firefouf: {
     display: "flex",
     margin: 5,
-    fontSize: 12,
+    fontSize: 10,
     alignItems: "center",
     color: "#DDDDDD"
+  },
+  kelnerlogo: {
+    marginLeft: 10,
+    marginBottom: 10,
+    width: 80,
+    height: 80
   }
 };
 
@@ -50,6 +62,7 @@ const Menu = ({
 }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
     <div style={styles.settingList}>
+      <div style={{ ...styles.settings, cursor: undefined }}>Afficher :</div>
       <div onClick={checkNations} style={styles.settings}>
         Nations
         <input onChange={() => {}} type="checkbox" checked={settings.nations} />
@@ -63,19 +76,46 @@ const Menu = ({
         <input onChange={() => {}} type="checkbox" checked={settings.battle} />
       </div>
     </div>
-    <a target="blank" href="https://www.mozilla.org/fr/firefox/new/" style={styles.firefouf}>
+    <div style={{ display: "flex", flexDirection: "row" }}>
       <img
-        style={styles.foxIcon}
-        src={config.api + "/lekelner/asset/fox.png"}
+        style={styles.kelnerlogo}
+        src={config.api + "/lekelner/asset/lekelner.png"}
       />
-      Application testée sur Firefox
-    </a><a target="blank" href="https://github.com/Erzender/Kelnermap" style={styles.firefouf}>
-      <img
-        style={styles.foxIcon}
-        src={config.api + "/lekelner/asset/github.png"}
-      />
-      Code source
-    </a>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            ...styles.firefouf,
+            color: "#AA2222",
+            fontSize: 18,
+            fontFamily: "Enchanted Land"
+          }}
+        >
+          LE KELNER
+        </div>
+        <a
+          target="blank"
+          href="https://www.mozilla.org/fr/firefox/new/"
+          style={styles.firefouf}
+        >
+          <img
+            style={styles.foxIcon}
+            src={config.api + "/lekelner/asset/fox.png"}
+          />
+          Site optimisé pour Firefox
+        </a>
+        <a
+          target="blank"
+          href="https://github.com/Erzender/Kelnermap"
+          style={styles.firefouf}
+        >
+          <img
+            style={styles.foxIcon}
+            src={config.api + "/lekelner/asset/github.png"}
+          />
+          Code source
+        </a>
+      </div>
+    </div>
     <div
       style={{ ...styles.closeWindow, top: open ? 5 : -205 }}
       onClick={clickClose}
