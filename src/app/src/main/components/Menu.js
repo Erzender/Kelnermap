@@ -35,7 +35,8 @@ const styles = {
     flex: 1,
     flexDirection: "row",
     userSelect: "none",
-    marginBottom: 20
+    marginBottom: 20,
+    alignItems: "center"
   },
   firefouf: {
     display: "flex",
