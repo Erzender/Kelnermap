@@ -20,7 +20,8 @@ const Nation = db.sequelize.define("nation", {
   pic: Sequelize.STRING,
   stronghold: Sequelize.STRING,
   reputationPool: { type: Sequelize.INTEGER, defaultValue: 0 },
-  regions: { type: Sequelize.STRING, defaultValue: "" }
+  regions: { type: Sequelize.STRING, defaultValue: "" },
+  hymne: { type: Sequelize.STRING }
 });
 
 const Battle = db.sequelize.define("battle", {

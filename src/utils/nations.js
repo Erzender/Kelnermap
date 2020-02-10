@@ -33,6 +33,7 @@ exports.nationDesc = async id => {
     desc: nation.dataValues.desc,
     color: nation.dataValues.color,
     pic: nation.dataValues.pic,
+    hymne: nation.dataValues.hymne,
     stronghold: nation.dataValues.stronghold,
     citizens: citizens.map(citizen => citizen.dataValues.picture)
   };

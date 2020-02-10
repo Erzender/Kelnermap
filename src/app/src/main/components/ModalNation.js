@@ -42,6 +42,7 @@ const styles = {
 
 const Nation = ({ nationInfo, territory }) => (
   <div style={styles.container}>
+    {nationInfo.hymne && <audio controls autoplay="autoplay" src={nationInfo.hymne}></audio>}
     <div style={{ ...styles.imageContainer, borderColor: nationInfo.color }}>
       <img style={styles.images} src={nationInfo.pic} />
     </div>

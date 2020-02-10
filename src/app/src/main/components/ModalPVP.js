@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Paragraphs from "@render-props/paragraphs";
 import { getNationInfo } from "../duck/thunks";
 
 import config from "../../config.json";
