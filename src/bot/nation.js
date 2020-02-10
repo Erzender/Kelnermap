@@ -173,6 +173,8 @@ exports.changer = async (client, message, args, player) => {
       await player.dataValues.Identity.update({ pic: args[3] });
     } else if (args[2] == "description") {
       await player.dataValues.Identity.update({ desc: args[3] });
+    } else if (args[2] == "hymne") {
+      await player.dataValues.Identity.update({ hymne: args[3] });
     } else if (args[2] == "bastion") {
       if (args.length < 6) {
         return message.channel.send(
