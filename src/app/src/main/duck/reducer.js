@@ -10,7 +10,7 @@ const initialState = {
   war: null,
   pvp: [],
   menuOpened: false,
-  settings: { nations: true, cities: true, battle: true },
+  settings: { nations: true, cities: true, battle: true, autoplay: true },
   nationColorMap: null,
   modal: null
 };
@@ -87,6 +87,13 @@ const root = (state = initialState, action) => {
     case "TOGGLE_PVP":
       return { ...state, modal: { type: "pvp" } };
     case "TOGGLE_SETTING":
+      let storage = localStorage.getItem("settingAutoplay");
+      if (action.which === "autoplay") {
+        localStorage.setItem(
+          "settingAutoplay",
+          storage === "false" ? true : false
+        );
+      }
       return {
         ...state,
         settings: {
@@ -100,21 +107,6 @@ const root = (state = initialState, action) => {
         modal: { type: "loading" }
       };
     case "NATION_INFO_SUCCESS":
-      console.log(
-        Object.keys(state.regionInfo)
-          .filter(
-            reg =>
-              state.regionInfo[reg].nation &&
-              state.regionInfo[reg].nation.id === action.res.id
-          )
-          .map(reg =>
-            regions.reduce(
-              (total, row) => total + row.filter(tile => tile === reg).length,
-              0
-            )
-          )
-          .reduce((total, cur) => total + cur, 0)
-      );
       return {
         ...state,
         modal: { type: "nation", info: action.res }
