@@ -59,11 +59,11 @@ const Menu = ({
   settings,
   checkNations,
   checkCities,
-  checkBattle
+  checkBattle,
+  checkAutoplay
 }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
     <div style={styles.settingList}>
-      <div style={{ ...styles.settings, cursor: undefined }}>Afficher :</div>
       <div onClick={checkNations} style={styles.settings}>
         Nations
         <input onChange={() => {}} type="checkbox" checked={settings.nations} />
@@ -75,6 +75,14 @@ const Menu = ({
       <div onClick={checkBattle} style={styles.settings}>
         Bataille
         <input onChange={() => {}} type="checkbox" checked={settings.battle} />
+      </div>
+      <div onClick={checkAutoplay} style={styles.settings}>
+        Lecture Auto
+        <input
+          onChange={() => {}}
+          type="checkbox"
+          checked={settings.autoplay}
+        />
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -126,16 +134,21 @@ const Menu = ({
   </div>
 );
 
-const mapStateToProps = state => ({
-  open: state.root.menuOpened,
-  settings: state.root.settings
-});
+const mapStateToProps = state => {
+  let autoplay = localStorage.getItem("settingAutoplay");
+  autoplay = autoplay === "true";
+  return {
+    open: state.root.menuOpened,
+    settings: { ...state.root.settings, autoplay }
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   clickClose: () => dispatch({ type: "TOGGLE_MENU" }),
   checkNations: () => dispatch({ type: "TOGGLE_SETTING", which: "nations" }),
   checkCities: () => dispatch({ type: "TOGGLE_SETTING", which: "cities" }),
-  checkBattle: () => dispatch({ type: "TOGGLE_SETTING", which: "battle" })
+  checkBattle: () => dispatch({ type: "TOGGLE_SETTING", which: "battle" }),
+  checkAutoplay: () => dispatch({ type: "TOGGLE_SETTING", which: "autoplay" })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

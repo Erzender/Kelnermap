@@ -40,9 +40,11 @@ const styles = {
   }
 };
 
-const Nation = ({ nationInfo, territory }) => (
+const Nation = ({ nationInfo, territory, autoplay }) => (
   <div style={styles.container}>
-    {nationInfo.hymne && <audio controls autoplay="autoplay" src={nationInfo.hymne}></audio>}
+    {nationInfo.hymne && (
+      <audio controls autoPlay={autoplay} src={nationInfo.hymne}></audio>
+    )}
     <div style={{ ...styles.imageContainer, borderColor: nationInfo.color }}>
       <img style={styles.images} src={nationInfo.pic} />
     </div>
@@ -75,6 +77,7 @@ const mapStateToProps = state => ({
     pic: state.root.modal.info.pic || config.api + "/lekelner/asset/nation.png",
     desc: state.root.modal.info.desc.split("\n") || []
   },
+  autoplay: localStorage.getItem("settingAutoplay") === "true",
   territory:
     Math.round(
       0.23 *
