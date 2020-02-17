@@ -4,21 +4,22 @@ import { connect } from "react-redux";
 import config from "../../config.json";
 import cities from "../../cities.json";
 
-const geoToImage = (x, z) => ({
+const geoToImage = (mod, x, z) => ({
   x:
-    (config.mapSize.x * (x - config.mapCorners.start.X * config.cali.x)) /
+    (config.mapSize.x * mod * (x - config.mapCorners.start.X * config.cali.x)) /
     (Math.abs(config.mapCorners.end.X - config.mapCorners.start.X) *
       config.cali.x),
   z:
-    (config.mapSize.z * (z - config.mapCorners.start.Z * config.cali.z)) /
+    (config.mapSize.z * mod * (z - config.mapCorners.start.Z * config.cali.z)) /
     (Math.abs(config.mapCorners.end.Z - config.mapCorners.start.Z) *
       config.cali.z)
 });
 
-const coors = Object.keys(cities).map(city => {
-  let geo = geoToImage(cities[city].x, cities[city].z);
-  return { x: geo.x, z: geo.z, id: city };
-});
+const coors = mod =>
+  Object.keys(cities).map(city => {
+    let geo = geoToImage(mod, cities[city].x, cities[city].z);
+    return { x: geo.x, z: geo.z, id: city };
+  });
 
 const styles = {
   container: {
@@ -42,10 +43,18 @@ const styles = {
   }
 };
 
-const Cities = ({ clickCity, clickBattle, selected, battle, cities, battleSelected }) => (
+const Cities = ({
+  clickCity,
+  clickBattle,
+  selected,
+  battle,
+  cities,
+  battleSelected,
+  zoomedCoors
+}) => (
   <div style={styles.container}>
     {cities &&
-      coors.map(coor => (
+      zoomedCoors.map(coor => (
         <img
           onClick={e => clickCity(coor.id, e)}
           key={coor.id}
@@ -82,7 +91,8 @@ const mapStateToProps = state => ({
       ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
       : null,
   cities: state.root.settings.cities,
-  battleSelected: !!state.root.selectedBattle
+  battleSelected: !!state.root.selectedBattle,
+  zoomedCoors: coors(state.root.settings.zoom)
 });
 
 const mapDispatchToProps = dispatch => ({

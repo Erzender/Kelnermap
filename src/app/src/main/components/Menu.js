@@ -60,7 +60,9 @@ const Menu = ({
   checkNations,
   checkCities,
   checkBattle,
-  checkAutoplay
+  checkAutoplay,
+  zoomMore,
+  zoomLess
 }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
     <div style={styles.settingList}>
@@ -83,6 +85,12 @@ const Menu = ({
           type="checkbox"
           checked={settings.autoplay}
         />
+      </div>
+      <div style={styles.settings} onClick={zoomMore}>
+        🔍+
+      </div>
+      <div style={styles.settings} onClick={zoomLess}>
+        🔍-
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -148,7 +156,9 @@ const mapDispatchToProps = dispatch => ({
   checkNations: () => dispatch({ type: "TOGGLE_SETTING", which: "nations" }),
   checkCities: () => dispatch({ type: "TOGGLE_SETTING", which: "cities" }),
   checkBattle: () => dispatch({ type: "TOGGLE_SETTING", which: "battle" }),
-  checkAutoplay: () => dispatch({ type: "TOGGLE_SETTING", which: "autoplay" })
+  checkAutoplay: () => dispatch({ type: "TOGGLE_SETTING", which: "autoplay" }),
+  zoomMore: () => dispatch({ type: "ZOOM", modifier: true }),
+  zoomLess: () => dispatch({ type: "ZOOM", modifier: false })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
