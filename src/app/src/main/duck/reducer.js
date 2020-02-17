@@ -10,7 +10,13 @@ const initialState = {
   war: null,
   pvp: [],
   menuOpened: false,
-  settings: { nations: true, cities: true, battle: true, autoplay: true },
+  settings: {
+    nations: true,
+    cities: true,
+    battle: true,
+    autoplay: true,
+    zoom: 1
+  },
   nationColorMap: null,
   modal: null
 };
@@ -99,6 +105,16 @@ const root = (state = initialState, action) => {
         settings: {
           ...state.settings,
           [action.which]: !state.settings[action.which]
+        }
+      };
+    case "ZOOM":
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          zoom: action.modifier
+            ? state.settings.zoom + 0.1
+            : state.settings.zoom - 0.1
         }
       };
     case "MODAL_LOADING":

@@ -15,8 +15,6 @@ const styles = {
     backgroundColor: "black"
   },
   mapImage: {
-    width: config.mapSize.x,
-    height: config.mapSize.z,
     userSelect: "none",
     zIndex: -1
   },
@@ -27,8 +25,6 @@ const styles = {
   },
   grid: {
     zindex: 1,
-    width: config.mapSize.x,
-    height: config.mapSize.z,
     position: "absolute",
     top: 0,
     left: 0,
@@ -37,7 +33,7 @@ const styles = {
   }
 };
 
-const Map = ({ margins }) => (
+const Map = ({ margins, dimensions }) => (
   <div style={styles.container}>
     <div
       style={{
@@ -47,12 +43,13 @@ const Map = ({ margins }) => (
       }}
     >
       <img
-        style={styles.mapImage}
+        style={{ ...styles.mapImage, ...dimensions }}
         src={config.api + "/lekelner/asset/map.jpg"}
       />
       <div
         style={{
           ...styles.grid,
+          ...dimensions,
           marginLeft: margins.x,
           marginTop: margins.z
         }}
@@ -67,12 +64,13 @@ const Map = ({ margins }) => (
 );
 
 const mapStateToProps = state => ({
-  margins: state.root.mapMargins
+  margins: state.root.mapMargins,
+  dimensions: {
+    width: config.mapSize.x * state.root.settings.zoom,
+    height: config.mapSize.z * state.root.settings.zoom
+  }
 });
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
