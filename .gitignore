@@ -3,3 +3,4 @@ database.sqlite
 src/app/src/regions.json
 src/app/src/cities.json
 src/regionInfo.json
+whitelist.json

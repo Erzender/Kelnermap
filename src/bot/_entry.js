@@ -8,6 +8,8 @@ const commands = {
   $région: require("./region")
 };
 
+const adminCommands = require("./admin");
+
 try {
   client.on("ready", () => {
     console.log("Ready!");
@@ -51,7 +53,9 @@ exports.client = client;
 const processBotMessage = message => {
   if (
     !(
-      message.channel.id === JSON.parse(process.env.KELNER_BOT).channel &&
+      (message.channel.id === JSON.parse(process.env.KELNER_BOT).channel ||
+        message.channel.id ===
+          JSON.parse(process.env.KELNER_BOT).adminchannel) &&
       message.channel.guild.id === JSON.parse(process.env.KELNER_BOT).guild &&
       message.content.length > 0 &&
       message.content[0] === "$"
@@ -85,7 +89,14 @@ const processBotMessage = message => {
 };
 
 const processCommand = async (client, message, args) => {
-  if (args.length >= 2 && commands[args[0]] && commands[args[0]][args[1]]) {
+  if (
+    args.length >= 2 &&
+    ((commands[args[0]] && !!commands[args[0]][args[1]]) ||
+      (args[0] === "$admin" &&
+        message.channel.id ===
+          JSON.parse(process.env.KELNER_BOT).adminchannel &&
+        adminCommands[args[1]]))
+  ) {
     let player = await data.Player.findByPk(message.author.id, {
       include: [
         {
@@ -106,7 +117,11 @@ const processCommand = async (client, message, args) => {
         return message.channel.send("Le Kelner.exe a cessé de fonctionner.");
       }
     }
-    commands[args[0]][args[1]](client, message, args, player);
+    if (args[0] === "$admin") {
+      adminCommands[args[1]](client, message, args, player);
+    } else {
+      commands[args[0]][args[1]](client, message, args, player);
+    }
   } else {
     return message.channel.send("Cette commande n'existe papapapapa.");
   }
