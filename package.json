@@ -22,7 +22,9 @@
     "discord.js": "^11.5.1",
     "express": "^4.17.1",
     "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.0",
     "sequelize": "^5.21.2",
-    "sqlite3": "^4.0.9"
+    "sqlite3": "^4.0.9",
+    "ssh2-sftp-client": "^5.0.2"
   }
 }
