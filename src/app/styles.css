@@ -8,6 +8,14 @@
   background-color: "white";
 }
 
+div.button {
+  background-color: #333333;
+}
+
+div.button:active {
+  background-color: #555555;
+}
+
 @keyframes loadingSword {
   from {
     transform: rotate(0deg);

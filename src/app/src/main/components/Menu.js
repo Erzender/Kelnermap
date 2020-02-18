@@ -24,13 +24,19 @@ const styles = {
     cursor: "pointer",
     userSelect: "none"
   },
-  settings: { fontWeight: "bold", margin: 10, cursor: "pointer" },
+  settings: {
+    fontWeight: "bold",
+    margin: 5,
+    cursor: "pointer",
+    padding: 5
+  },
   foxIcon: {
     width: 15,
     height: 15,
     marginRight: 5
   },
   settingList: {
+    flexWrap: "wrap",
     display: "flex",
     flex: 1,
     flexDirection: "row",
@@ -66,19 +72,19 @@ const Menu = ({
 }) => (
   <div style={{ ...styles.container, marginTop: open ? 0 : -210 }}>
     <div style={styles.settingList}>
-      <div onClick={checkNations} style={styles.settings}>
+      <div className="button" onClick={checkNations} style={styles.settings}>
         Nations
         <input onChange={() => {}} type="checkbox" checked={settings.nations} />
       </div>
-      <div onClick={checkCities} style={styles.settings}>
+      <div className="button" onClick={checkCities} style={styles.settings}>
         Villes
         <input onChange={() => {}} type="checkbox" checked={settings.cities} />
       </div>
-      <div onClick={checkBattle} style={styles.settings}>
+      <div className="button" onClick={checkBattle} style={styles.settings}>
         Bataille
         <input onChange={() => {}} type="checkbox" checked={settings.battle} />
       </div>
-      <div onClick={checkAutoplay} style={styles.settings}>
+      <div className="button" onClick={checkAutoplay} style={styles.settings}>
         Lecture Auto
         <input
           onChange={() => {}}
@@ -86,10 +92,10 @@ const Menu = ({
           checked={settings.autoplay}
         />
       </div>
-      <div style={styles.settings} onClick={zoomMore}>
+      <div className="button" style={styles.settings} onClick={zoomMore}>
         🔍+
       </div>
-      <div style={styles.settings} onClick={zoomLess}>
+      <div className="button" style={styles.settings} onClick={zoomLess}>
         🔍-
       </div>
     </div>
