@@ -14,10 +14,8 @@ exports.whitelister = async (client, message, args, player) => {
       username: JSON.parse(process.env.KELNER_FTP).usr,
       password: JSON.parse(process.env.KELNER_FTP).pwd
     });
-    await sftp.fastGet(
-      "/whitelist.json",
-      __dirname + "../../../whitelist.json"
-    );
+    let file = __dirname + "/../../../whitelist.json";
+    await sftp.fastGet("/whitelist.json", file);
     let content = require(__dirname + "../../../whitelist.json");
 
     info = await (
@@ -34,16 +32,8 @@ exports.whitelister = async (client, message, args, player) => {
       (item, pos, self) =>
         self.findIndex(item2 => item2.name === item.name) === pos
     );
-    fs.writeFile(
-      __dirname + "../../../whitelist.json",
-      JSON.stringify(content),
-      "utf8",
-      () => {}
-    );
-    await sftp.fastPut(
-      __dirname + "../../../whitelist.json",
-      "/whitelist.json"
-    );
+    fs.writeFile(file, JSON.stringify(content), "utf8", () => {});
+    await sftp.fastPut(file, "/whitelist.json");
     await sftp.end();
   } catch (err) {
     console.log(err);
