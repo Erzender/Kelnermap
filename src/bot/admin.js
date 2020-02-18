@@ -14,7 +14,10 @@ exports.whitelister = async (client, message, args, player) => {
       username: JSON.parse(process.env.KELNER_FTP).usr,
       password: JSON.parse(process.env.KELNER_FTP).pwd
     });
-    await sftp.fastGet("/whitelist.json", __dirname + "../../../whitelist.json");
+    await sftp.fastGet(
+      "/whitelist.json",
+      __dirname + "../../../whitelist.json"
+    );
     let content = require(__dirname + "../../../whitelist.json");
 
     info = await (
@@ -47,5 +50,12 @@ exports.whitelister = async (client, message, args, player) => {
     return message.channel.send("ça s'est chié");
   }
   message.channel.send("Ok.");
-  message.channel.send("!mcmd whitelist reload");
+  let channel;
+  try {
+    channel = client.channels.get(JSON.parse(process.env.KELNER_BOT).console);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  channel.send("whitelist reload");
 };
