@@ -1,11 +1,11 @@
 import regions from "../../regions.json";
+import config from "../../config.json";
 
 const initialState = {
   selectedTile: null,
   selectedCity: null,
   selectedBattle: false,
-  mapMargins: { x: 0, z: 0 },
-  posZoom: { x: 0, z: 0 },
+  selectedPos: { x: 200, z: 200 },
   regionInfo: null,
   war: null,
   pvp: [],
@@ -15,10 +15,19 @@ const initialState = {
     cities: true,
     battle: true,
     autoplay: true,
-    zoom: 1
+    zoom: 3
   },
   nationColorMap: null,
   modal: null
+};
+
+initialState.mapMargins = {
+  x:
+    window.innerWidth / 2 -
+    initialState.selectedPos.x * initialState.settings.zoom,
+  z:
+    (window.innerHeight - 200) / 2 -
+    initialState.selectedPos.z * initialState.settings.zoom
 };
 
 const root = (state = initialState, action) => {
@@ -48,6 +57,10 @@ const root = (state = initialState, action) => {
       return {
         ...state,
         menuOpened: false,
+        selectedPos: {
+          x: (action.pos.x - state.mapMargins.x) / state.settings.zoom,
+          z: (action.pos.z - state.mapMargins.z) / state.settings.zoom
+        },
         mapMargins: {
           x: state.mapMargins.x - action.pos.x + window.innerWidth / 2,
           z: state.mapMargins.z - action.pos.z + (window.innerHeight - 200) / 2
@@ -59,6 +72,10 @@ const root = (state = initialState, action) => {
     case "MOVE_POSITION":
       return {
         ...state,
+        selectedPos: {
+          x: (action.pos.x - state.mapMargins.x) / state.settings.zoom,
+          z: (action.pos.z - state.mapMargins.z) / state.settings.zoom
+        },
         mapMargins: {
           x: state.mapMargins.x - action.pos.x + window.innerWidth / 2,
           z: state.mapMargins.z - action.pos.z + (window.innerHeight - 200) / 2
@@ -79,11 +96,6 @@ const root = (state = initialState, action) => {
         selectedTile: null,
         selectedCity: null,
         selectedBattle: true
-      };
-    case "POS_ZOOM":
-      return {
-        ...state,
-        posZoom: action.pos
       };
     case "TOGGLE_MENU":
       return {
@@ -108,13 +120,18 @@ const root = (state = initialState, action) => {
         }
       };
     case "ZOOM":
+      let zoom = action.modifier
+        ? state.settings.zoom * 1.1
+        : state.settings.zoom * 0.9;
       return {
         ...state,
         settings: {
           ...state.settings,
-          zoom: action.modifier
-            ? state.settings.zoom + 0.1
-            : state.settings.zoom - 0.1
+          zoom
+        },
+        mapMargins: {
+          x: window.innerWidth / 2 - state.selectedPos.x * zoom,
+          z: (window.innerHeight - 200) / 2 - state.selectedPos.z * zoom
         }
       };
     case "MODAL_LOADING":

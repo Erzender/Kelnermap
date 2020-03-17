@@ -21,19 +21,19 @@ const styles = {
   tilesCnt: {
     width: config.mapSize.x,
     height: config.mapSize.z,
-    transition: window.innerWidth > 800 ? "margin 1s" : "none"
+    //transition: window.innerWidth > 800 ? "margin 1s" : "none"
   },
   grid: {
     zindex: 1,
     position: "absolute",
     top: 0,
     left: 0,
-    transition: window.innerWidth > 800 ? "margin 1s" : "none",
+    //transition: window.innerWidth > 800 ? "margin 1s" : "none",
     display: "flex"
   }
 };
 
-const Map = ({ margins, dimensions }) => (
+const Map = ({ margins, dimensions, zoom }) => (
   <div style={styles.container}>
     <div
       style={{
@@ -41,6 +41,7 @@ const Map = ({ margins, dimensions }) => (
         marginLeft: margins.x,
         marginTop: margins.z
       }}
+      onWheel={zoom}
     >
       <img
         style={{ ...styles.mapImage, ...dimensions }}
@@ -71,6 +72,10 @@ const mapStateToProps = state => ({
   }
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  zoom: e =>
+    //dispatch({ type: "MOVE_POSITION", pos: { x: e.clientX, z: e.clientY } }) &&
+    dispatch({ type: "ZOOM", modifier: e.deltaY < 0 })
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

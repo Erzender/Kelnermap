@@ -25,6 +25,7 @@ const styles = {
     userSelect: "none"
   },
   settings: {
+    WebkitUserSelect: "none",
     fontWeight: "bold",
     margin: 5,
     cursor: "pointer",
@@ -36,13 +37,15 @@ const styles = {
     marginRight: 5
   },
   settingList: {
+    userSelect: "none",
     flexWrap: "wrap",
     display: "flex",
     flex: 1,
     flexDirection: "row",
     userSelect: "none",
     marginBottom: 20,
-    alignItems: "center"
+    alignItems: "center",
+    marginRight: 30,
   },
   firefouf: {
     display: "flex",
