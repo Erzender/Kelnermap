@@ -5,14 +5,8 @@ import config from "../../config.json";
 import cities from "../../cities.json";
 
 const geoToImage = (mod, x, z) => ({
-  x:
-    (config.mapSize.x * mod * (x - config.mapCorners.start.X * config.cali.x)) /
-    (Math.abs(config.mapCorners.end.X - config.mapCorners.start.X) *
-      config.cali.x),
-  z:
-    (config.mapSize.z * mod * (z - config.mapCorners.start.Z * config.cali.z)) /
-    (Math.abs(config.mapCorners.end.Z - config.mapCorners.start.Z) *
-      config.cali.z)
+  x: config.mapSize.x * mod * ((x - config.cali.xOf) / config.cali.x),
+  z: config.mapSize.z * mod * ((z - config.cali.zOf) / config.cali.z)
 });
 
 const coors = mod =>

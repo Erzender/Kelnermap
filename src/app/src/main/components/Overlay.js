@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import config from "../../config.json";
 import regions from "../../regions.json";
 import cities from "../../cities.json";
-import Zoom from "./Zoom";
 import Menu from "./Menu";
 import { getNationInfo } from "../duck/thunks";
 
@@ -89,7 +88,6 @@ const styles = {
 const Overlay = ({
   tileInfo,
   coor,
-  isZoom,
   image,
   menuClick,
   menu,
@@ -115,7 +113,6 @@ const Overlay = ({
         </div>
       </div>
       <div style={styles.bottomView}>
-        {isZoom && <Zoom />}
         {image && <img style={styles.cityImage} src={image} />}
         <div style={styles.infoBox}>
           <div>{coor}</div>
@@ -158,12 +155,13 @@ const mapStateToProps = state => {
       : null;
   return {
     menu: state.root.menuOpened,
-    isZoom: window.innerWidth >= 800 && state.root.selectedTile,
     image:
       window.innerWidth >= 800 && state.root.selectedCity
         ? config.api + "/lekelner/asset/city.png"
         : window.innerWidth >= 800 && state.root.selectedBattle
         ? config.api + "/lekelner/asset/battle.png"
+        : window.innerWidth >= 800 && state.root.selectedTile
+        ? config.api + "/lekelner/asset/parchment.png"
         : null,
     tileInfo: info && {
       name: info.n,
@@ -173,16 +171,12 @@ const mapStateToProps = state => {
     },
     coor: state.root.selectedTile
       ? parseInt(
-          config.cali.x *
-            (config.mapCorners.start.X + state.root.selectedTile.x) +
-            state.root.posZoom.x +
+          (config.cali.x * state.root.selectedPos.x) / config.mapSize.x +
             config.cali.xOf
         ) +
         ", " +
         parseInt(
-          config.cali.z *
-            (config.mapCorners.start.Z + state.root.selectedTile.z) +
-            state.root.posZoom.z +
+          (config.cali.z * state.root.selectedPos.z) / config.mapSize.z +
             config.cali.zOf
         )
       : state.root.selectedCity
