@@ -5,7 +5,8 @@ const client = new Discord.Client();
 const commands = {
   $profil: require("./profile"),
   $nation: require("./nation"),
-  $région: require("./region")
+  $région: require("./region"),
+  $édifice: require("./edifice")
 };
 
 const adminCommands = require("./admin");

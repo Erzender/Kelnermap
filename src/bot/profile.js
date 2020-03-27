@@ -5,7 +5,7 @@ const checkIsNationCitizen = require("../utils/citizenship")
 
 /*
 $profil voir [<identifiant discord>]
-$profil changer [image, description] <nouvelle valeur>
+$profil changer [image, description, minecraft] <nouvelle valeur>
 */
 
 const voir = async (client, message, args, player) => {
@@ -51,7 +51,11 @@ const voir = async (client, message, args, player) => {
       player.Identity !== null ? player.Identity.pic : null
     )
     .setDescription(player.dataValues.desc)
-    .setThumbnail(player.dataValues.picture)
+    .setThumbnail(player.dataValues.picture);
+  player.dataValues.minecraft &&
+    player.dataValues.minecraft.length &&
+    embed.addField("Pseudo Minecraft", player.dataValues.minecraft);
+  embed
     .addField("Réputation", player.dataValues.reputation)
     .addField("Nationalité", nation);
 
@@ -76,6 +80,8 @@ exports.changer = async (client, message, args, player) => {
       await player.update({ desc: args[3] });
     } else if (args[2] === "image") {
       await player.update({ picture: args[3] });
+    } else if (args[2] === "minecraft") {
+      await player.update({ minecraft: args[3] });
     } else {
       return message.channel.send("Pas compris.");
     }
