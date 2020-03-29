@@ -34,8 +34,12 @@ exports.getLeaderBoard = async () => {
   });
   let leaderBoard = players
     .map(player => ({
-      picture: player.dataValues.picture,
+      picture:
+        player.dataValues.picture !== null && player.dataValues.picture.length
+          ? player.dataValues.picture
+          : "https://vignette.wikia.nocookie.net/protagonists/images/d/d7/Alex.jpg/revision/latest?cb=20180206200812",
       desc: player.dataValues.desc,
+      name: player.dataValues.minecraft,
       reputation: player.dataValues.reputation,
       nation: player.Identity && player.Identity.dataValues.pic,
       nationId: player.Identity && player.Identity.dataValues.id

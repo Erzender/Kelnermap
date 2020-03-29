@@ -20,6 +20,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "discord.js": "^11.5.1",
+    "ejs": "^3.0.1",
     "express": "^4.17.1",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",

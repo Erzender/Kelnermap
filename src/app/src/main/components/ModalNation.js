@@ -5,7 +5,13 @@ import config from "../../config.json";
 import regions from "../../regions.json";
 
 const styles = {
-  container: { width: "100%" },
+  container: {
+    marginTop: 50,
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "80%",
+    minWidth: 800
+  },
   image: {
     width: 150
   },
