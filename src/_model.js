@@ -36,18 +36,21 @@ const Edificio = db.sequelize.define("edificio", {
   name: Sequelize.STRING,
   desc: { type: Sequelize.TEXT, defaultValue: "" },
   pic: Sequelize.STRING,
-  region: Sequelize.STRING
+  region: Sequelize.STRING,
+  mastodon: Sequelize.STRING
 });
 
 const Art = db.sequelize.define("art", {
   name: Sequelize.STRING,
   desc: { type: Sequelize.TEXT, defaultValue: "" },
-  pic: Sequelize.STRING
+  pic: Sequelize.STRING,
+  mastodon: Sequelize.STRING
 });
 
 const Shop = db.sequelize.define("shop", {
   name: Sequelize.STRING,
-  desc: { type: Sequelize.TEXT, defaultValue: "" }
+  desc: { type: Sequelize.TEXT, defaultValue: "" },
+  mastodon: Sequelize.STRING
 });
 
 Player.belongsTo(Nation, { as: "Identity" });

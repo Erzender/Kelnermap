@@ -41,10 +41,14 @@ const styles = {
     cursor: "pointer",
     userSelect: "none"
   },
-  content: { display: "flex", flex: 1, transition: "opacity 1s", margin: 10 }
+  content: {
+    display: "flex",
+    flex: 1,
+    transition: "opacity 1s"
+  }
 };
 
-const Modal = ({ open, loading, clickClose, isNation, isPVP }) => (
+const Modal = ({ open, loading, clickClose, isNation, isPVP, isFrame }) => (
   <div
     style={{
       ...styles.container,
@@ -59,6 +63,12 @@ const Modal = ({ open, loading, clickClose, isNation, isPVP }) => (
         opacity: !open || loading ? 0 : 1
       }}
     >
+      {isFrame && (
+        <iframe
+          style={{ width: "100%", borderStyle: "none", marginTop: 40 }}
+          src="http://localhost:8081/lekelner/explorer/edifices/2"
+        ></iframe>
+      )}
       {isNation && <Nation />}
       {isPVP && <ModalPVP />}
     </div>
@@ -83,7 +93,8 @@ const mapStateToProps = state => ({
   open: state.root.modal !== null,
   loading: state.root.modal && state.root.modal.type === "loading",
   isNation: state.root.modal && state.root.modal.type === "nation",
-  isPVP: state.root.modal && state.root.modal.type === "pvp"
+  isPVP: state.root.modal && state.root.modal.type === "pvp",
+  isFrame: state.root.modal && state.root.modal.type === "frame"
 });
 
 const mapDispatchToProps = dispatch => ({

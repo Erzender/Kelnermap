@@ -1,0 +1,21 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 80%; min-width: 800px;"
+>
+  <a style="text-decoration: none;" href="<%- "./" + edifice.id -%>"><h1 style="color: cadetblue;">🏠<%= edifice.name %></h1></a>
+  <% if (edifice.pic.length > 0) { %><img
+    src="<%- edifice.pic -%>"
+    style="width: 100%;"
+  /><% } %>
+  <div
+    style="display: flex; flex-direction: row; font-size: 14; align-items: center;"
+  >
+    <img class="miniProfile" src="<%- edifice.playerPicture -%>" />
+    <b><%= edifice.Creator.dataValues.minecraft %></b>
+  </div>
+  <div>📜Région : <a style="font-weight: bold;" href="<%- "/lekelner/explorer/regions/" + edifice.region.key -%>"><%=edifice.region.n %></a></div>
+  <div style="border-left: 3px solid gray; border-top-left-radius: 5px; border-bottom-left-radius: 5px; padding-left: 5px">
+    <% edifice.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
+</div>

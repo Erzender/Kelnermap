@@ -10,6 +10,7 @@ const regionInfo = require("./regionInfo.json");
 const nationUtils = require("./utils/nations");
 const regionUtils = require("./utils/regions");
 const cronUtils = require("./utils/cron");
+const resource = require("./pres/_entry");
 
 try {
   client.login(JSON.parse(process.env.KELNER_BOT).id);
@@ -18,6 +19,7 @@ try {
 }
 
 app.use(cors());
+app.set("view engine", "ejs");
 
 const router = express.Router();
 
@@ -52,6 +54,9 @@ router.get("/mapInfo", async function(req, res, next) {
 router.get("/nation/:id", async function(req, res, next) {
   res.json(await nationUtils.nationDesc(req.params.id));
 });
+
+app.set("views", __dirname + "/views");
+router.use("/explorer", resource);
 
 app.use("/lekelner", router);
 

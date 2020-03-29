@@ -5,7 +5,12 @@ import { getNationInfo } from "../duck/thunks";
 import config from "../../config.json";
 
 const styles = {
-  container: { width: "100%" },
+  container: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "80%",
+    minWidth: 800
+  },
   row: {
     display: "flex",
     flexDirection: "row",
@@ -35,8 +40,8 @@ const styles = {
   nationPic: {
     cursor: "pointer",
     boxShadow: "2px 5px 5px black",
-    marginTop: 30,
-    marginLeft: -40,
+    marginTop: 50,
+    marginLeft: -50,
     borderRadius: 100,
     width: 30,
     height: 30,
@@ -49,14 +54,23 @@ const styles = {
     backgroundRepeat: "no-repeat"
   },
   reput: { width: 50 },
+  name: {
+    maxHeight: 60,
+    overflow: "hidden",
+    fontFamily: "Enchanted Land",
+    fontSize: 35
+  },
   desc: {
     flex: 1,
+    height: 60,
     maxHeight: 60,
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
-    fontFamily: "Enchanted Land",
-    fontSize: 30
+    borderLeftStyle: "solid",
+    borderLeftColor: "white",
+    marginLeft: 10,
+    paddingLeft: 10
   }
 };
 
@@ -85,7 +99,14 @@ const ModalPVP = ({ pvp, clickNation }) => (
           )}
         </span>
         <div style={styles.reput}>{"⚔️" + player.reputation}</div>
-        <div style={styles.desc}>{player.desc}</div>
+        <div style={styles.name}>{player.name}</div>
+        <div style={styles.desc}>
+          {player.desc.split("\n").map(row => (
+            <div>
+              {row} <br />
+            </div>
+          ))}
+        </div>
       </div>
     ))}
   </div>
