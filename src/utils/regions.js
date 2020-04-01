@@ -1,5 +1,9 @@
-const data = require("../_model");
 const moment = require("moment");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
+const data = require("../_model");
+const regions = require("../regionInfo.json");
 
 moment.locale("fr");
 const getDateFormatted = date => moment(date).format("dddd D MMMM à LT");
@@ -46,4 +50,17 @@ exports.getLeaderBoard = async () => {
     }))
     .sort((p1, p2) => p1.reputation < p2.reputation);
   return leaderBoard;
+};
+
+exports.getRegionActivity = async () => {
+  let ret = regions;
+  let keys = Object.keys(regions);
+  let edifices = await data.Edificio.findAll({
+    where: { region: { [Op.in]: keys } }
+  });
+
+  keys.forEach(key => {
+    ret[key].edifices = edifices.filter(elem => elem.region === key).length;
+  });
+  return ret;
 };

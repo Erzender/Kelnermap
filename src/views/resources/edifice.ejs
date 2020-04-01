@@ -13,9 +13,13 @@
     <b><%= edifice.Creator.dataValues.minecraft %></b>
   </div>
   <div>📜Région : <a style="font-weight: bold;" href="<%- "/lekelner/explorer/regions/" + edifice.region.key -%>"><%=edifice.region.n %></a></div>
-  <div style="border-left: 3px solid gray; border-top-left-radius: 5px; border-bottom-left-radius: 5px; padding-left: 5px">
+  <div style="border-left: 3px solid gray; padding-left: 5px">
     <% edifice.desc.forEach(function(desc){ %>
     <p><%= desc %></p>
     <% }); %>
   </div>
+  <a style="display: flex; font-weight: bold; width: 100px; justify-content: center; background-color: cadetblue; margin-bottom: 10px; margin-top: 10px; padding: 5px; text-decoration: none;" href="<%- edifice.edit -%>">
+    Modifier ✍
+  </a>
+  <%- include ('mastodon') %>
 </div>

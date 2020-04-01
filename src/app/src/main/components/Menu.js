@@ -8,7 +8,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    backgroundColor: "#222222",
+    background: 'repeat url("' + config.api + '/lekelner/asset/wood.jpg")',
     zIndex: 2,
     height: 200,
     overflow: "hidden",
@@ -45,7 +45,7 @@ const styles = {
     userSelect: "none",
     marginBottom: 20,
     alignItems: "center",
-    marginRight: 30,
+    marginRight: 30
   },
   firefouf: {
     display: "flex",

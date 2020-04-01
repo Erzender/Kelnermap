@@ -3,10 +3,10 @@ const app = express();
 const client = require("./bot/_entry").client;
 const cors = require("cors");
 const cron = require("node-cron");
+const bodyParser = require("body-parser");
 
 const db = require("./_data");
 const bot = require("./bot/_entry");
-const regionInfo = require("./regionInfo.json");
 const nationUtils = require("./utils/nations");
 const regionUtils = require("./utils/regions");
 const cronUtils = require("./utils/cron");
@@ -22,6 +22,8 @@ app.use(cors());
 app.set("view engine", "ejs");
 
 const router = express.Router();
+
+router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/", function(req, res) {
   res.sendFile(__dirname + "/app/index.html");
@@ -43,7 +45,7 @@ router.get("/asset/:id", function(req, res, next) {
 
 router.get("/mapInfo", async function(req, res, next) {
   let info = {
-    regionInfo: regionInfo,
+    regionInfo: await regionUtils.getRegionActivity(),
     war: await regionUtils.getWar(),
     pvp: await regionUtils.getLeaderBoard(),
     nations: await nationUtils.getNationRawList()

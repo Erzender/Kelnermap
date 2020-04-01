@@ -40,7 +40,9 @@ exports.get = async function(req, res) {
   }));
   res.render("index", {
     route: "region",
-    info
+    info,
+    embedTitle: info.region.n,
+    embedImage: ""
   });
 };
 
