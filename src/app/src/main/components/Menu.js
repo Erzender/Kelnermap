@@ -13,7 +13,7 @@ const styles = {
     height: 200,
     overflow: "hidden",
     transition: "margin 0.5s",
-    boxShadow: "0px 1px 4px grey",
+    boxShadow: "0px 4px 10px black",
     color: "white"
   },
   closeWindow: {

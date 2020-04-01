@@ -85,8 +85,7 @@ exports.getEditor = async function(req, res) {
   });
 };
 
-exports.postEditor = async function(req, res) {
-  console.log(req.body);
+exports.postEditor = async function(req, res) {S
   let command = "$édifice ";
   command += req.body.id >= 0 ? "changer " + req.body.id + " " : "créer ";
   command +=
