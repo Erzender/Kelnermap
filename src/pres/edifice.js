@@ -86,6 +86,7 @@ exports.getEditor = async function(req, res) {
 };
 
 exports.postEditor = async function(req, res) {
+  console.log(req.body);
   let command = "$édifice ";
   command += req.body.id >= 0 ? "changer " + req.body.id + " " : "créer ";
   command +=
@@ -100,6 +101,9 @@ exports.postEditor = async function(req, res) {
     '" "' +
     req.body.mastodon +
     '"';
+  if (req.body.delete === "on") {
+    command = "$édifice supprimer " + req.body.id;
+  }
   let fields = { ...req.body, command };
   res.render("index", {
     route: "edificeEdit",

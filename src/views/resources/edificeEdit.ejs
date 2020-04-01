@@ -21,6 +21,9 @@
     <p>
         Lien du post mastodon <input name="mastodon" value="<%= fields.mastodon %>" />
     </p>
+    <% if (fields.id > 0) { %>
+      <p style="color: red;"><input name="delete" type="checkbox" /> Supprimer l'édifice ?</p>
+    <% } %>
     <input type="submit" value="Générer la commande Discord" />
   </form>
   <% if (fields.command.length > 0) { %>
