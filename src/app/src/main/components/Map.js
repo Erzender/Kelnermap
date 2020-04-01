@@ -12,7 +12,7 @@ const styles = {
     position: "relative",
     overflow: "hidden",
     flex: 1,
-    backgroundColor: "black"
+    background: "black"
   },
   mapImage: {
     userSelect: "none",
@@ -20,7 +20,7 @@ const styles = {
   },
   tilesCnt: {
     width: config.mapSize.x,
-    height: config.mapSize.z,
+    height: config.mapSize.z
     //transition: window.innerWidth > 800 ? "margin 1s" : "none"
   },
   grid: {
@@ -29,11 +29,24 @@ const styles = {
     top: 0,
     left: 0,
     //transition: window.innerWidth > 800 ? "margin 1s" : "none",
-    display: "flex"
+    display: "flex",
+    overflow: "hidden"
+  },
+  cloud: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.3,
+    width: 1000,
+    animationName: "mymove",
+    animationDuration: "200s",
+    animationIterationCount: "infinite"
   }
 };
 
-const Map = ({ margins, dimensions, zoom }) => (
+const Map = ({ margins, dimensions, curZoom, zoom }) => (
   <div style={styles.container}>
     <div
       style={{
@@ -57,6 +70,13 @@ const Map = ({ margins, dimensions, zoom }) => (
       >
         <Grid />
         <Cities />
+        <img
+          src={config.api + "/lekelner/asset/nuage.png"}
+          style={{
+            ...styles.cloud,
+            ...dimensions
+          }}
+        />
       </div>
     </div>
     <Overlay />
@@ -69,7 +89,8 @@ const mapStateToProps = state => ({
   dimensions: {
     width: config.mapSize.x * state.root.settings.zoom,
     height: config.mapSize.z * state.root.settings.zoom
-  }
+  },
+  curZoom: state.root.settings.zoom
 });
 
 const mapDispatchToProps = dispatch => ({
