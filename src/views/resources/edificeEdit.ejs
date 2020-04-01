@@ -1,0 +1,30 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 80%; min-width: 800px;"
+>
+  <h1 style="color: cadetblue;">🏠<%= fields.title %></h1>
+  <form id="fedifice" action="/lekelner/explorer/edifices/editeur" method="post">
+    <input name="id" style="display: none" value="<%= fields.id %>" />
+    <input name="title" style="display: none" value="<%= fields.title %>" />
+    <p>Nom <input name="name" value="<%= fields.name %>" /></p>
+    <p>
+        <div>Description</div>
+        <textarea rows="10" cols="50" height="400px" name="description" form="fedifice" ><%= fields.description %></textarea>
+    </p>
+    <p>Image <input name="picture" value="<%= fields.picture %>" /></p>
+    <p>
+        Région ou ville <select name="region" form="fedifice" >
+            <% regions.forEach(function(region){ %>
+                <option <%= region.key === fields.region ? 'selected' : '' %> value="<%= region.key %>"><%= region.value %></option>
+            <% }); %>
+        </select>
+    </p>
+    <p>
+        Lien du post mastodon <input name="mastodon" value="<%= fields.mastodon %>" />
+    </p>
+    <input type="submit" value="Générer la commande Discord" />
+  </form>
+  <% if (fields.command.length > 0) { %>
+    <div>Commande à copier dans Discord :</div>
+    <textarea cols="50" readonly onClick="this.select();" ><%= fields.command %></textarea>
+  <% } %>
+</div>

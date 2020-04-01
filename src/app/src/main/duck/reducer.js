@@ -149,6 +149,14 @@ const root = (state = initialState, action) => {
         ...state,
         modal: null
       };
+    case "SHOW_REGION":
+      return {
+        ...state,
+        modal: {
+          type: "frame",
+          frameLink: config.api + "/lekelner/explorer/regions/" + action.id
+        }
+      };
     default:
       return state;
   }

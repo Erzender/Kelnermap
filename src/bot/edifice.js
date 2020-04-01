@@ -33,7 +33,7 @@ const voir = async (client, message, args, player) => {
 exports.voir = voir;
 
 exports.créer = async (client, message, args, player) => {
-  if (args.length < 6) return message.channel.send("Pas compris.");
+  if (args.length < 7) return message.channel.send("Pas compris.");
 
   let edificio = null;
 
@@ -44,7 +44,8 @@ exports.créer = async (client, message, args, player) => {
       desc: args[3],
       pic: args[4],
       region: args[5],
-      CreatorDiscord: player.dataValues.discord
+      CreatorDiscord: player.dataValues.discord,
+      mastodon: args[6]
     });
   } catch (err) {
     console.log(err);
@@ -54,7 +55,7 @@ exports.créer = async (client, message, args, player) => {
 };
 
 exports.changer = async (client, message, args, player) => {
-  if (args.length < 7) return message.channel.send("Pas compris.");
+  if (args.length < 8) return message.channel.send("Pas compris.");
 
   let edifice = await data.Edificio.findByPk(args[2]);
   if (!edifice) return message.channel.send("Il existe pas ce truc.");
@@ -64,7 +65,8 @@ exports.changer = async (client, message, args, player) => {
     name: args[3],
     desc: args[4],
     pic: args[5],
-    region: args[6]
+    region: args[6],
+    mastodon: args[7]
   });
   voir(client, message, [null, null, edifice.dataValues.id], player);
 };

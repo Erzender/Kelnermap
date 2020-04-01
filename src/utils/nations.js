@@ -19,11 +19,6 @@ exports.nationDesc = async id => {
         model: data.Nation,
         as: "Homelands",
         where: { id: nation.dataValues.id }
-      },
-      {
-        model: data.Nation,
-        as: "Identity",
-        where: { id: nation.dataValues.id }
       }
     ]
   });

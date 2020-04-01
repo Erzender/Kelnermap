@@ -31,11 +31,11 @@ const styles = {
     flex: 1,
     width: 800,
     maxWidth: "100%",
-    backgroundColor: "#222222",
+    background: 'repeat url("' + config.api + '/lekelner/asset/wood.jpg")',
     color: "white",
     flexDirection: "row",
     display: "flex",
-    boxShadow: "0px -2px 4px grey",
+    boxShadow: "0px 0px 30px black",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10
   },
@@ -55,7 +55,8 @@ const styles = {
   desc: {
     fontSize: 20,
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    cursor: "pointer"
   },
   nationColor: {
     height: 20,
@@ -71,17 +72,30 @@ const styles = {
     marginRight: 30,
     borderRadius: 30,
     fontSize: 30,
-    backgroundColor: "#222222",
+    background: 'repeat url("' + config.api + '/lekelner/asset/wood.jpg")',
     color: "white",
     height: 40,
     width: 40,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: "0px 1px 2px grey",
+    boxShadow: "0px 0px 4px black",
     zIndex: 2,
     transition: "margin 0.5s",
     cursor: "pointer"
+  },
+  activity: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  edifices: {
+    backgroundColor: "cadetblue",
+    borderRadius: 20,
+    display: "flex",
+    width: 50,
+    justifyContent: "center",
+    height: 25,
+    margin: 5
   }
 };
 
@@ -92,9 +106,11 @@ const Overlay = ({
   menuClick,
   menu,
   clickNation,
+  clickRegion,
   pvpClick
 }) => {
   const onClickNation = () => clickNation(tileInfo.nationId);
+  const onClickRegion = () => clickRegion(tileInfo.region);
   return (
     <div style={styles.container}>
       <div style={styles.upperView}>
@@ -116,9 +132,26 @@ const Overlay = ({
         {image && <img style={styles.cityImage} src={image} />}
         <div style={styles.infoBox}>
           <div>{coor}</div>
-          {tileInfo && <div style={styles.title}>{tileInfo.name}</div>}
+          {tileInfo && (
+            <div
+              style={{
+                ...styles.title,
+                cursor: tileInfo && tileInfo.region ? "pointer" : "none"
+              }}
+              onClick={onClickRegion}
+            >
+              {tileInfo.name}
+            </div>
+          )}
+          <div style={styles.activity}>
+            {tileInfo && tileInfo.edifices ? (
+              <div style={styles.edifices}>🏠{tileInfo.edifices}</div>
+            ) : (
+              <div />
+            )}
+          </div>
           {tileInfo && tileInfo.nationName && (
-            <div style={styles.desc}>
+            <div onClick={onClickNation} style={styles.desc}>
               <div
                 style={{
                   ...styles.nationColor,
@@ -126,10 +159,7 @@ const Overlay = ({
                 }}
               />
               Domination :
-              <div
-                onClick={onClickNation}
-                style={{ fontWeight: "bold", marginLeft: 5, cursor: "pointer" }}
-              >
+              <div style={{ fontWeight: "bold", marginLeft: 5 }}>
                 {tileInfo.nationName}
               </div>
             </div>
@@ -143,6 +173,8 @@ const Overlay = ({
 const mapStateToProps = state => {
   let region = state.root.selectedTile
     ? regions[state.root.selectedTile.z][state.root.selectedTile.x]
+    : state.root.selectedCity
+    ? state.root.selectedCity
     : null;
   let info =
     region && state.root.regionInfo && state.root.regionInfo[region]
@@ -165,6 +197,8 @@ const mapStateToProps = state => {
         : null,
     tileInfo: info && {
       name: info.n,
+      region,
+      edifices: info.edifices,
       nationId: info.nation && info.nation.id,
       nationName: info.nation && info.nation.name,
       nationColor: info.nation && info.nation.color
@@ -192,6 +226,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   menuClick: () => dispatch({ type: "TOGGLE_MENU" }),
   clickNation: id => dispatch(getNationInfo(id)),
+  clickRegion: id => id && dispatch({ type: "SHOW_REGION", id }),
   pvpClick: () => dispatch({ type: "TOGGLE_PVP" })
 });
 

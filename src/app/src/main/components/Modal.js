@@ -13,7 +13,7 @@ const styles = {
     right: 0,
     bottom: 0,
     display: "flex",
-    backgroundColor: "#222222",
+    background: 'repeat url("' + config.api + '/lekelner/asset/wood.jpg")',
     zIndex: 2,
     transition: "height 0.3s",
     color: "white",
@@ -48,7 +48,15 @@ const styles = {
   }
 };
 
-const Modal = ({ open, loading, clickClose, isNation, isPVP, isFrame }) => (
+const Modal = ({
+  open,
+  loading,
+  clickClose,
+  isNation,
+  isPVP,
+  isFrame,
+  frameLink
+}) => (
   <div
     style={{
       ...styles.container,
@@ -66,7 +74,7 @@ const Modal = ({ open, loading, clickClose, isNation, isPVP, isFrame }) => (
       {isFrame && (
         <iframe
           style={{ width: "100%", borderStyle: "none", marginTop: 40 }}
-          src="http://localhost:8081/lekelner/explorer/edifices/2"
+          src={frameLink}
         ></iframe>
       )}
       {isNation && <Nation />}
@@ -94,7 +102,8 @@ const mapStateToProps = state => ({
   loading: state.root.modal && state.root.modal.type === "loading",
   isNation: state.root.modal && state.root.modal.type === "nation",
   isPVP: state.root.modal && state.root.modal.type === "pvp",
-  isFrame: state.root.modal && state.root.modal.type === "frame"
+  isFrame: state.root.modal && state.root.modal.type === "frame",
+  frameLink: state.root.modal && state.root.modal.frameLink
 });
 
 const mapDispatchToProps = dispatch => ({

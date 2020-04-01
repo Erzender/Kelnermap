@@ -9,6 +9,8 @@ router.get("/", function(req, res) {
 });
 
 router.get("/edifices", edifice.getAll);
+router.get("/edifices/editeur", edifice.getEditor);
+router.post("/edifices/editeur", edifice.postEditor);
 router.get("/edifices/:id", edifice.get);
 
 router.get("/regions", region.getAll);

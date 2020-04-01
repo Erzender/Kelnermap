@@ -1,12 +1,17 @@
 <html>
   <head>
-    <title>Le Kelner</title>
+    <title>Le Kelner : Explorer</title>
     <link rel="stylesheet" href="/lekelner/styles" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="<% embedTitle %>" />
+    <meta property="twitter:description" content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse.">
+    <meta property="twitter:image" content="<%- embedImage -%>" />
   </head>
 
   <body>
     <% if (route === "404") { %> <%- include ('error') %> <% } %>
     <% if (route === "edifice") { %> <%- include ('resources/edifice') %> <% } %>
     <% if (route === "region") { %> <%- include ('resources/region') %> <% } %>
+    <% if (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% } %>
   </body>
 </html>
