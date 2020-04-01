@@ -70,3 +70,14 @@ exports.changer = async (client, message, args, player) => {
   });
   voir(client, message, [null, null, edifice.dataValues.id], player);
 };
+
+exports.supprimer = async (client, message, args, player) => {
+  if (args.length < 3) return message.channel.send("Pas compris.");
+
+  let edifice = await data.Edificio.findByPk(args[2]);
+  if (!edifice) return message.channel.send("Il existe pas ce truc.");
+  if (edifice.dataValues.CreatorDiscord !== player.dataValues.discord)
+    return message.channel.send("C'est pas ta construction wesh.");
+  await edifice.destroy();
+  return message.channel.send("L'édifice de pute à été éliminé.");
+};
