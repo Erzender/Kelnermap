@@ -68,7 +68,7 @@ exports.get = async function(req, res) {
   };
   res.render("index", {
     route: "player",
-    embedTitle: info.name,
+    embedTitle: "Joueur : " + info.name,
     embedImage: info.picture,
     info
   });

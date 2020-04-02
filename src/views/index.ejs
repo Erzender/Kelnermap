@@ -1,18 +1,44 @@
 <html>
   <head>
-    <title>Le Kelner : Explorer</title>
+    <title>Le Kelner : <%= embedTitle %></title>
     <link rel="stylesheet" href="/lekelner/styles" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="<% embedTitle %>" />
-    <meta property="twitter:description" content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse.">
-    <meta property="twitter:image" content="<%- embedImage -%>" />
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="<%= embedTitle %>" />
+    <meta
+      name="description"
+      content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://erzender.freeboxos.fr/lekelner/" />
+    <meta property="og:title" content="<%= embedTitle %>" />
+    <meta
+      property="og:description"
+      content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse."
+    />
+    <meta property="og:image" content="<%- embedImage -%>" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://erzender.freeboxos.fr/lekelner"
+    />
+    <meta property="twitter:title" content="<%= embedTitle %>" />
+    <meta
+      property="twitter:description"
+      content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse."
+    />
+    <meta property="twitter:image" content="h<%- embedImage -%>" />
   </head>
 
   <body>
-    <% if (route === "404") { %> <%- include ('error') %> <% } %>
-    <% if (route === "edifice") { %> <%- include ('resources/edifice') %> <% } %>
-    <% if (route === "region") { %> <%- include ('resources/region') %> <% } %>
-    <% if (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% } %>
-    <% if (route === "player") { %> <%- include ('resources/player') %> <% } %>
+    <% if (route === "404") { %> <%- include ('error') %> <% } %> <% if (route
+    === "edifice") { %> <%- include ('resources/edifice') %> <% } %> <% if
+    (route === "region") { %> <%- include ('resources/region') %> <% } %> <% if
+    (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% }
+    %> <% if (route === "player") { %> <%- include ('resources/player') %> <% }
+    %>
   </body>
 </html>
