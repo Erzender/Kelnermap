@@ -28,6 +28,7 @@ const styles = {
     overflow: "hidden"
   },
   profilePic: {
+    cursor: "pointer",
     borderRadius: 100,
     width: 50,
     height: 50,
@@ -46,7 +47,7 @@ const styles = {
   }
 };
 
-const Nation = ({ nationInfo, territory, autoplay }) => (
+const Nation = ({ nationInfo, territory, autoplay, onPlayerClick }) => (
   <div style={styles.container}>
     {nationInfo.hymne && (
       <audio controls autoPlay={autoplay} src={nationInfo.hymne}></audio>
@@ -61,10 +62,11 @@ const Nation = ({ nationInfo, territory, autoplay }) => (
     <div style={styles.citizens}>
       {nationInfo.citizens.map(citizen => (
         <span
-          key={citizen}
+          key={citizen.id}
+          onClick={() => onPlayerClick(citizen.id)}
           style={{
             ...styles.profilePic,
-            backgroundImage: "url(" + citizen + ")"
+            backgroundImage: "url(" + citizen.pic + ")"
           }}
         ></span>
       ))}
@@ -106,6 +108,8 @@ const mapStateToProps = state => ({
     " km²"
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  onPlayerClick: id => dispatch({ type: "SHOW_PLAYER", id })
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nation);

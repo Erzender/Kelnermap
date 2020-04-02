@@ -66,8 +66,6 @@ const styles = {
     height: 60,
     maxHeight: 60,
     overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
     borderLeftStyle: "solid",
     borderLeftColor: "white",
     marginLeft: 10,
@@ -81,7 +79,7 @@ const ModalPVP = ({ pvp, clickNation, clickPlayer }) => (
     {pvp.map((player, i) => (
       <div style={styles.row} key={i}>
         <div style={{ ...styles.number, fontSize: i === 0 ? 60 : 40 }}>
-          {"#" + (i + 1)}
+          {i === 0 ? "🏆" : "#" + (i + 1)}
         </div>
         <span
           onClick={() => clickPlayer(player.id)}
