@@ -63,7 +63,7 @@ exports.get = async function(req, res) {
       }))
       .filter(elem => elem.edifices.length > 0)
       .sort((a, b) => {
-        return a.edifices.length < b.edifices.length;
+        return  b.edifices.length - a.edifices.length;
       })
   };
   res.render("index", {
