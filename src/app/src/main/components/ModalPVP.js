@@ -26,6 +26,7 @@ const styles = {
     marginRight: 10
   },
   profilePic: {
+    cursor: "pointer",
     borderRadius: 100,
     width: 60,
     height: 60,
@@ -74,7 +75,7 @@ const styles = {
   }
 };
 
-const ModalPVP = ({ pvp, clickNation }) => (
+const ModalPVP = ({ pvp, clickNation, clickPlayer }) => (
   <div style={styles.container}>
     <h1>Classement PVP</h1>
     {pvp.map((player, i) => (
@@ -83,6 +84,7 @@ const ModalPVP = ({ pvp, clickNation }) => (
           {"#" + (i + 1)}
         </div>
         <span
+          onClick={() => clickPlayer(player.id)}
           style={{
             ...styles.profilePic,
             backgroundImage: "url(" + player.picture + ")"
@@ -101,8 +103,8 @@ const ModalPVP = ({ pvp, clickNation }) => (
         <div style={styles.reput}>{"⚔️" + player.reputation}</div>
         <div style={styles.name}>{player.name}</div>
         <div style={styles.desc}>
-          {player.desc.split("\n").map(row => (
-            <div>
+          {player.desc.split("\n").map((row, i) => (
+            <div key={i}>
               {row} <br />
             </div>
           ))}
@@ -115,7 +117,8 @@ const ModalPVP = ({ pvp, clickNation }) => (
 const mapStateToProps = state => ({ pvp: state.root.pvp });
 
 const mapDispatchToProps = dispatch => ({
-  clickNation: id => dispatch(getNationInfo(id))
+  clickNation: id => dispatch(getNationInfo(id)),
+  clickPlayer: id => dispatch({ type: "SHOW_PLAYER", id })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalPVP);

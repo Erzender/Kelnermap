@@ -12,7 +12,9 @@ exports.get = async function(req, res) {
     ]
   });
   if (edifice === null) {
-    return res.status(404).render("index", { route: "404" });
+    return res
+      .status(404)
+      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
   }
   let mastodon = await mastodonUtils.getComments(edifice.dataValues.mastodon);
 
@@ -64,7 +66,9 @@ exports.getEditor = async function(req, res) {
     });
 
     if (edifice === null) {
-      return res.status(404).render("index", { route: "404" });
+      return res
+        .status(404)
+        .render("index", { route: "404", embedTitle: "404", embedImage: "" });
     }
 
     fields.id = edifice.dataValues.id;
@@ -85,7 +89,8 @@ exports.getEditor = async function(req, res) {
   });
 };
 
-exports.postEditor = async function(req, res) {S
+exports.postEditor = async function(req, res) {
+  S;
   let command = "$édifice ";
   command += req.body.id >= 0 ? "changer " + req.body.id + " " : "créer ";
   command +=

@@ -7,7 +7,7 @@ const regions = require("../regionInfo.json");
 exports.get = async function(req, res) {
   let region = regions[req.params.id];
   if (!region) {
-    return res.status(404).render("index", { route: "404" });
+    return res.status(404).render("index", { route: "404", embedTitle: "404", embedImage: ""  });
   }
   let info = { region: { ...region, key: req.params.id } };
   info.domination = await data.Nation.findOne({

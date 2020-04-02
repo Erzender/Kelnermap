@@ -32,7 +32,7 @@ div.button:active {
   }
   90% {
     margin-left: 100%;
-    top: -30%;
+    top: -80%;
   }
   95% {
     margin-left: 100%;
@@ -67,6 +67,20 @@ a {
   border-radius: 100px;
   width: 20px;
   height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 5px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.bigProfile {
+  border-radius: 10px;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;

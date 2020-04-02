@@ -41,7 +41,7 @@ const styles = {
     opacity: 0.3,
     width: 1000,
     animationName: "mymove",
-    animationDuration: "200s",
+    animationDuration: "400s",
     animationIterationCount: "infinite"
   }
 };
