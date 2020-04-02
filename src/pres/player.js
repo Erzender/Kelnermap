@@ -62,9 +62,8 @@ exports.get = async function(req, res) {
           }))
       }))
       .filter(elem => elem.edifices.length > 0)
-      .sort((a, b) => a.edifices.length < b.edifices.length)
+      .sort((a, b) => a.edifices.length > b.edifices.length)
   };
-  console.log(info.edifices);
   res.render("index", {
     route: "player",
     embedTitle: info.name,
