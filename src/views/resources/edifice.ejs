@@ -6,12 +6,13 @@
     src="<%- edifice.pic -%>"
     style="width: 100%;"
   /><% } %>
-  <div
+  <a
+    href="/lekelner/explorer/joueurs/<%= edifice.Creator.dataValues.discord %> "
     style="display: flex; flex-direction: row; font-size: 14; align-items: center;"
   >
     <img class="miniProfile" src="<%- edifice.playerPicture -%>" />
     <b><%= edifice.Creator.dataValues.minecraft %></b>
-  </div>
+  </a>
   <div>📜Région : <a style="font-weight: bold;" href="<%- "/lekelner/explorer/regions/" + edifice.region.key -%>"><%=edifice.region.n %></a></div>
   <div style="border-left: 3px solid gray; padding-left: 5px">
     <% edifice.desc.forEach(function(desc){ %>

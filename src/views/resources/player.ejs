@@ -1,0 +1,46 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 80%; min-width: 800px;"
+>
+  <img class="bigProfile" src="<%= info.picture %> " />
+  <a style="text-decoration: none;" href="<%= info.link %> "
+    ><h1 style="color: darkred">🍪<%= info.name %></h1></a
+  >
+  <div style="border-left: 3px solid gray; padding-left: 5px">
+    <% info.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
+  <h2>Nation🏳️</h2>
+  <% if (info.nationName.length) { %>
+  <div
+    style="display: flex; margin-bottom: 10px; flex-direction: row; align-items: center; border-left: <%= info.nationColor %> solid 20px; padding-left: 10px;"
+  >
+    <b><%= info.nationName %> </b>
+    <img class="miniProfile" src="<%= info.nationPic %> " />
+  </div>
+  <% } %>
+
+  <div>
+    Citoyen de : <% info.citizenship.forEach(function(nat){ %> <%= nat %> | <%
+    }); %>
+  </div>
+  <h2>PVP⚔️</h2>
+  <div><%= info.pvpScore %> points de réputation</div>
+  <div>
+    <b style="font-size: 20px;">#<%= info.pvpRanking %></b> au classement
+  </div>
+  <h2 style="color:cadetblue;">🏠Edifices : <%= info.edificesNum %></h2>
+  <a
+    style="display: flex; font-weight: bold; width: 250px; justify-content: center; background-color: cadetblue; margin-bottom: 10px; margin-top: 10px; padding: 5px; text-decoration: none;"
+    href="/lekelner/explorer/edifices/editeur"
+  >
+    ＋Enregistrer un édifice
+  </a>
+  <div style="border-left: cadetblue 3px solid; padding-left: 5px;">
+    <% info.edifices.forEach(function(list){ %>
+    <h3><%= list.region.n %></h3>
+    <% list.edifices.forEach(function(edifice){ %>
+    <a href="<%- edifice.link -%>"><%= edifice.name %></a>
+    <% }); %> <% }); %>
+  </div>
+</div>

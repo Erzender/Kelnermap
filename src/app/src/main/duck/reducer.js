@@ -157,6 +157,14 @@ const root = (state = initialState, action) => {
           frameLink: config.api + "/lekelner/explorer/regions/" + action.id
         }
       };
+    case "SHOW_PLAYER":
+      return {
+        ...state,
+        modal: {
+          type: "frame",
+          frameLink: config.api + "/lekelner/explorer/joueurs/" + action.id
+        }
+      };
     default:
       return state;
   }
