@@ -8,7 +8,7 @@ const styles = {
     marginTop: 50,
     marginLeft: "auto",
     marginRight: "auto",
-    width: 800,
+    width: 1000,
     maxWidth: "100%"
   },
   image: {

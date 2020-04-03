@@ -8,7 +8,7 @@ const styles = {
   container: {
     marginLeft: "auto",
     marginRight: "auto",
-    width: 800,
+    width: 1000,
     maxWidth: "100%"
   },
   row: {
@@ -39,7 +39,6 @@ const styles = {
     backgroundRepeat: "no-repeat"
   },
   nationPic: {
-    cursor: "pointer",
     boxShadow: "2px 5px 5px black",
     marginTop: 50,
     marginLeft: -50,
@@ -73,7 +72,7 @@ const styles = {
   }
 };
 
-const ModalPVP = ({ pvp, clickNation, clickPlayer }) => (
+const ModalPVP = ({ pvp, clickPlayer }) => (
   <div style={styles.container}>
     <h1>Classement PVP</h1>
     {pvp.map((player, i) => (
@@ -90,7 +89,6 @@ const ModalPVP = ({ pvp, clickNation, clickPlayer }) => (
         >
           {player.nation && (
             <div
-              onClick={() => clickNation(player.nationId)}
               style={{
                 ...styles.nationPic,
                 backgroundImage: "url(" + player.nation + ")"
@@ -115,7 +113,6 @@ const ModalPVP = ({ pvp, clickNation, clickPlayer }) => (
 const mapStateToProps = state => ({ pvp: state.root.pvp });
 
 const mapDispatchToProps = dispatch => ({
-  clickNation: id => dispatch(getNationInfo(id)),
   clickPlayer: id => dispatch({ type: "SHOW_PLAYER", id })
 });
 

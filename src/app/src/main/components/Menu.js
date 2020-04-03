@@ -87,14 +87,6 @@ const Menu = ({
         Bataille
         <input onChange={() => {}} type="checkbox" checked={settings.battle} />
       </div>
-      <div className="button" onClick={checkAutoplay} style={styles.settings}>
-        Lecture Auto
-        <input
-          onChange={() => {}}
-          type="checkbox"
-          checked={settings.autoplay}
-        />
-      </div>
       <div className="button" style={styles.settings} onClick={zoomMore}>
         🔍+
       </div>

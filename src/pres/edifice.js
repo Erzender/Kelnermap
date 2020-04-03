@@ -31,7 +31,7 @@ exports.get = async function(req, res) {
         edifice.dataValues.Creator.dataValues.picture !== null &&
         edifice.dataValues.Creator.dataValues.picture.length
           ? edifice.dataValues.Creator.dataValues.picture
-          : "https://vignette.wikia.nocookie.net/protagonists/images/d/d7/Alex.jpg/revision/latest?cb=20180206200812",
+          : "/lekelner/asset/Alex.webp",
       region: {
         ...regions[edifice.dataValues.region],
         key: edifice.dataValues.region
