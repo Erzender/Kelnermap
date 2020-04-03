@@ -12,15 +12,15 @@ const styles = {
     position: "relative",
     overflow: "hidden",
     flex: 1,
-    background: "black"
+    background: "black",
   },
   mapImage: {
     userSelect: "none",
-    zIndex: -1
+    zIndex: -1,
   },
   tilesCnt: {
     width: config.mapSize.x,
-    height: config.mapSize.z
+    height: config.mapSize.z,
     //transition: window.innerWidth > 800 ? "margin 1s" : "none"
   },
   grid: {
@@ -30,7 +30,7 @@ const styles = {
     left: 0,
     //transition: window.innerWidth > 800 ? "margin 1s" : "none",
     display: "flex",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   cloud: {
     position: "absolute",
@@ -42,8 +42,8 @@ const styles = {
     width: 1000,
     animationName: "mymove",
     animationDuration: "400s",
-    animationIterationCount: "infinite"
-  }
+    animationIterationCount: "infinite",
+  },
 };
 
 const Map = ({ margins, dimensions, curZoom, zoom }) => (
@@ -52,7 +52,7 @@ const Map = ({ margins, dimensions, curZoom, zoom }) => (
       style={{
         ...styles.tilesCnt,
         marginLeft: margins.x,
-        marginTop: margins.z
+        marginTop: margins.z,
       }}
       onWheel={zoom}
     >
@@ -65,18 +65,20 @@ const Map = ({ margins, dimensions, curZoom, zoom }) => (
           ...styles.grid,
           ...dimensions,
           marginLeft: margins.x,
-          marginTop: margins.z
+          marginTop: margins.z,
         }}
       >
         <Grid />
         <Cities />
-        <img
-          src={config.api + "/lekelner/asset/nuage.png"}
-          style={{
-            ...styles.cloud,
-            ...dimensions
-          }}
-        />
+        {window.innerWidth > 800 && (
+          <img
+            src={config.api + "/lekelner/asset/nuage.png"}
+            style={{
+              ...styles.cloud,
+              ...dimensions,
+            }}
+          />
+        )}
       </div>
     </div>
     <Overlay />
@@ -84,19 +86,19 @@ const Map = ({ margins, dimensions, curZoom, zoom }) => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   margins: state.root.mapMargins,
   dimensions: {
     width: config.mapSize.x * state.root.settings.zoom,
-    height: config.mapSize.z * state.root.settings.zoom
+    height: config.mapSize.z * state.root.settings.zoom,
   },
-  curZoom: state.root.settings.zoom
+  curZoom: state.root.settings.zoom,
 });
 
-const mapDispatchToProps = dispatch => ({
-  zoom: e =>
+const mapDispatchToProps = (dispatch) => ({
+  zoom: (e) =>
     //dispatch({ type: "MOVE_POSITION", pos: { x: e.clientX, z: e.clientY } }) &&
-    dispatch({ type: "ZOOM", modifier: e.deltaY < 0 })
+    dispatch({ type: "ZOOM", modifier: e.deltaY < 0 }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
