@@ -1,5 +1,5 @@
 const data = require("../_model");
-const regions = require("../regionInfo.json");
+const regions = require("../../config/regionInfo.json");
 const mastodonUtils = require("../utils/mastodon");
 
 exports.get = async function(req, res) {

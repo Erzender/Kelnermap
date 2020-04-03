@@ -8,7 +8,7 @@ const regionUtils = require("../utils/regions");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 const getNationCitizens = require("../utils/citizenship").getNationCitizens;
-const regions1 = require("../regionInfo.json");
+const regions1 = require("../../config/regionInfo.json");
 
 /*
 $région revendiquer [<numéro région>] [--force]

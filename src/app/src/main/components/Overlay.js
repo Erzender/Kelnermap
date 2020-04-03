@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import config from "../../config.json";
-import regions from "../../regions.json";
-import cities from "../../cities.json";
+import config from "../../../config.json";
 import Menu from "./Menu";
 import { getNationInfo } from "../duck/thunks";
 
@@ -16,14 +14,14 @@ const styles = {
     bottom: 0,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   upperView: {
     flex: 1,
     width: "100%",
     display: "flex",
     alignItems: "flex-end",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   bottomView: {
     zIndex: 2,
@@ -37,26 +35,26 @@ const styles = {
     display: "flex",
     boxShadow: "0px 0px 30px black",
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10
+    borderTopRightRadius: 10,
   },
   infoBox: {
-    padding: 10
+    padding: 10,
   },
   title: {
     fontFamily: "Enchanted Land",
     fontSize: 40,
-    height: 40
+    height: 40,
   },
   cityImage: {
     height: 180,
     width: 180,
-    margin: 10
+    margin: 10,
   },
   desc: {
     fontSize: 20,
     display: "flex",
     flexDirection: "row",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   nationColor: {
     height: 20,
@@ -64,7 +62,7 @@ const styles = {
     borderStyle: "solid",
     borderWidth: 3,
     borderColor: "white",
-    marginRight: 5
+    marginRight: 5,
   },
   menuButton: {
     userSelect: "none",
@@ -82,11 +80,11 @@ const styles = {
     boxShadow: "0px 0px 4px black",
     zIndex: 2,
     transition: "margin 0.5s",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   activity: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   edifices: {
     backgroundColor: "cadetblue",
@@ -95,8 +93,8 @@ const styles = {
     width: 50,
     justifyContent: "center",
     height: 25,
-    margin: 5
-  }
+    margin: 5,
+  },
 };
 
 const Overlay = ({
@@ -107,7 +105,7 @@ const Overlay = ({
   menu,
   clickNation,
   clickRegion,
-  pvpClick
+  pvpClick,
 }) => {
   const onClickNation = () => clickNation(tileInfo.nationId);
   const onClickRegion = () => clickRegion(tileInfo.region);
@@ -136,7 +134,7 @@ const Overlay = ({
             <div
               style={{
                 ...styles.title,
-                cursor: tileInfo && tileInfo.region ? "pointer" : "none"
+                cursor: tileInfo && tileInfo.region ? "pointer" : "none",
               }}
               onClick={onClickRegion}
             >
@@ -155,7 +153,7 @@ const Overlay = ({
               <div
                 style={{
                   ...styles.nationColor,
-                  backgroundColor: tileInfo.nationColor
+                  backgroundColor: tileInfo.nationColor,
                 }}
               />
               Domination :
@@ -170,9 +168,9 @@ const Overlay = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   let region = state.root.selectedTile
-    ? regions[state.root.selectedTile.z][state.root.selectedTile.x]
+    ? state.root.regions[state.root.selectedTile.z][state.root.selectedTile.x]
     : state.root.selectedCity
     ? state.root.selectedCity
     : null;
@@ -201,7 +199,7 @@ const mapStateToProps = state => {
       edifices: info.edifices,
       nationId: info.nation && info.nation.id,
       nationName: info.nation && info.nation.name,
-      nationColor: info.nation && info.nation.color
+      nationColor: info.nation && info.nation.color,
     },
     coor: state.root.selectedTile
       ? parseInt(
@@ -214,20 +212,20 @@ const mapStateToProps = state => {
             config.cali.zOf
         )
       : state.root.selectedCity
-      ? cities[state.root.selectedCity].x +
+      ? state.root.cities[state.root.selectedCity].x +
         ", " +
-        cities[state.root.selectedCity].z
+        state.root.cities[state.root.selectedCity].z
       : state.root.selectedBattle
       ? state.root.war.stronghold.x + ", " + state.root.war.stronghold.z
-      : ""
+      : "",
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   menuClick: () => dispatch({ type: "TOGGLE_MENU" }),
-  clickNation: id => dispatch(getNationInfo(id)),
-  clickRegion: id => id && dispatch({ type: "SHOW_REGION", id }),
-  pvpClick: () => dispatch({ type: "TOGGLE_PVP" })
+  clickNation: (id) => dispatch(getNationInfo(id)),
+  clickRegion: (id) => id && dispatch({ type: "SHOW_REGION", id }),
+  pvpClick: () => dispatch({ type: "TOGGLE_PVP" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overlay);

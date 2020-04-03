@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { getNationInfo } from "../duck/thunks";
 
-import config from "../../config.json";
+import config from "../../../config.json";
 
 const styles = {
   container: {
     marginLeft: "auto",
     marginRight: "auto",
-    width: "80%",
-    minWidth: 800
+    width: 800,
+    maxWidth: "100%"
   },
   row: {
     display: "flex",
