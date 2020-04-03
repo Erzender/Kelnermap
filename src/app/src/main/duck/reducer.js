@@ -15,7 +15,6 @@ const initialState = {
     nations: true,
     cities: true,
     battle: true,
-    autoplay: true,
     zoom: 2,
   },
   nationColorMap: null,
@@ -166,6 +165,14 @@ const root = (state = initialState, action) => {
         modal: {
           type: "frame",
           frameLink: config.api + "/lekelner/explorer/joueurs/" + action.id,
+        },
+      };
+    case "SHOW_NATION":
+      return {
+        ...state,
+        modal: {
+          type: "frame",
+          frameLink: config.api + "/lekelner/explorer/nations/" + action.id,
         },
       };
     default:

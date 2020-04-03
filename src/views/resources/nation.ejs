@@ -1,0 +1,47 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
+>
+  <div style="display: flex; flex-direction: row; align-items: center;">
+    <% if (info.pic) { %>
+    <span
+      class="bigProfile"
+      style="background-image: url('<%= info.pic %>');"
+    ></span>
+    <% } %>
+    <a style="flex: 1; text-align: center;" href="./<%= info.id %>"
+      ><h1><%= info.name %></h1></a
+    >
+  </div>
+  <hr style="background-color: black; height: 20px;" />
+  <h3>Superficie</h3>
+  <%= info.size %> km²<br />
+  <h3>Hymne national</h3>
+  <% if (info.pic) { %>
+  <audio controls="" src="<%= info.anthem %>"></audio>
+  <% } %>
+  <h3>Dirigeants et habitants :</h3>
+  <div style="display: flex; flex-direction: row;">
+    <% info.citizens.forEach(function(player){ %>
+    <a
+      href="/lekelner/explorer/joueurs/<%= player.id %>"
+      class="bigProfile"
+      style="background-image: url('<%= player.pic %>');"
+    ></a>
+    <% }); %>
+  </div>
+  <div style="display: flex; flex-direction: row;">
+    <% info.inhabs.forEach(function(player){ %>
+    <a
+      href="/lekelner/explorer/joueurs/<%= player.id %>"
+      class="miniProfile"
+      style="background-image: url('<%= player.pic %>');"
+    ></a>
+    <% }); %>
+  </div>
+  <hr />
+  <div style="border-left: 3px solid gray; padding-left: 5px;">
+    <% info.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
+</div>

@@ -50,7 +50,7 @@ const Grid = ({
                   ? "thick solid #330000"
                   : "none",
               opacity:
-                regions.length && regions[i][j] === selectedRegion ? 1 : 0.5,
+                regions.length && regions[i][j] === selectedRegion ? 1 : 0.3,
               backgroundColor:
                 regions.length && regions[i][j] === selectedRegion
                   ? "rgba(100, 50, 0, 0.5)"

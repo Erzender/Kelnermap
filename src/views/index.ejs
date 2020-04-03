@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Le Kelner : <%= embedTitle %></title>
+    <title>Le Kelner | <%= embedTitle %></title>
     <link rel="stylesheet" href="/lekelner/styles" />
     <!-- Primary Meta Tags -->
     <meta name="title" content="<%= embedTitle %>" />
@@ -34,11 +34,11 @@
   </head>
 
   <body>
-    <% if (route === "404") { %> <%- include ('error') %> <% } %> <% if (route
-    === "edifice") { %> <%- include ('resources/edifice') %> <% } %> <% if
-    (route === "region") { %> <%- include ('resources/region') %> <% } %> <% if
-    (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% }
-    %> <% if (route === "player") { %> <%- include ('resources/player') %> <% }
-    %>
+    <% if (route === "404") { %> <%- include ('error') %> <% } %>
+    <% if (route === "edifice") { %> <%- include ('resources/edifice') %> <% } %>
+    <% if (route === "region") { %> <%- include ('resources/region') %> <% } %>
+    <% if (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% }%>
+    <% if (route === "player") { %> <%- include ('resources/player') %> <% }%>
+    <% if (route === "nation") { %> <%- include ('resources/nation') %> <% }%>
   </body>
 </html>

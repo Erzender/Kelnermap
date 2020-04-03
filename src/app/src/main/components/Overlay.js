@@ -223,7 +223,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   menuClick: () => dispatch({ type: "TOGGLE_MENU" }),
-  clickNation: (id) => dispatch(getNationInfo(id)),
+  clickNation: (id) => id && dispatch({ type: "SHOW_NATION", id }),
   clickRegion: (id) => id && dispatch({ type: "SHOW_REGION", id }),
   pvpClick: () => dispatch({ type: "TOGGLE_PVP" }),
 });
