@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import config from "../../../config.json";
-import Nation from "./ModalNation";
 import ModalPVP from "./ModalPVP";
 
 const styles = {
@@ -17,13 +16,13 @@ const styles = {
     zIndex: 2,
     transition: "height 0.3s",
     color: "white",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   loading: {
     display: "flex",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   loadingImage: {
     width: 100,
@@ -31,7 +30,7 @@ const styles = {
     animationName: "loadingSword",
     animationDuration: "0.8s",
     animationIterationCount: "infinite",
-    animationTimingFunction: "linear"
+    animationTimingFunction: "linear",
   },
   closeWindow: {
     position: "absolute",
@@ -39,13 +38,13 @@ const styles = {
     right: 5,
     fontSize: 20,
     cursor: "pointer",
-    userSelect: "none"
+    userSelect: "none",
   },
   content: {
     display: "flex",
     flex: 1,
-    transition: "opacity 1s"
-  }
+    transition: "opacity 1s",
+  },
 };
 
 const Modal = ({
@@ -55,20 +54,20 @@ const Modal = ({
   isNation,
   isPVP,
   isFrame,
-  frameLink
+  frameLink,
 }) => (
   <div
     style={{
       ...styles.container,
       height: open ? "100%" : 0,
-      overflow: open ? "auto" : "hidden"
+      overflow: open ? "auto" : "hidden",
     }}
   >
     <div
       style={{
         ...styles.content,
         maxHeight: !open || loading ? 0 : "none",
-        opacity: !open || loading ? 0 : 1
+        opacity: !open || loading ? 0 : 1,
       }}
     >
       {isFrame && (
@@ -77,7 +76,6 @@ const Modal = ({
           src={frameLink}
         ></iframe>
       )}
-      {isNation && <Nation />}
       {isPVP && <ModalPVP />}
     </div>
     {loading && (
@@ -97,17 +95,17 @@ const Modal = ({
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   open: state.root.modal !== null,
   loading: state.root.modal && state.root.modal.type === "loading",
   isNation: state.root.modal && state.root.modal.type === "nation",
   isPVP: state.root.modal && state.root.modal.type === "pvp",
   isFrame: state.root.modal && state.root.modal.type === "frame",
-  frameLink: state.root.modal && state.root.modal.frameLink
+  frameLink: state.root.modal && state.root.modal.frameLink,
 });
 
-const mapDispatchToProps = dispatch => ({
-  clickClose: () => dispatch({ type: "CLOSE_MODAL" })
+const mapDispatchToProps = (dispatch) => ({
+  clickClose: () => dispatch({ type: "CLOSE_MODAL" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

@@ -33,6 +33,7 @@ exports.get = async function (req, res) {
     pic: nation.dataValues.pic,
     name: nation.dataValues.name,
     desc: nation.dataValues.desc.split("\n") || [],
+    color: nation.dataValues.color,
     size:
       tiles
         .flat()
