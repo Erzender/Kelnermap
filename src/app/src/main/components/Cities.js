@@ -1,15 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import config from "../../config.json";
-import cities from "../../cities.json";
+import config from "../../../config.json";
 
 const geoToImage = (mod, x, z) => ({
   x: config.mapSize.x * mod * ((x - config.cali.xOf) / config.cali.x),
   z: config.mapSize.z * mod * ((z - config.cali.zOf) / config.cali.z)
 });
 
-const coors = mod =>
+const coors = (mod, cities) =>
   Object.keys(cities).map(city => {
     let geo = geoToImage(mod, cities[city].x, cities[city].z);
     return { x: geo.x, z: geo.z, id: city };
@@ -42,12 +41,12 @@ const Cities = ({
   clickBattle,
   selected,
   battle,
-  cities,
+  displayCities,
   battleSelected,
   zoomedCoors
 }) => (
   <div style={styles.container}>
-    {cities &&
+    {displayCities &&
       zoomedCoors.map(coor => (
         <img
           onClick={e => clickCity(coor.id, e)}
@@ -84,9 +83,9 @@ const mapStateToProps = state => ({
     state.root.settings.battle && state.root.war
       ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
       : null,
-  cities: state.root.settings.cities,
+  displayCities: state.root.settings.cities,
   battleSelected: !!state.root.selectedBattle,
-  zoomedCoors: coors(state.root.settings.zoom)
+  zoomedCoors: coors(state.root.settings.zoom, state.root.cities)
 });
 
 const mapDispatchToProps = dispatch => ({

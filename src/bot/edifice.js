@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 const data = require("../_model");
-const regions = require("../regionInfo.json");
+const regions = require("../../config/regionInfo.json");
 
 /*
 $édifice créer <nom> <description> <image> <région/ville>

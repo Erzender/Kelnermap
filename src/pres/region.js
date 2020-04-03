@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 const data = require("../_model");
-const regions = require("../regionInfo.json");
+const regions = require("../../config/regionInfo.json");
 
 exports.get = async function(req, res) {
   let region = regions[req.params.id];

@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import config from "../../config.json";
-import regions from "../../regions.json";
+import config from "../../../config.json";
 
 const styles = {
   container: {
     marginTop: 50,
     marginLeft: "auto",
     marginRight: "auto",
-    width: "80%",
-    minWidth: 800
+    width: 800,
+    maxWidth: "100%"
   },
   image: {
     width: 150
@@ -96,7 +95,7 @@ const mapStateToProps = state => ({
               state.root.regionInfo[reg].nation.id === state.root.modal.info.id
           )
           .map(reg =>
-            regions.reduce(
+            state.root.regions.reduce(
               (total, row) => total + row.filter(tile => tile === reg).length,
               0
             )

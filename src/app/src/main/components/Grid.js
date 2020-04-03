@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import config from "../../config.json";
-import regions from "../../regions.json";
+import config from "../../../config.json";
 
 let tab = [];
 for (let i = config.mapCorners.start.Z; i <= config.mapCorners.end.Z; i++) {
@@ -18,23 +17,29 @@ const styles = {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    cursor: "url(" + config.api + "/lekelner/asset/sword.png), auto"
+    cursor: "url(" + config.api + "/lekelner/asset/sword.png), auto",
   },
   tile: {
     overflow: "hidden",
     flex: 1,
     zIndex: 1,
-    transition: "background-color 0.5s"
-  }
+    transition: "background-color 0.5s",
+  },
 };
 
-const Grid = ({ clickTile, selectedTile, selectedRegion, regionColors }) => (
+const Grid = ({
+  clickTile,
+  selectedTile,
+  selectedRegion,
+  regionColors,
+  regions,
+}) => (
   <div style={styles.container}>
     {tab.map((line, i) => (
       <div key={i} style={{ display: "flex", flex: 1 }}>
         {line.map((tile, j) => (
           <div
-            onClick={e => {
+            onClick={(e) => {
               clickTile(e, j, i);
             }}
             key={tile}
@@ -44,13 +49,14 @@ const Grid = ({ clickTile, selectedTile, selectedRegion, regionColors }) => (
                 selectedTile.z === i && selectedTile.x === j
                   ? "thick solid #330000"
                   : "none",
-              opacity: regions[i][j] === selectedRegion ? 1 : 0.5,
+              opacity:
+                regions.length && regions[i][j] === selectedRegion ? 1 : 0.5,
               backgroundColor:
-                regions[i][j] === selectedRegion
+                regions.length && regions[i][j] === selectedRegion
                   ? "rgba(100, 50, 0, 0.5)"
                   : regionColors
                   ? regionColors[i][j]
-                  : "rgba(0, 0, 0, 0)"
+                  : "rgba(0, 0, 0, 0)",
             }}
           />
         ))}
@@ -59,28 +65,30 @@ const Grid = ({ clickTile, selectedTile, selectedRegion, regionColors }) => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedTile: state.root.selectedTile
     ? state.root.selectedTile
     : { x: null, z: null },
   selectedRegion:
     (state.root.selectedTile &&
-      regions[state.root.selectedTile.z][state.root.selectedTile.x] !== "0" &&
-      regions[state.root.selectedTile.z][state.root.selectedTile.x]) ||
+      state.root.regions[state.root.selectedTile.z][
+        state.root.selectedTile.x
+      ] !== "0" &&
+      state.root.regions[state.root.selectedTile.z][
+        state.root.selectedTile.x
+      ]) ||
     null,
-  regionColors: state.root.settings.nations && state.root.nationColorMap
+  regionColors: state.root.settings.nations && state.root.nationColorMap,
+  regions: state.root.regions,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clickTile: (e, x, z) =>
     dispatch({
       type: "CLICK_TILE",
       pos: { x: e.clientX, z: e.clientY },
-      tile: { x, z }
-    })
+      tile: { x, z },
+    }),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Grid);
+export default connect(mapStateToProps, mapDispatchToProps)(Grid);

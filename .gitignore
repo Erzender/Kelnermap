@@ -1,6 +1,6 @@
 node_modules
 database.sqlite
-src/app/src/regions.json
-src/app/src/cities.json
-src/regionInfo.json
+config/regionInfo.json
+config/cities.json
+config/regions.json
 whitelist.json

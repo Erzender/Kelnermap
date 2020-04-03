@@ -1,5 +1,5 @@
 const data = require("../_model");
-const regions = require("../regionInfo.json");
+const regions = require("../../config/regionInfo.json");
 
 exports.get = async function(req, res) {
   let player = await data.Player.findByPk(req.params.id, {

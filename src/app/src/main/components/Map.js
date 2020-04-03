@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import config from "../../config.json";
+import config from "../../../config.json";
 
 import Grid from "./Grid";
 import Overlay from "./Overlay";
