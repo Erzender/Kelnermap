@@ -142,10 +142,8 @@ const Overlay = ({
             </div>
           )}
           <div style={styles.activity}>
-            {tileInfo && tileInfo.edifices ? (
+            {tileInfo && (
               <div style={styles.edifices}>🏠{tileInfo.edifices}</div>
-            ) : (
-              <div />
             )}
           </div>
           {tileInfo && tileInfo.nationName && (

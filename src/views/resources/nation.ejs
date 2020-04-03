@@ -12,11 +12,11 @@
       ><h1><%= info.name %></h1></a
     >
   </div>
-  <hr style="background-color: black; height: 20px;" />
+  <hr style="background-color: <%= info.color %>; height: 20px;" />
   <h3>Superficie</h3>
   <%= info.size %> km²<br />
+  <% if (info.anthem && info.anthem.length) { %>
   <h3>Hymne national</h3>
-  <% if (info.pic) { %>
   <audio controls="" src="<%= info.anthem %>"></audio>
   <% } %>
   <h3>Dirigeants et habitants :</h3>
