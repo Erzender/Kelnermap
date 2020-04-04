@@ -37,7 +37,7 @@ exports.get = async function (req, res) {
     size:
       tiles
         .flat()
-        .filter((elem) => elem !== "0" && nation.regions.indexOf(elem) > 0)
+        .filter((elem) => elem !== "0" && nation.regions.indexOf(elem) >= 0)
         .length * 0.25,
     anthem: nation.dataValues.hymne,
     citizens: citizens.map((citizen) => ({
