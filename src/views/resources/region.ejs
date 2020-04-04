@@ -2,12 +2,12 @@
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
 <a style="text-decoration: none;" href="<%- "./" + info.region.key -%>"><h1 style="color: orange;">📜<%= info.region.n %></h1></a>
-<div style="display: flex; flex-direction: row; align-items: center;">
+<a <% if (info.domination.id) { %> href="/lekelner/explorer/nations/<%= info.domination.id %>" <% } %> style="display: flex; flex-direction: row; align-items: center;">
     <div
       style="width: 20px; height: 20px; border: 3px solid white; margin-right: 10px; background-color: <%- info.domination.color -%>;"
     ></div>
     Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b>
-  </div>
+</a>
   <h2 style="color: cadetblue;"><%= "🏠Edifices : " + info.edifices.length %></h2>
   <a style="display: flex; font-weight: bold; width: 250px; justify-content: center; background-color: cadetblue; margin-bottom: 10px; margin-top: 10px; padding: 5px; text-decoration: none;" href="/lekelner/explorer/edifices/editeur?region=<%= info.region.key %>">
     ＋Enregistrer un édifice
