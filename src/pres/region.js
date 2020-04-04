@@ -4,48 +4,51 @@ const Op = Sequelize.Op;
 const data = require("../_model");
 const regions = require("../../config/regionInfo.json");
 
-exports.get = async function(req, res) {
+exports.get = async function (req, res) {
   let region = regions[req.params.id];
   if (!region) {
-    return res.status(404).render("index", { route: "404", embedTitle: "404", embedImage: ""  });
+    return res
+      .status(404)
+      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
   }
   let info = { region: { ...region, key: req.params.id } };
   info.domination = await data.Nation.findOne({
-    where: { regions: { [Op.substring]: req.params.id } }
+    where: { regions: { [Op.substring]: req.params.id } },
   });
   info.domination =
     info.domination === null
       ? { name: "Aucune", color: "none" }
       : {
           name: info.domination.dataValues.name,
-          color: info.domination.dataValues.color
+          color: info.domination.dataValues.color,
+          id: info.domination.dataValues.id,
         };
   let edifices = await data.Edificio.findAll({
     where: { region: req.params.id },
     include: [
       {
         model: data.Player,
-        as: "Creator"
-      }
-    ]
+        as: "Creator",
+      },
+    ],
   });
-  info.edifices = edifices.map(edifice => ({
+  info.edifices = edifices.map((edifice) => ({
     name: edifice.name,
     link: "/lekelner/explorer/edifices/" + edifice.id,
     player:
       edifice.dataValues.Creator.dataValues.picture !== null &&
       edifice.dataValues.Creator.dataValues.picture.length
         ? edifice.dataValues.Creator.dataValues.picture
-        : "/lekelner/asset/Alex.webp"
+        : "/lekelner/asset/Alex.webp",
   }));
   res.render("index", {
     route: "region",
     info,
     embedTitle: info.region.n,
-    embedImage: ""
+    embedImage: "",
   });
 };
 
-exports.getAll = async function(req, res) {
+exports.getAll = async function (req, res) {
   res.send("Des régions ?");
 };
