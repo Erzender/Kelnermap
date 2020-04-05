@@ -80,8 +80,8 @@ exports.brexit = async (client, message, args, player) => {
       include: {
         model: data.Nation,
         as: "Identity",
-        where: { id: player.Identity.dataValues.id }
-      }
+        where: { id: player.Identity.dataValues.id },
+      },
     });
   } catch (err) {
     console.log(err);
@@ -127,14 +127,14 @@ const voir = async (client, message, args, player) => {
       {
         model: data.Nation,
         as: "Homelands",
-        where: { id: nation.dataValues.id }
+        where: { id: nation.dataValues.id },
       },
       {
         model: data.Nation,
         as: "Identity",
-        where: { id: nation.dataValues.id }
-      }
-    ]
+        where: { id: nation.dataValues.id },
+      },
+    ],
   });
   const embed = new Discord.RichEmbed()
     .setColor(nation.dataValues.color)
@@ -148,7 +148,7 @@ const voir = async (client, message, args, player) => {
     embed.addField(
       "Citoyens",
       Object.keys(citizens)
-        .map(i => message.guild.members.get(citizens[i].dataValues.discord))
+        .map((i) => message.guild.members.get(citizens[i].dataValues.discord))
         .reduce((prev, citizen) => prev + ", " + citizen)
     );
   }
@@ -174,7 +174,11 @@ exports.changer = async (client, message, args, player) => {
     } else if (args[2] == "description") {
       await player.dataValues.Identity.update({ desc: args[3] });
     } else if (args[2] == "hymne") {
-      await player.dataValues.Identity.update({ hymne: args[3] });
+      let arg = args[3].split("www.youtube.com/watch?v=");
+      arg = arg.length > 1 ? arg[1] : arg[0];
+      arg = arg.split("youtu.be/");
+      arg = arg.length > 1 ? arg[1] : arg[0];
+      await player.dataValues.Identity.update({ hymne: arg });
     } else if (args[2] == "bastion") {
       if (args.length < 6) {
         return message.channel.send(
@@ -189,7 +193,7 @@ exports.changer = async (client, message, args, player) => {
           parseInt(args[4]) +
           " Y | " +
           parseInt(args[5]) +
-          " Z"
+          " Z",
       });
     } else {
       return message.channel.send("Pas compris.");
@@ -210,9 +214,9 @@ exports.changer = async (client, message, args, player) => {
 exports.lister = async (client, message, args, player) => {
   let nations = await data.Nation.findAll();
   let format = Object.keys(nations)
-    .map(i => ({
+    .map((i) => ({
       id: nations[i].dataValues.id,
-      name: nations[i].dataValues.name
+      name: nations[i].dataValues.name,
     }))
     .reduce((prev, next) => prev + "\n" + next.name + " (" + next.id + ")", "");
   const embed = new Discord.RichEmbed()
@@ -283,10 +287,10 @@ exports.distribuer = async (client, message, args, player) => {
   let receiver = await data.Player.findByPk(args[3]);
   if (receiver === null) return message.channel.send("Connais pas ce type");
   await receiver.update({
-    reputation: receiver.dataValues.reputation + amount
+    reputation: receiver.dataValues.reputation + amount,
   });
   await player.dataValues.Identity.update({
-    reputationPool: player.dataValues.Identity.reputationPool - amount
+    reputationPool: player.dataValues.Identity.reputationPool - amount,
   });
   message.channel.send("Et " + amount + " réput', " + amount + " !");
   botProfile.voir(

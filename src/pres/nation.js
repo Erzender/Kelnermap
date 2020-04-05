@@ -39,7 +39,7 @@ exports.get = async function (req, res) {
         .flat()
         .filter((elem) => elem !== "0" && nation.regions.indexOf(elem) >= 0)
         .length * 0.25,
-    anthem: nation.dataValues.hymne,
+    anthem: "https://www.invidio.us/embed/" + nation.dataValues.hymne,
     citizens: citizens.map((citizen) => ({
       id: citizen.dataValues.discord,
       pic:
