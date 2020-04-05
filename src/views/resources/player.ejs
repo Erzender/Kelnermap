@@ -1,21 +1,57 @@
 <div
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
-  <span class="bigProfile" style='background-image: url("<%= info.picture %>") ;'  ></span>
-  <a style="text-decoration: none;" href="<%= info.link %> "
-    ><h1 style="color: darkred">🍪<%= info.name %></h1></a
+  <a
+    href="<%= info.link %> "
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: none;
+    "
   >
-  <div style="border-left: 3px solid gray; padding-left: 5px">
+    <span
+      class="bigProfile"
+      style="background-image: url('<%= info.picture %>');"
+    ></span>
+    <h1 style="color: darkred; flex: 1; text-align: center;">
+      <%= info.name %>
+    </h1>
+  </a>
+  <div style="border-left: 3px solid gray; padding-left: 5px;">
     <% info.desc.forEach(function(desc){ %>
     <p><%= desc %></p>
     <% }); %>
   </div>
+  <a
+    style="
+      display: flex;
+      font-weight: bold;
+      width: 100px;
+      justify-content: center;
+      background-color: darkred;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      padding: 5px;
+      text-decoration: none;
+    "
+    href="<%- info.edit -%>"
+  >
+    Modifier ✍
+  </a>
   <hr style="margin-top: 50px;" />
   <h2>Nation🏳️</h2>
   <% if (info.nationName && info.nationName.length) { %>
   <a
-  href="/lekelner/explorer/nations/<%= info.nationId %>"
-    style="display: flex; margin-bottom: 10px; flex-direction: row; align-items: center; border-left: <%= info.nationColor %> solid 20px; padding-left: 10px;"
+    href="/lekelner/explorer/nations/<%= info.nationId %>"
+    style="
+      display: flex;
+      margin-bottom: 10px;
+      flex-direction: row;
+      align-items: center;
+      border-left: <%= info.nationColor %> solid 20px;
+      padding-left: 10px;
+    "
   >
     <b><%= info.nationName %> </b>
     <img class="miniProfile" src="<%= info.nationPic %> " />
@@ -26,16 +62,25 @@
     Citoyen de : <% info.citizenship.forEach(function(nat){ %> <%= nat %> | <%
     }); %>
   </div>
-  <hr style="margin-top: 50px;" />
   <h2>PVP⚔️</h2>
   <div><%= info.pvpScore %> points de réputation</div>
   <div>
     <b style="font-size: 20px;">#<%= info.pvpRanking %></b> au classement
   </div>
   <hr style="margin-top: 50px;" />
-  <h2 style="color:cadetblue;">🏠Edifices : <%= info.edificesNum %></h2>
+  <h2 style="color: cadetblue;">🏠Edifices : <%= info.edificesNum %></h2>
   <a
-    style="display: flex; font-weight: bold; width: 250px; justify-content: center; background-color: cadetblue; margin-bottom: 10px; margin-top: 10px; padding: 5px; text-decoration: none;"
+    style="
+      display: flex;
+      font-weight: bold;
+      width: 250px;
+      justify-content: center;
+      background-color: cadetblue;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      padding: 5px;
+      text-decoration: none;
+    "
     href="/lekelner/explorer/edifices/editeur"
   >
     ＋Enregistrer un édifice

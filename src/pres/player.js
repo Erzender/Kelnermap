@@ -12,14 +12,12 @@ exports.get = async function (req, res) {
     ],
   });
   if (player === null) {
-    return res
-      .status(404)
-      .render("index", {
-        route: "404",
-        embedTitle: "404",
-        embedImage: "",
-        embedDesc: "",
-      });
+    return res.status(404).render("index", {
+      route: "404",
+      embedTitle: "404",
+      embedImage: "",
+      embedDesc: "",
+    });
   }
   let edifices = await data.Edificio.findAll({
     where: { CreatorDiscord: player.dataValues.discord },
@@ -42,6 +40,7 @@ exports.get = async function (req, res) {
       .findIndex((p) => p.id === player.dataValues.discord) + 1;
 
   let info = {
+    edit: "/lekelner/explorer/joueurs/editeur?id=" + player.dataValues.discord,
     link: "/lekelner/explorer/joueurs/" + player.dataValues.discord,
     name: player.dataValues.minecraft,
     picture:
@@ -78,5 +77,63 @@ exports.get = async function (req, res) {
     embedImage: info.picture,
     embedDesc: player.dataValues.desc,
     info,
+  });
+};
+
+exports.getEditor = async function (req, res) {
+  let fields = {
+    id: -1,
+    title: "Modifier le profil",
+    name: "",
+    description: "",
+    picture: "",
+    command: "",
+  };
+  if (req.query.id) {
+    let player = await data.Player.findByPk(req.query.id);
+
+    if (player === null) {
+      return res.status(404).render("index", {
+        route: "404",
+        embedTitle: "404",
+        embedImage: "",
+        embedDesc: "",
+      });
+    }
+
+    fields.id = player.dataValues.id;
+    fields.title =
+      "Modifier le profil " + (player.dataValues.minecraft || "") + " :";
+    fields.name = player.dataValues.minecraft || "";
+    fields.description = player.dataValues.desc;
+    fields.picture = player.dataValues.picture;
+  }
+
+  res.render("index", {
+    route: "playerEdit",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    fields,
+  });
+};
+
+exports.postEditor = async function (req, res) {
+  let command = "$profil changer ";
+  command +=
+    '"' +
+    req.body.name +
+    '" "' +
+    req.body.description +
+    '" "<' +
+    req.body.picture +
+    '>"';
+  let fields = { ...req.body, command };
+  res.render("index", {
+    route: "playerEdit",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    fields,
   });
 };

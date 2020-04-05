@@ -18,10 +18,10 @@ const voir = async (client, message, args, player) => {
       include: [
         {
           model: data.Nation,
-          as: "Identity"
+          as: "Identity",
         },
-        { model: data.Nation, as: "Homelands" }
-      ]
+        { model: data.Nation, as: "Homelands" },
+      ],
     });
     if (player === null) {
       return message.channel.send(
@@ -32,7 +32,7 @@ const voir = async (client, message, args, player) => {
   const nation =
     player.Identity === null ? "Aucune" : player.Identity.dataValues.name;
   const citizen = Object.keys(player.dataValues.Homelands).map(
-    v => player.dataValues.Homelands[v].dataValues.name
+    (v) => player.dataValues.Homelands[v].dataValues.name
   );
 
   let discordProfile = await message.guild.fetchMember(
@@ -75,19 +75,25 @@ exports.changer = async (client, message, args, player) => {
   if (args.length < 4) {
     return message.channel.send("Pas compris.");
   }
-  try {
-    if (args[2] === "description") {
-      await player.update({ desc: args[3] });
-    } else if (args[2] === "image") {
-      await player.update({ picture: args[3] });
-    } else if (args[2] === "minecraft") {
-      await player.update({ minecraft: args[3] });
-    } else {
-      return message.channel.send("Pas compris.");
+  if (args.length >= 5) {
+    await player.update({ minecraft: args[2] });
+    await player.update({ desc: args[3] });
+    await player.update({ picture: args[4] });
+  } else {
+    try {
+      if (args[2] === "description") {
+        await player.update({ desc: args[3] });
+      } else if (args[2] === "image") {
+        await player.update({ picture: args[3] });
+      } else if (args[2] === "minecraft") {
+        await player.update({ minecraft: args[3] });
+      } else {
+        return message.channel.send("Pas compris.");
+      }
+    } catch (err) {
+      console.log(err);
+      return message.channel.send("Le Kelner.exe a cessé de fonctionner.");
     }
-  } catch (err) {
-    console.log(err);
-    return message.channel.send("Le Kelner.exe a cessé de fonctionner.");
   }
   message.channel.send("Voilà voilà.");
   voir(client, message, [null, null], player);
