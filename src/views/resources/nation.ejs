@@ -17,9 +17,16 @@
   <%= info.size %> km²<br />
   <% if (info.anthem && info.anthem.length) { %>
   <h3>Hymne national</h3>
-  <audio controls="" src="<%= info.anthem %>"></audio>
+  <iframe
+    width="500"
+    height="70"
+    src="<%= info.anthem %>"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
   <% } %>
-  <h3>Dirigeants et habitants :</h3>
+  <h3>Dirigeants</h3>
   <div style="display: flex; flex-direction: row;">
     <% info.citizens.forEach(function(player){ %>
     <a
@@ -29,6 +36,7 @@
     ></a>
     <% }); %>
   </div>
+  <h3>Habitants</h3>
   <div style="display: flex; flex-direction: row;">
     <% info.inhabs.forEach(function(player){ %>
     <a
