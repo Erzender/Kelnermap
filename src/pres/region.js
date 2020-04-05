@@ -9,7 +9,7 @@ exports.get = async function (req, res) {
   if (!region) {
     return res
       .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
+      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
   }
   let info = { region: { ...region, key: req.params.id } };
   info.domination = await data.Nation.findOne({
@@ -46,6 +46,7 @@ exports.get = async function (req, res) {
     info,
     embedTitle: info.region.n,
     embedImage: "",
+    embedDesc: "",
   });
 };
 

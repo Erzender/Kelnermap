@@ -14,7 +14,7 @@ exports.get = async function(req, res) {
   if (edifice === null) {
     return res
       .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
+      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
   }
   let mastodon = await mastodonUtils.getComments(edifice.dataValues.mastodon);
 
@@ -22,6 +22,7 @@ exports.get = async function(req, res) {
     route: "edifice",
     embedTitle: edifice.dataValues.name,
     embedImage: edifice.dataValues.pic,
+    embedDesc: edifice.dataValues.desc,
     mastodon,
     edifice: {
       ...edifice.dataValues,
@@ -68,7 +69,7 @@ exports.getEditor = async function(req, res) {
     if (edifice === null) {
       return res
         .status(404)
-        .render("index", { route: "404", embedTitle: "404", embedImage: "" });
+        .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
     }
 
     fields.id = edifice.dataValues.id;
@@ -84,6 +85,7 @@ exports.getEditor = async function(req, res) {
     route: "edificeEdit",
     embedTitle: "Editeur",
     embedImage: "",
+    embedDesc: "",
     fields,
     regions: Object.keys(regions).map(key => ({ key, value: regions[key].n }))
   });
@@ -112,6 +114,7 @@ exports.postEditor = async function(req, res) {
     route: "edificeEdit",
     embedTitle: "Editeur",
     embedImage: "",
+    embedDesc: "",
     fields,
     regions: Object.keys(regions).map(key => ({ key, value: regions[key].n }))
   });
