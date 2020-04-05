@@ -6,7 +6,7 @@ const commands = {
   $profil: require("./profile"),
   $nation: require("./nation"),
   $région: require("./region"),
-  $édifice: require("./edifice")
+  $édifice: require("./edifice"),
 };
 
 const adminCommands = require("./admin");
@@ -28,7 +28,7 @@ try {
 }
 
 try {
-  client.on("message", message => {
+  client.on("message", (message) => {
     processBotMessage(message);
   });
 } catch (err) {
@@ -51,7 +51,7 @@ try {
 
 exports.client = client;
 
-const processBotMessage = message => {
+const processBotMessage = (message) => {
   if (
     !(
       (message.channel.id === JSON.parse(process.env.KELNER_BOT).channel ||
@@ -85,6 +85,11 @@ const processBotMessage = message => {
       args = args.concat(rawargs.slice(complexArgPos, i + 1));
     }
   });
+  args = args.map((arg) =>
+    arg.length && arg[0] === "<" && arg[arg.length - 1] === ">"
+      ? arg.substring(1, arg.length - 1)
+      : arg
+  );
   console.log(args);
   processCommand(client, message, args);
 };
@@ -102,10 +107,10 @@ const processCommand = async (client, message, args) => {
       include: [
         {
           model: data.Nation,
-          as: "Identity"
+          as: "Identity",
         },
-        { model: data.Nation, as: "Homelands", through: "Citizenship" }
-      ]
+        { model: data.Nation, as: "Homelands", through: "Citizenship" },
+      ],
     });
     if (player === null) {
       try {

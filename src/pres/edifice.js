@@ -2,19 +2,24 @@ const data = require("../_model");
 const regions = require("../../config/regionInfo.json");
 const mastodonUtils = require("../utils/mastodon");
 
-exports.get = async function(req, res) {
+exports.get = async function (req, res) {
   let edifice = await data.Edificio.findByPk(req.params.id, {
     include: [
       {
         model: data.Player,
-        as: "Creator"
-      }
-    ]
+        as: "Creator",
+      },
+    ],
   });
   if (edifice === null) {
     return res
       .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
+      .render("index", {
+        route: "404",
+        embedTitle: "404",
+        embedImage: "",
+        embedDesc: "",
+      });
   }
   let mastodon = await mastodonUtils.getComments(edifice.dataValues.mastodon);
 
@@ -35,17 +40,17 @@ exports.get = async function(req, res) {
           : "/lekelner/asset/Alex.webp",
       region: {
         ...regions[edifice.dataValues.region],
-        key: edifice.dataValues.region
-      }
-    }
+        key: edifice.dataValues.region,
+      },
+    },
   });
 };
 
-exports.getAll = async function(req, res) {
+exports.getAll = async function (req, res) {
   res.send("Des édifices ?");
 };
 
-exports.getEditor = async function(req, res) {
+exports.getEditor = async function (req, res) {
   let fields = {
     id: -1,
     title: "Créer un nouvel édifice :",
@@ -54,22 +59,27 @@ exports.getEditor = async function(req, res) {
     picture: "",
     region: req.query.region ? req.query.region : "1",
     mastodon: "",
-    command: ""
+    command: "",
   };
   if (req.query.id) {
     let edifice = await data.Edificio.findByPk(req.query.id, {
       include: [
         {
           model: data.Player,
-          as: "Creator"
-        }
-      ]
+          as: "Creator",
+        },
+      ],
     });
 
     if (edifice === null) {
       return res
         .status(404)
-        .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
+        .render("index", {
+          route: "404",
+          embedTitle: "404",
+          embedImage: "",
+          embedDesc: "",
+        });
     }
 
     fields.id = edifice.dataValues.id;
@@ -87,11 +97,14 @@ exports.getEditor = async function(req, res) {
     embedImage: "",
     embedDesc: "",
     fields,
-    regions: Object.keys(regions).map(key => ({ key, value: regions[key].n }))
+    regions: Object.keys(regions).map((key) => ({
+      key,
+      value: regions[key].n,
+    })),
   });
 };
 
-exports.postEditor = async function(req, res) {
+exports.postEditor = async function (req, res) {
   let command = "$édifice ";
   command += req.body.id >= 0 ? "changer " + req.body.id + " " : "créer ";
   command +=
@@ -99,13 +112,13 @@ exports.postEditor = async function(req, res) {
     req.body.name +
     '" "' +
     req.body.description +
-    '" "' +
+    '" "<' +
     req.body.picture +
-    '" "' +
+    '>" "' +
     req.body.region +
-    '" "' +
+    '" "<' +
     req.body.mastodon +
-    '"';
+    '>"';
   if (req.body.delete === "on") {
     command = "$édifice supprimer " + req.body.id;
   }
@@ -116,6 +129,9 @@ exports.postEditor = async function(req, res) {
     embedImage: "",
     embedDesc: "",
     fields,
-    regions: Object.keys(regions).map(key => ({ key, value: regions[key].n }))
+    regions: Object.keys(regions).map((key) => ({
+      key,
+      value: regions[key].n,
+    })),
   });
 };

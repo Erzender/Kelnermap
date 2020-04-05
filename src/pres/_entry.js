@@ -18,6 +18,8 @@ router.get("/edifices/:id", edifice.get);
 router.get("/regions", region.getAll);
 router.get("/regions/:id", region.get);
 
+router.get("/joueurs/editeur", player.getEditor);
+router.post("/joueurs/editeur", player.postEditor);
 router.get("/joueurs/:id", player.get);
 
 router.get("/nations/:id", nation.get);
