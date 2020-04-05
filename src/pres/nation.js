@@ -4,9 +4,12 @@ const tiles = require("../../config/regions.json");
 exports.get = async function (req, res) {
   let nation = await data.Nation.findByPk(req.params.id);
   if (nation === null) {
-    return res
-      .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
+    return res.status(404).render("index", {
+      route: "404",
+      embedTitle: "404",
+      embedImage: "",
+      embedDesc: "",
+    });
   }
 
   const citizens = await data.Player.findAll({
@@ -39,7 +42,10 @@ exports.get = async function (req, res) {
         .flat()
         .filter((elem) => elem !== "0" && nation.regions.indexOf(elem) >= 0)
         .length * 0.25,
-    anthem: "https://www.invidio.us/embed/" + nation.dataValues.hymne,
+    anthem:
+      nation.dataValues.hymne && nation.dataValues.hymne.length
+        ? "https://www.invidio.us/embed/" + nation.dataValues.hymne
+        : null,
     citizens: citizens.map((citizen) => ({
       id: citizen.dataValues.discord,
       pic:
