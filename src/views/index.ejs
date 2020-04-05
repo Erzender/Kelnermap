@@ -1,7 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr-FR">
   <head>
     <title>Le Kelner | <%= embedTitle %></title>
     <link rel="stylesheet" href="/lekelner/styles" />
+    <meta charset="utf-8" />
     <!-- Primary Meta Tags -->
     <meta name="title" content="<%= embedTitle %>" />
     <meta
@@ -10,12 +12,13 @@
     />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:locale" content="fr_FR" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://erzender.freeboxos.fr/lekelner/" />
     <meta property="og:title" content="<%= embedTitle %>" />
     <meta
       property="og:description"
-      content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse."
+      content="<%= embedDesc %>"
     />
     <meta property="og:image" content="<%- embedImage -%>" />
 
@@ -23,12 +26,12 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:url"
-      content="https://erzender.freeboxos.fr/lekelner"
+      content="https://erzender.freeboxos.fr/lekelner/"
     />
     <meta property="twitter:title" content="<%= embedTitle %>" />
     <meta
       property="twitter:description"
-      content="Attention. Ce wesbite n'est pas un wesbite sur le cyclimse."
+      content="<%= embedDesc %>"
     />
     <meta property="twitter:image" content="h<%- embedImage -%>" />
   </head>

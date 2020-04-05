@@ -14,7 +14,12 @@ exports.get = async function (req, res) {
   if (player === null) {
     return res
       .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
+      .render("index", {
+        route: "404",
+        embedTitle: "404",
+        embedImage: "",
+        embedDesc: "",
+      });
   }
   let edifices = await data.Edificio.findAll({
     where: { CreatorDiscord: player.dataValues.discord },
@@ -71,6 +76,7 @@ exports.get = async function (req, res) {
     route: "player",
     embedTitle: "Joueur : " + info.name,
     embedImage: info.picture,
+    embedDesc: player.dataValues.desc,
     info,
   });
 };

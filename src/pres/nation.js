@@ -6,7 +6,7 @@ exports.get = async function (req, res) {
   if (nation === null) {
     return res
       .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "" });
+      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
   }
 
   const citizens = await data.Player.findAll({
@@ -60,6 +60,7 @@ exports.get = async function (req, res) {
     route: "nation",
     embedTitle: "Nation : " + nation.dataValues.name,
     embedImage: nation.dataValues.pic,
+    embedDesc: nation.dataValues.desc,
     info,
   });
 };
