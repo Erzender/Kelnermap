@@ -9,7 +9,7 @@ const styles = {
     marginLeft: "auto",
     marginRight: "auto",
     width: 1000,
-    maxWidth: "100%"
+    maxWidth: "100%",
   },
   row: {
     display: "flex",
@@ -18,12 +18,12 @@ const styles = {
     maxHeight: 80,
     alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomStyle: "solid"
+    borderBottomStyle: "solid",
   },
   number: {
     fontWeight: "bold",
     fontSize: 40,
-    marginRight: 10
+    marginRight: 10,
   },
   profilePic: {
     cursor: "pointer",
@@ -36,10 +36,10 @@ const styles = {
     margin: 5,
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    backgroundRepeat: "no-repeat"
+    backgroundRepeat: "no-repeat",
   },
   nationPic: {
-    boxShadow: "2px 5px 5px black",
+    boxShadow: "2px -2px 5px black",
     marginTop: 50,
     marginLeft: -50,
     borderRadius: 100,
@@ -51,25 +51,25 @@ const styles = {
     overflow: "hidden",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    backgroundRepeat: "no-repeat"
+    backgroundRepeat: "no-repeat",
   },
   reput: { width: 50 },
   name: {
     maxHeight: 60,
     overflow: "hidden",
     fontFamily: "Enchanted Land",
-    fontSize: 35
+    fontSize: 35,
   },
   desc: {
     flex: 1,
-    height: 60,
-    maxHeight: 60,
+    height: 55,
+    maxHeight: 55,
     overflow: "hidden",
     borderLeftStyle: "solid",
     borderLeftColor: "white",
     marginLeft: 10,
-    paddingLeft: 10
-  }
+    paddingLeft: 10,
+  },
 };
 
 const ModalPVP = ({ pvp, clickPlayer }) => (
@@ -84,14 +84,14 @@ const ModalPVP = ({ pvp, clickPlayer }) => (
           onClick={() => clickPlayer(player.id)}
           style={{
             ...styles.profilePic,
-            backgroundImage: "url(" + player.picture + ")"
+            backgroundImage: "url(" + player.picture + ")",
           }}
         >
           {player.nation && (
             <div
               style={{
                 ...styles.nationPic,
-                backgroundImage: "url(" + player.nation + ")"
+                backgroundImage: "url(" + player.nation + ")",
               }}
             />
           )}
@@ -110,10 +110,10 @@ const ModalPVP = ({ pvp, clickPlayer }) => (
   </div>
 );
 
-const mapStateToProps = state => ({ pvp: state.root.pvp });
+const mapStateToProps = (state) => ({ pvp: state.root.pvp });
 
-const mapDispatchToProps = dispatch => ({
-  clickPlayer: id => dispatch({ type: "SHOW_PLAYER", id })
+const mapDispatchToProps = (dispatch) => ({
+  clickPlayer: (id) => dispatch({ type: "SHOW_PLAYER", id }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalPVP);
