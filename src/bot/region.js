@@ -19,17 +19,17 @@ $région défendue
 */
 
 let regions = {};
-Object.keys(regions1).forEach(region => {
+Object.keys(regions1).forEach((region) => {
   regions[region] = {
     ...regions1[region],
     keys:
-      Object.keys(regions1).filter(vas => regions1[vas].suze === region) +
-      [region]
+      Object.keys(regions1).filter((vas) => regions1[vas].suze === region) +
+      [region],
   };
 });
 
 const getClaimableRegions = () =>
-  Object.keys(regions).filter(id => !regions[id].suze);
+  Object.keys(regions).filter((id) => !regions[id].suze);
 
 exports.revendiquer = async (client, message, args, player) => {
   if (!player.Identity) {
@@ -42,20 +42,22 @@ exports.revendiquer = async (client, message, args, player) => {
   }
 
   if (args.length <= 2) {
-    const content = getClaimableRegions().map(id => id + ": " + regions[id].n);
+    const content = getClaimableRegions().map(
+      (id) => id + ": " + regions[id].n
+    );
     let embed = new Discord.RichEmbed().addField("Régions", content);
     return message.channel.send(embed);
   }
-  if (!getClaimableRegions().find(region => region === args[2]))
+  if (!getClaimableRegions().find((region) => region === args[2]))
     return message.channel.send("C'est non !");
 
   let owner = await data.Nation.findOne({
-    where: { regions: { [Op.substring]: args[2] } }
+    where: { regions: { [Op.substring]: args[2] } },
   });
 
   if (owner === null) {
     await player.Identity.update({
-      regions: player.Identity.dataValues.regions + regions[args[2]].keys
+      regions: player.Identity.dataValues.regions + regions[args[2]].keys,
     });
     return message.channel.send(
       `**${
@@ -86,21 +88,21 @@ exports.revendiquer = async (client, message, args, player) => {
     let desowned = owner.dataValues.regions;
     regions[args[2]].keys
       .split("")
-      .forEach(key => (desowned = desowned.replace(key, "")));
+      .forEach((key) => (desowned = desowned.replace(key, "")));
     await owner.update({
-      regions: desowned
+      regions: desowned,
     });
     player = await data.Player.findByPk(message.author.id, {
       include: [
         {
           model: data.Nation,
-          as: "Identity"
+          as: "Identity",
         },
-        { model: data.Nation, as: "Homelands" }
-      ]
+        { model: data.Nation, as: "Homelands" },
+      ],
     });
     await player.Identity.update({
-      regions: player.Identity.dataValues.regions + regions[args[2]].keys
+      regions: player.Identity.dataValues.regions + regions[args[2]].keys,
     });
 
     return message.channel.send(
@@ -110,7 +112,7 @@ exports.revendiquer = async (client, message, args, player) => {
   }
 
   let battle = await data.Battle.findOne({
-    where: { status: { [Op.in]: ["initialized", "started"] } }
+    where: { status: { [Op.in]: ["initialized", "started"] } },
   });
   if (battle) {
     return message.channel.send(
@@ -118,10 +120,7 @@ exports.revendiquer = async (client, message, args, player) => {
     );
   }
 
-  let date = moment()
-    .day(3)
-    .startOf("day")
-    .add(21, "hours");
+  let date = moment().day(3).startOf("day").add(21, "hours");
   if (moment().isAfter(date))
     return message.channel.send(
       "C'est trop tôt pour déclarer une bataille, attendez demain vers 1:00 !"
@@ -131,7 +130,7 @@ exports.revendiquer = async (client, message, args, player) => {
     stronghold: owner.dataValues.stronghold,
     date,
     BelligerentId: player.Identity.dataValues.id,
-    TargetId: owner.dataValues.id
+    TargetId: owner.dataValues.id,
   });
 
   let citizens = await getNationCitizens(owner);
@@ -156,18 +155,18 @@ exports.céder = async (client, message, args, player) => {
   }
 
   if (
-    !getClaimableRegions().find(region => region === args[2]) ||
+    !getClaimableRegions().find((region) => region === args[2]) ||
     player.Identity.dataValues.regions.search(args[2]) < 0
   )
     return message.channel.send(
       "Ah oui mais là, je crois que ça va pas être possible."
     );
 
-  let battle = data.Battle.findOne({
+  let battle = await data.Battle.findOne({
     where: {
       status: { [Op.in]: ["initialized", "started"] },
-      regionTarget: args[2]
-    }
+      regionTarget: args[2],
+    },
   });
   if (battle !== null)
     return message.channel.send("Oh bah non hé y'a une bataille dessus.");
@@ -175,9 +174,9 @@ exports.céder = async (client, message, args, player) => {
   let desowned = player.Identity.dataValues.regions;
   regions[args[2]].keys
     .split("")
-    .forEach(key => (desowned = desowned.replace(key, "")));
+    .forEach((key) => (desowned = desowned.replace(key, "")));
   await player.Identity.update({
-    regions: desowned
+    regions: desowned,
   });
 
   message.channel.send(
@@ -206,11 +205,11 @@ exports.invasion = async (client, message, args, player) => {
   else if (args[2] === "combattre") await battle.addDefender(player);
   let invaders = await battle
     .getInvaders()
-    .map(invader => "<@" + invader.dataValues.discord + "> ");
+    .map((invader) => "<@" + invader.dataValues.discord + "> ");
   invaders = invaders.length > 0 ? invaders : "Personne ?";
   let defenders = await battle
     .getDefenders()
-    .map(defender => "<@" + defender.dataValues.discord + "> ");
+    .map((defender) => "<@" + defender.dataValues.discord + "> ");
   defenders = defenders.length > 0 ? defenders : "Personne ?";
 
   const embed = new Discord.RichEmbed()
@@ -253,16 +252,16 @@ exports.envahie = async (client, message, args, player) => {
   let desowned = owner.dataValues.regions;
   regions[battle.dataValues.regionTarget].keys
     .split("")
-    .forEach(key => (desowned = desowned.replace(key, "")));
+    .forEach((key) => (desowned = desowned.replace(key, "")));
   await owner.update({
-    regions: desowned
+    regions: desowned,
   });
   let winner = await battle.getBelligerent();
   let reputation = 10 * (await battle.getDefenders()).length + 10;
   await winner.update({
     regions:
       winner.dataValues.regions + regions[battle.dataValues.regionTarget].keys,
-    reputationPool: winner.dataValues.reputationPool + reputation
+    reputationPool: winner.dataValues.reputationPool + reputation,
   });
   await battle.update({ status: "victory" });
   await battle.removeInvaders(await battle.getInvaders());
@@ -294,7 +293,7 @@ exports.défendue = async (client, message, args, player) => {
   let winner = await battle.getTarget();
   let reputation = 10 * (await battle.getInvaders()).length + 10;
   await winner.update({
-    reputationPool: winner.dataValues.reputationPool + reputation
+    reputationPool: winner.dataValues.reputationPool + reputation,
   });
   await battle.update({ status: "defeat" });
   await battle.removeInvaders(await battle.getInvaders());

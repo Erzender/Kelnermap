@@ -24,10 +24,9 @@
     <% if (fields.id > 0) { %>
       <p style="color: red;"><input name="delete" type="checkbox" /> Supprimer l'édifice ?</p>
     <% } %>
-    <input type="submit" value="Générer la commande Discord" />
+    <button type="submit">Générer la commande Discord 🖥</button>
   </form>
   <% if (fields.command.length > 0) { %>
-    <div>Commande à copier dans Discord :</div>
     <textarea cols="50" readonly onClick="this.select();" ><%= fields.command %></textarea>
   <% } %>
 </div>

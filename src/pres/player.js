@@ -103,7 +103,8 @@ exports.getEditor = async function (req, res) {
 
     fields.id = player.dataValues.id;
     fields.title =
-      "Modifier le profil " + (player.dataValues.minecraft || "") + " :";
+      (player.dataValues.minecraft ? player.dataValues.minecraft + "| " : "") +
+      "Modifier le profil";
     fields.name = player.dataValues.minecraft || "";
     fields.description = player.dataValues.desc;
     fields.picture = player.dataValues.picture;

@@ -63,6 +63,10 @@ a {
   color: white;
 }
 
+button {
+  font-weight: bold;
+}
+
 .miniProfile {
   border-radius: 100px;
   width: 30px;
