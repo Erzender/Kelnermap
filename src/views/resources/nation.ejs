@@ -13,6 +13,22 @@
     >
   </div>
   <hr style="background-color: <%= info.color %>; height: 20px;" />
+  <a
+    style="
+      display: flex;
+      font-weight: bold;
+      width: 100px;
+      justify-content: center;
+      background-color: darkred;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      padding: 5px;
+      text-decoration: none;
+    "
+    href="<%= info.edit %>"
+  >
+    Modifier ✍
+  </a>
   <h3>Superficie</h3>
   <%= info.size %> km²<br />
   <% if (info.anthem && info.anthem.length) { %>
@@ -56,22 +72,6 @@
     <p><%= desc %></p>
     <% }); %>
   </div>
-  <a
-    style="
-      display: flex;
-      font-weight: bold;
-      width: 100px;
-      justify-content: center;
-      background-color: black;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 5px;
-      text-decoration: none;
-    "
-    href="<%= info.edit %>"
-  >
-    Modifier ✍
-  </a>
 
   <div style="margin-top: 50px; font-weight: bold;">
     Pour rejoindre la nation :
