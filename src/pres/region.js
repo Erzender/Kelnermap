@@ -7,11 +7,21 @@ const regions = require("../../config/regionInfo.json");
 exports.get = async function (req, res) {
   let region = regions[req.params.id];
   if (!region) {
-    return res
-      .status(404)
-      .render("index", { route: "404", embedTitle: "404", embedImage: "", embedDesc: "" });
+    return res.status(404).render("index", {
+      route: "404",
+      embedTitle: "404",
+      embedImage: "",
+      embedDesc: "",
+    });
   }
   let info = { region: { ...region, key: req.params.id } };
+  info.cities = Object.keys(regions)
+    .filter((key) => regions[key].suze && regions[key].suze === info.region.key)
+    .map((reg) => ({
+      link: "/lekelner/explorer/regions/" + reg,
+      name: regions[reg].n,
+    }));
+  console.log(info.cities);
   info.domination = await data.Nation.findOne({
     where: { regions: { [Op.substring]: req.params.id } },
   });

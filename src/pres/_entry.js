@@ -22,6 +22,10 @@ router.get("/joueurs/editeur", player.getEditor);
 router.post("/joueurs/editeur", player.postEditor);
 router.get("/joueurs/:id", player.get);
 
+router.get("/nations/editeur", nation.getEditor);
+router.post("/nations/editeur/global", nation.postEditor);
+router.post("/nations/editeur/expelliarmus", nation.postExpell);
+router.post("/nations/editeur/citizen", nation.postCitizen);
 router.get("/nations/:id", nation.get);
 
 module.exports = router;
