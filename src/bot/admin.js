@@ -2,6 +2,9 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 const FTPClient = require("ssh2-sftp-client");
 
+const data = require("../_model");
+const regions = require("../../config/regionInfo.json");
+
 exports.whitelister = async (client, message, args, player) => {
   if (args.length < 3) return message.channel.send("qui ?");
 
@@ -12,7 +15,7 @@ exports.whitelister = async (client, message, args, player) => {
       host: JSON.parse(process.env.KELNER_FTP).host,
       port: JSON.parse(process.env.KELNER_FTP).port,
       username: JSON.parse(process.env.KELNER_FTP).usr,
-      password: JSON.parse(process.env.KELNER_FTP).pwd
+      password: JSON.parse(process.env.KELNER_FTP).pwd,
     });
     let file = __dirname + "/../../../whitelist.json";
     await sftp.fastGet("/whitelist.json", file);
@@ -26,11 +29,11 @@ exports.whitelister = async (client, message, args, player) => {
         (total, cur) => total.slice(0, cur) + "-" + total.slice(cur),
         info.offlineuuid
       ),
-      name: info.nick
+      name: info.nick,
     });
     content = content.filter(
       (item, pos, self) =>
-        self.findIndex(item2 => item2.name === item.name) === pos
+        self.findIndex((item2) => item2.name === item.name) === pos
     );
     fs.writeFile(file, JSON.stringify(content), "utf8", () => {});
     await sftp.fastPut(file, "/whitelist.json");
@@ -47,5 +50,28 @@ exports.whitelister = async (client, message, args, player) => {
     console.log(err);
     return;
   }
-  channel.send("whitelist reload");
+  channel.send("whitelist reloaded");
+};
+
+exports.ville = async (client, message, args, player) => {
+  let nations = await data.Nation.findAll();
+  let suzes = Object.keys(regions)
+    .map((reg) => ({
+      reg,
+      vassals: Object.keys(regions).filter(
+        (reg2) => regions[reg2].suze && regions[reg2].suze === reg
+      ),
+    }))
+    .filter((reg) => reg.vassals.length);
+
+  nations.forEach((nation) => {
+    let regs = nation.dataValues.regions;
+
+    suzes.forEach((suze) => {
+      regs = regs.replace(suze.reg, suze.reg + suze.vassals.join(""));
+    });
+    regs = Array.from(new Set(regs.split(""))).join("");
+    nation.update({ regions: regs });
+  });
+  message.channel.send("villes rechargées wéé");
 };

@@ -8,6 +8,16 @@
     ></div>
     Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b>
 </a>
+  <% if (info.cities.length) { %>
+  <h2 style="color: orange;"><%= "📜Villes : " + info.cities.length %></h2>
+  <div style="border-left: orange 3px solid; padding-left: 5px;">
+    <% info.cities.forEach(function(city){ %>
+      <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
+          <a href="<%- city.link -%>"><%= city.name %></a>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
   <h2 style="color: cadetblue;"><%= "🏠Edifices : " + info.edifices.length %></h2>
   <a style="display: flex; font-weight: bold; width: 250px; justify-content: center; background-color: cadetblue; margin-bottom: 10px; margin-top: 10px; padding: 5px; text-decoration: none;" href="/lekelner/explorer/edifices/editeur?region=<%= info.region.key %>">
     ＋Enregistrer un édifice

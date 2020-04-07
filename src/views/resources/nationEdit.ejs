@@ -1,0 +1,51 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
+>
+  <h1><%= fields.title %></h1>
+  <form id="fnation" action="/lekelner/explorer/nations/editeur/global" method="post">
+    <input name="id" style="display: none" value="<%= fields.id %>" />
+    <input name="title" style="display: none" value="<%= fields.title %>" />
+    <input name="citizenship" style="display: none" value="<%= JSON.stringify(fields.citizenship) %>" />
+    <p>Nom <input name="name" value="<%= fields.name %>" /></p>
+    <p>
+        <div>Description</div>
+        <textarea rows="10" cols="50" height="400px" name="description" form="fnation" ><%= fields.description %></textarea>
+    </p>
+    <p>Couleur <input name="color" type="color" value="<%= fields.color %>" /></p>
+    <p>Armoiries (image) <input name="picture" value="<%= fields.picture %>" /></p>
+    <p>Hymne (lien ou identifiant youtube) <input name="anthem" value="<%= fields.anthem %>" /></p>
+    <p>
+        <div>Bastion : le bastion est une salle accessible, qui servira de zone de départ pour les défenseurs de la nation en cas de bataille. Il faut indiquer les coordonnées ici :</div>
+        X<input type="number" style="width:80px;" name="x" value="<%= fields.x %>" />
+        Y<input type="number" style="width:80px;" name="y" value="<%= fields.y %>" />
+        Z<input type="number" style="width:80px;" name="z" value="<%= fields.z %>" />
+    </p>
+    <button type="submit">Générer la commande Discord 🖥</button>
+  </form>
+  <% if (fields.command.length > 0) { %>
+    <textarea cols="50" readonly onClick="this.select();" ><%= fields.command %></textarea>
+  <% } %>
+  <% if (fields.id >= 0) { %>
+  <h2>Autres commandes :</h2>
+  <form id="f2nation" action="/lekelner/explorer/nations/editeur/expelliarmus?nation=<%= fields.id %>" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    Virer un dirigeant : 
+    <select name="player" form="f2nation">
+      <% fields.citizenship.citizens.forEach(function(player){ %>
+        <option value="<%= player.id %>"><%= player.name || "crétin anonyme" %></option>
+      <% }) %>
+    </select>
+    <button type="submit">Générer la commande Discord 🖥</button>
+  </form>
+  <form id="f3nation" action="/lekelner/explorer/nations/editeur/citizen" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    Ajouter un dirigeant : 
+    <select name="player" form="f3nation">
+      <% fields.citizenship.nonCitizens.forEach(function(player){ %>
+        <option value="<%= player.id %>"><%= player.name || "crétin anonyme" %></option>
+      <% }) %>
+    </select>
+    <button type="submit">Générer la commande Discord 🖥</button>
+  </form>
+  <% } %>
+</div>

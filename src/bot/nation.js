@@ -26,7 +26,28 @@ exports.fonder = async (client, message, args, player) => {
   }
   let nation = null;
   try {
-    nation = await data.Nation.create({ name: args[2] });
+    if (args.length < 10) {
+      nation = await data.Nation.create({ name: args[2] });
+    } else {
+      let arg = args[6].split("www.youtube.com/watch?v=");
+      arg = arg.length > 1 ? arg[1] : arg[0];
+      arg = arg.split("youtu.be/");
+      arg = arg.length > 1 ? arg[1] : arg[0];
+      nation = await data.Nation.create({
+        name: args[2],
+        desc: args[3],
+        pic: args[4],
+        color: args[5],
+        hymne: arg,
+        stronghold:
+          parseInt(args[7]) +
+          " X | " +
+          parseInt(args[8]) +
+          " Y | " +
+          parseInt(args[9]) +
+          " Z",
+      });
+    }
     await player.addHomeland(nation);
     await player.setIdentity(nation);
   } catch (err) {
@@ -129,11 +150,6 @@ const voir = async (client, message, args, player) => {
         as: "Homelands",
         where: { id: nation.dataValues.id },
       },
-      {
-        model: data.Nation,
-        as: "Identity",
-        where: { id: nation.dataValues.id },
-      },
     ],
   });
   const embed = new Discord.RichEmbed()
@@ -161,53 +177,80 @@ exports.changer = async (client, message, args, player) => {
   if (args.length < 4) {
     return message.channel.send("Pas compris.");
   }
-  if (!checkIsNationCitizen(player)) {
-    return message.channel.send("You have no power here.");
-  }
+
+  let nation = player.dataValues.Identity;
   try {
-    if (args[2] === "couleur" && /^#(?:[0-9a-f]{3}){1,2}$/i.test(args[3])) {
-      await player.dataValues.Identity.update({ color: args[3] });
-    } else if (args[2] === "nom") {
-      await player.dataValues.Identity.update({ name: args[3] });
-    } else if (args[2] === "image") {
-      await player.dataValues.Identity.update({ pic: args[3] });
-    } else if (args[2] == "description") {
-      await player.dataValues.Identity.update({ desc: args[3] });
-    } else if (args[2] == "hymne") {
-      let arg = args[3].split("www.youtube.com/watch?v=");
+    if (args.length >= 11) {
+      nation = player.Homelands.filter(
+        (nat) => nat.dataValues.id.toString() === args[2]
+      );
+      if (nation.length === 0)
+        return message.channel.send("You have no power here.");
+
+      nation = nation[0];
+      let arg = args[7].split("www.youtube.com/watch?v=");
       arg = arg.length > 1 ? arg[1] : arg[0];
       arg = arg.split("youtu.be/");
       arg = arg.length > 1 ? arg[1] : arg[0];
-      await player.dataValues.Identity.update({ hymne: arg });
-    } else if (args[2] == "bastion") {
-      if (args.length < 6) {
-        return message.channel.send(
-          "Il faut 3 coordonnées (X, Y, Z).\n`$nation changer bastion 1 2 3`"
-        );
-      }
-      console.log(args[3]);
-      await player.dataValues.Identity.update({
+      await nation.update({
+        name: args[3],
+        desc: args[4],
+        pic: args[5],
+        color: args[6],
+        hymne: arg,
         stronghold:
-          parseInt(args[3]) +
+          parseInt(args[8]) +
           " X | " +
-          parseInt(args[4]) +
+          parseInt(args[9]) +
           " Y | " +
-          parseInt(args[5]) +
+          parseInt(args[10]) +
           " Z",
       });
     } else {
-      return message.channel.send("Pas compris.");
+      if (!checkIsNationCitizen(player)) {
+        return message.channel.send("You have no power here.");
+      }
+      if (args[2] === "couleur" && /^#(?:[0-9a-f]{3}){1,2}$/i.test(args[3])) {
+        await player.dataValues.Identity.update({ color: args[3] });
+      } else if (args[2] === "nom") {
+        await player.dataValues.Identity.update({ name: args[3] });
+      } else if (args[2] === "image") {
+        await player.dataValues.Identity.update({ pic: args[3] });
+      } else if (args[2] == "description") {
+        await player.dataValues.Identity.update({ desc: args[3] });
+      } else if (args[2] == "hymne") {
+        let arg = args[3].split("www.youtube.com/watch?v=");
+        arg = arg.length > 1 ? arg[1] : arg[0];
+        arg = arg.split("youtu.be/");
+        arg = arg.length > 1 ? arg[1] : arg[0];
+        await player.dataValues.Identity.update({ hymne: arg });
+      } else if (args[2] == "bastion") {
+        if (args.length < 6) {
+          return message.channel.send(
+            "Il faut 3 coordonnées (X, Y, Z).\n`$nation changer bastion 1 2 3`"
+          );
+        }
+        console.log(args[3]);
+        await player.dataValues.Identity.update({
+          stronghold:
+            parseInt(args[3]) +
+            " X | " +
+            parseInt(args[4]) +
+            " Y | " +
+            parseInt(args[5]) +
+            " Z",
+        });
+      } else {
+        return message.channel.send("Pas compris.");
+      }
     }
   } catch (err) {
     console.log(err);
-    return message.channel.send("Le Kelner.exe a cessé de fonctionner.");
+    return message.channel.send(
+      "Le Kelner.exe a cessé de fonctionner. Nom de nation déjà pris peut-être ?"
+    );
   }
-  voir(
-    client,
-    message,
-    [null, null, player.dataValues.Identity.dataValues.id],
-    player
-  );
+  voir(client, message, [null, null, nation.dataValues.id], player);
   message.channel.send("Voilà voilà.");
 };
 
@@ -236,12 +279,16 @@ exports.naturaliser = async (client, message, args, player) => {
   if (targetPlayer === null) {
     return message.channel.send("Joueur inconnu.");
   }
-  await targetPlayer.addHomeland(player.Identity);
+  let nation = player.Identity;
+  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
+  if (nation === null) return message.channel.send("Pas trouvé la nation");
+  await targetPlayer.removeHomeland(nation);
+  await targetPlayer.addHomeland(nation);
   message.channel.send(
     "<@" +
       args[2] +
-      "> peut désormais obtenir la nationalité de **" +
-      player.Identity.dataValues.name +
+      "> est un nouveau dirigeant de **" +
+      nation.dataValues.name +
       "**"
   );
 };
@@ -262,12 +309,15 @@ exports.radier = async (client, message, args, player) => {
   if (targetPlayer === null) {
     return message.channel.send("Joueur inconnu.");
   }
-  await targetPlayer.removeHomeland(player.Identity);
+  let nation = player.Identity;
+  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
+  if (nation === null) return message.channel.send("Pas trouvé la nation");
+  await targetPlayer.removeHomeland(nation);
   message.channel.send(
     "<@" +
       args[2] +
-      "> n'est plus citoyen de **" +
-      player.Identity.dataValues.name +
+      "> n'est plus dirigeant de **" +
+      nation.dataValues.name +
       "**"
   );
 };
