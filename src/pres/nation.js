@@ -183,9 +183,10 @@ exports.postEditor = async function (req, res) {
   }
   let fields = {
     ...req.body,
-    citizenship: JSON.parse(req.body.citizenship),
     command,
   };
+  if (req.body.citizenship)
+    fields.citizenship = JSON.parse(req.body.citizenship);
   res.render("index", {
     route: "nationEdit",
     embedTitle: "Editeur",

@@ -5,6 +5,7 @@
   <h2>Mon personnage :</h2>
   <form id="fplayer" action="/lekelner/explorer/joueurs/editeur" method="post">
     <input readonly name="title" style="display: none" value="<%= fields.title %>" />
+    <input readonly name="nation" style="display: none" value="<%= fields.nation %>" />
     <p>Pseudo Minecraft <input name="name" value="<%= fields.name %>" /></p>
     <p>
         <div>Description</div>
@@ -17,6 +18,26 @@
     <textarea cols="50" readonly onClick="this.select();" ><%= fields.command %></textarea>
   <% } %>
   <h2>Autres actions :</h2>
+  <% if (fields.nation) { %>
   <div>Quitter sa nation</div>
   <textarea cols="50" rows="1" readonly onClick="this.select();" >$nation brexit</textarea>
+  <% } %>
+  <% if (!fields.nation) { %>
+  <a
+    style="
+      display: flex;
+      font-weight: bold;
+      width: 200px;
+      justify-content: center;
+      background-color: darkred;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      padding: 5px;
+      text-decoration: none;
+    "
+    href="/lekelner/explorer/nations/editeur"
+  >
+  ＋Fonder une nation
+  </a>
+  <% } %>
 </div>

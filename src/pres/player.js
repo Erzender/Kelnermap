@@ -81,34 +81,31 @@ exports.get = async function (req, res) {
 };
 
 exports.getEditor = async function (req, res) {
+  let player = null;
+  if (req.query.id) {
+    player = await data.Player.findByPk(req.query.id);
+  }
+
+  if (player === null) {
+    return res.status(404).render("index", {
+      route: "404",
+      embedTitle: "404",
+      embedImage: "",
+      embedDesc: "",
+    });
+  }
+
   let fields = {
-    id: -1,
-    title: "Modifier le profil",
-    name: "",
-    description: "",
-    picture: "",
+    id: player.dataValues.id,
+    title:
+      (player.dataValues.minecraft ? player.dataValues.minecraft + "| " : "") +
+      "Modifier le profil",
+    name: player.dataValues.minecraft || "",
+    description: player.dataValues.desc,
+    picture: player.dataValues.picture,
+    nation: player.IdentityId,
     command: "",
   };
-  if (req.query.id) {
-    let player = await data.Player.findByPk(req.query.id);
-
-    if (player === null) {
-      return res.status(404).render("index", {
-        route: "404",
-        embedTitle: "404",
-        embedImage: "",
-        embedDesc: "",
-      });
-    }
-
-    fields.id = player.dataValues.id;
-    fields.title =
-      (player.dataValues.minecraft ? player.dataValues.minecraft + "| " : "") +
-      "Modifier le profil";
-    fields.name = player.dataValues.minecraft || "";
-    fields.description = player.dataValues.desc;
-    fields.picture = player.dataValues.picture;
-  }
 
   res.render("index", {
     route: "playerEdit",
