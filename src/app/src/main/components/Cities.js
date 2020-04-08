@@ -81,7 +81,7 @@ const mapStateToProps = state => ({
   selected: state.root.selectedCity,
   battle:
     state.root.settings.battle && state.root.war
-      ? geoToImage(state.root.war.stronghold.x, state.root.war.stronghold.z)
+      ? geoToImage(state.root.settings.zoom, state.root.war.stronghold.x, state.root.war.stronghold.z)
       : null,
   displayCities: state.root.settings.cities,
   battleSelected: !!state.root.selectedBattle,

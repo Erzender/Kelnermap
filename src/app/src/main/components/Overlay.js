@@ -142,7 +142,7 @@ const Overlay = ({
             </div>
           )}
           <div style={styles.activity}>
-            {tileInfo && (
+            {tileInfo && tileInfo.edifices !== undefined && (
               <div style={styles.edifices}>🏠{tileInfo.edifices}</div>
             )}
           </div>
