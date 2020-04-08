@@ -50,7 +50,7 @@ exports.whitelister = async (client, message, args, player) => {
     console.log(err);
     return;
   }
-  channel.send("whitelist reloaded");
+  channel.send("whitelist reload");
 };
 
 exports.ville = async (client, message, args, player) => {
