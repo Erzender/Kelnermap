@@ -1,9 +1,12 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const FTPClient = require("ssh2-sftp-client");
+const util = require("util");
 
 const data = require("../_model");
 const regions = require("../../config/regionInfo.json");
+
+const unlink = util.promisify(fs.unlink);
 
 exports.whitelister = async (client, message, args, player) => {
   if (args.length < 3) return message.channel.send("qui ?");
@@ -17,7 +20,10 @@ exports.whitelister = async (client, message, args, player) => {
       username: JSON.parse(process.env.KELNER_FTP).usr,
       password: JSON.parse(process.env.KELNER_FTP).pwd,
     });
-    let file = __dirname + "/../../../whitelist.json";
+    let file = __dirname + "/../../whitelist.json";
+    try {
+      await unlink(file);
+    } catch (err) {}
     await sftp.fastGet("/whitelist.json", file);
     let content = require(file);
 
