@@ -7,6 +7,7 @@ const data = require("../_model");
 const regions = require("../../config/regionInfo.json");
 
 const unlink = util.promisify(fs.unlink);
+const readFile = util.promisify(fs.readFile);
 
 exports.whitelister = async (client, message, args, player) => {
   if (args.length < 3) return message.channel.send("qui ?");
@@ -25,7 +26,7 @@ exports.whitelister = async (client, message, args, player) => {
       await unlink(file);
     } catch (err) {}
     await sftp.fastGet("/whitelist.json", file);
-    let content = require(file);
+    let content = JSON.parse(await readFile(file, "utf-8"));
 
     content = content.filter((elem) => elem.name !== args[2]);
     info = await (
