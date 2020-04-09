@@ -19,8 +19,9 @@ exports.whitelister = async (client, message, args, player) => {
     });
     let file = __dirname + "/../../../whitelist.json";
     await sftp.fastGet("/whitelist.json", file);
-    let content = require(__dirname + "../../../whitelist.json");
+    let content = require(file);
 
+    content = content.filter((elem) => elem.name !== args[2]);
     info = await (
       await fetch("http://tools.glowingmines.eu/convertor/nick/" + args[2])
     ).json();
@@ -29,12 +30,8 @@ exports.whitelister = async (client, message, args, player) => {
         (total, cur) => total.slice(0, cur) + "-" + total.slice(cur),
         info.offlineuuid
       ),
-      name: info.nick,
+      name: args[2],
     });
-    content = content.filter(
-      (item, pos, self) =>
-        self.findIndex((item2) => item2.name === item.name) === pos
-    );
     fs.writeFile(file, JSON.stringify(content), "utf8", () => {});
     await sftp.fastPut(file, "/whitelist.json");
     await sftp.end();
