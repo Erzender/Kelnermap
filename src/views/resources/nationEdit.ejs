@@ -75,7 +75,7 @@
   </form>
   <h3>⚔️Points de réputation PVP</h3>
   <div style="border-left: 3px solid gray; padding-left: 5px;">
-  0 points disponibles
+  <%= fields.pvp %> points disponibles
   <form id="f6nation" action="/lekelner/explorer/nations/editeur/dispatch?nation=<%= fields.id %>" method="post">
     <input name="nation" style="display: none" value="<%= fields.id %>" />
     Distribuer à (ctrl+clic pour en sélectionner plusieurs) :<br/>

@@ -141,6 +141,7 @@ exports.getEditor = async function (req, res) {
     fields.picture = nation.dataValues.pic;
     fields.color = nation.dataValues.color;
     fields.anthem = nation.dataValues.hymne;
+    fields.pvp = nation.dataValues.reputationPool;
     fields.players = players;
     fields.citizenship = {
       citizens: citizens
