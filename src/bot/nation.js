@@ -1,4 +1,7 @@
 const Discord = require("discord.js");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 const data = require("../_model");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
@@ -230,7 +233,6 @@ exports.changer = async (client, message, args, player) => {
             "Il faut 3 coordonnées (X, Y, Z).\n`$nation changer bastion 1 2 3`"
           );
         }
-        console.log(args[3]);
         await player.dataValues.Identity.update({
           stronghold:
             parseInt(args[3]) +
@@ -280,16 +282,23 @@ exports.naturaliser = async (client, message, args, player) => {
     return message.channel.send("Joueur inconnu.");
   }
   let nation = player.Identity;
-  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
-  if (nation === null) return message.channel.send("Pas trouvé la nation");
+  if (args.length > 3)
+    nation = await data.Nation.findOne({
+      where: {
+        id: {
+          [Op.and]: {
+            [Op.eq]: args[3],
+            [Op.in]: player.Homelands.map((nat) => nat.id),
+          },
+        },
+      },
+    });
+  if (nation === null)
+    return message.channel.send("Je crois que ça va pas être possible");
   await targetPlayer.removeHomeland(nation);
   await targetPlayer.addHomeland(nation);
   message.channel.send(
-    "<@" +
-      args[2] +
-      "> est un nouveau dirigeant de **" +
-      nation.dataValues.name +
-      "**"
+    "<@" + args[2] + "> est un dirigeant de **" + nation.dataValues.name + "**"
   );
 };
 
@@ -300,11 +309,6 @@ exports.radier = async (client, message, args, player) => {
   if (!checkIsNationCitizen(player)) {
     return message.channel.send("You have no power here.");
   }
-  if (args[2] === player.dataValues.discord) {
-    return message.channel.send(
-      "Nan ça c'est toi, essaye avec `$nation brexit`"
-    );
-  }
   let targetPlayer = await data.Player.findByPk(args[2]);
   if (targetPlayer === null) {
     return message.channel.send("Joueur inconnu.");
@@ -312,6 +316,14 @@ exports.radier = async (client, message, args, player) => {
   let nation = player.Identity;
   if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
   if (nation === null) return message.channel.send("Pas trouvé la nation");
+  if (
+    args[2] === player.dataValues.discord &&
+    player.Identity.id === nation.id
+  ) {
+    return message.channel.send(
+      "Nan ça c'est toi, essaye avec `$nation brexit`"
+    );
+  }
   await targetPlayer.removeHomeland(nation);
   message.channel.send(
     "<@" +
@@ -322,9 +334,63 @@ exports.radier = async (client, message, args, player) => {
   );
 };
 
+const multiDistri = async (client, message, args, player) => {
+  nation = await data.Nation.findOne({
+    where: {
+      [Op.and]: [
+        { id: { [Op.eq]: args[2] } },
+        { id: { [Op.in]: player.Homelands.map((nat) => nat.dataValues.id) } },
+      ],
+    },
+  });
+  if (nation === null)
+    return message.channel.send("Je crois que ça va pas être possible");
+
+  let players = [];
+  let amount = parseInt(args[3]);
+  args.forEach((arg, i) => {
+    if (i <= 3) return;
+    players.push(args[i]);
+  });
+  let realAmount =
+    amount * players.length < nation.dataValues.reputationPool
+      ? amount * players.length
+      : nation.dataValues.reputationPool;
+
+  if (realAmount <= 0) {
+    return message.channel.send("Y'a comme un lézard dans ton calcul.");
+  }
+
+  let total = ~~(realAmount / players.length);
+  let extras = realAmount % players.length;
+  let embed = new Discord.RichEmbed().setDescription("Point distribués :");
+  let targetPlayer = null;
+
+  total += 1;
+  for (i = 0; i < players.length; i++) {
+    targetPlayer = await data.Player.findByPk(players[i]);
+    if (targetPlayer !== null) {
+      if (i >= extras) total -= 1;
+      await nation.update({
+        reputationPool: nation.dataValues.reputationPool - total,
+      });
+      await targetPlayer.update({
+        reputation: targetPlayer.dataValues.reputation + total,
+      });
+      embed.addField(total + " ->", "<@" + players[i] + ">");
+    }
+  }
+  console.log(players);
+  message.channel.send(embed);
+};
+
 exports.distribuer = async (client, message, args, player) => {
-  if (args.length < 3) {
+  if (args.length < 5) {
     return message.channel.send("Pas compris.");
+  }
+  if (args.length > 4) {
+    await multiDistri(client, message, args, player);
+    return;
   }
   if (!checkIsNationCitizen(player)) {
     return message.channel.send("You have no power here.");

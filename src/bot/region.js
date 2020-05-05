@@ -32,9 +32,6 @@ const getClaimableRegions = () =>
   Object.keys(regions).filter((id) => !regions[id].suze);
 
 exports.revendiquer = async (client, message, args, player) => {
-  if (!player.Identity) {
-    return message.channel.send("Faut une nation d'abord : `$nation fonder`");
-  }
   if (!checkIsNationCitizen(player)) {
     return message.channel.send(
       "Il faut être citoyen de sa nation pour ça, bolosse."
@@ -51,24 +48,28 @@ exports.revendiquer = async (client, message, args, player) => {
   if (!getClaimableRegions().find((region) => region === args[2]))
     return message.channel.send("C'est non !");
 
+  let nation = player.Identity;
+  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
+  if (!nation) return message.channel.send("C'est pour quelle nation wesh ?");
+
   let owner = await data.Nation.findOne({
     where: { regions: { [Op.substring]: args[2] } },
   });
 
   if (owner === null) {
-    await player.Identity.update({
-      regions: player.Identity.dataValues.regions + regions[args[2]].keys,
+    await nation.update({
+      regions: nation.dataValues.regions + regions[args[2]].keys,
     });
     return message.channel.send(
       `**${
-        player.Identity.dataValues.name
+        nation.dataValues.name
       }** compte une nouvelle région dans son territoire : **${
         regions[args[2]].n
       }**`
     );
   }
 
-  if (owner.dataValues.id === player.Identity.dataValues.id) {
+  if (owner.dataValues.id === nation.dataValues.id) {
     return message.channel.send("Tu veux t'envahir toi-même. Idiot bête.");
   }
 
@@ -101,8 +102,8 @@ exports.revendiquer = async (client, message, args, player) => {
         { model: data.Nation, as: "Homelands" },
       ],
     });
-    await player.Identity.update({
-      regions: player.Identity.dataValues.regions + regions[args[2]].keys,
+    await nation.update({
+      regions: nation.dataValues.regions + regions[args[2]].keys,
     });
 
     return message.channel.send(
@@ -129,13 +130,13 @@ exports.revendiquer = async (client, message, args, player) => {
     regionTarget: args[2],
     stronghold: owner.dataValues.stronghold,
     date,
-    BelligerentId: player.Identity.dataValues.id,
+    BelligerentId: nation.dataValues.id,
     TargetId: owner.dataValues.id,
   });
 
   let citizens = await getNationCitizens(owner);
   citizens = "<@" + citizens.join("><@") + ">";
-  player.Identity.update({ regionTarget: args[2] });
+  nation.update({ regionTarget: args[2] });
   message.channel.send(`Cible verouillée : **${regions[args[2]].n}**
 ${citizens}, citoyens de **${
     owner.dataValues.name
@@ -144,9 +145,9 @@ Il faut utilser \`$région invasion\`, là`);
 };
 
 exports.céder = async (client, message, args, player) => {
-  if (!player.Identity) {
-    return message.channel.send("Mais t'as pas de nation oh.");
-  }
+  let nation = player.Identity;
+  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
+  if (!nation) return message.channel.send("C'est pour quelle nation wesh ?");
   if (!checkIsNationCitizen(player)) {
     return message.channel.send("Il faut être citoyen de sa nation pour ça.");
   }
@@ -156,7 +157,7 @@ exports.céder = async (client, message, args, player) => {
 
   if (
     !getClaimableRegions().find((region) => region === args[2]) ||
-    player.Identity.dataValues.regions.search(args[2]) < 0
+    nation.dataValues.regions.search(args[2]) < 0
   )
     return message.channel.send(
       "Ah oui mais là, je crois que ça va pas être possible."
@@ -171,17 +172,17 @@ exports.céder = async (client, message, args, player) => {
   if (battle !== null)
     return message.channel.send("Oh bah non hé y'a une bataille dessus.");
 
-  let desowned = player.Identity.dataValues.regions;
+  let desowned = nation.dataValues.regions;
   regions[args[2]].keys
     .split("")
     .forEach((key) => (desowned = desowned.replace(key, "")));
-  await player.Identity.update({
+  await nation.update({
     regions: desowned,
   });
 
   message.channel.send(
     "**" +
-      player.Identity.dataValues.name +
+      nation.dataValues.name +
       "** abdique la région de **" +
       regions[args[2]].n +
       "**"

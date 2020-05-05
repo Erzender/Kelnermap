@@ -50,7 +50,7 @@ div.button:active {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #222222;
+  background-color: #101010;
   color: white;
 }
 
@@ -63,8 +63,32 @@ a {
   color: white;
 }
 
+.ax {
+  display: flex;
+  font-weight: bold;
+  width: 200px;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
 button {
   font-weight: bold;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, border 0.2s;
+}
+
+button:hover {
+  background-color: grey;
+  border-radius: 10px;
+}
+
+textarea {
+  max-width: 100%;
 }
 
 .miniProfile {

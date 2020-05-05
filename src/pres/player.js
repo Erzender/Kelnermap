@@ -104,6 +104,12 @@ exports.getEditor = async function (req, res) {
     description: player.dataValues.desc,
     picture: player.dataValues.picture,
     nation: player.IdentityId,
+    nations: (await data.Nation.findAll())
+      .map((nation) => ({
+        key: nation.dataValues.id,
+        name: nation.dataValues.name,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name)),
     command: "",
   };
 
@@ -126,12 +132,22 @@ exports.postEditor = async function (req, res) {
     '" "<' +
     req.body.picture +
     '>"';
-  let fields = { ...req.body, command };
   res.render("index", {
-    route: "playerEdit",
+    route: "command",
     embedTitle: "Editeur",
     embedImage: "",
     embedDesc: "",
-    fields,
+    command,
+  });
+};
+
+exports.joinNation = async function (req, res) {
+  console.log(req.body);
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: "$nation rejoindre " + req.body.nation,
   });
 };

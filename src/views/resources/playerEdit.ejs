@@ -1,17 +1,17 @@
 <div
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
-  <h1 style="color: darkred;"><%= fields.title %></h1>
+  <h1><%= fields.title %></h1>
   <h2>Mon personnage :</h2>
-  <form id="fplayer" action="/lekelner/explorer/joueurs/editeur" method="post">
+  <form id="fplayer" action="/lekelner/explorer/joueurs/editeur/global" method="post">
     <input readonly name="title" style="display: none" value="<%= fields.title %>" />
     <input readonly name="nation" style="display: none" value="<%= fields.nation %>" />
-    <p>Pseudo Minecraft <input name="name" value="<%= fields.name %>" /></p>
+    <p>🏷️Pseudo Minecraft <input name="name" value="<%= fields.name %>" /></p>
     <p>
-        <div>Description</div>
-        <textarea rows="10" cols="50" height="400px" name="description" form="fplayer" ><%= fields.description %></textarea>
+        <div>📚Description</div>
+        <textarea rows="10"  cols="50" name="description" form="fplayer" ><%= fields.description %></textarea>
     </p>
-    <p>Image <input name="picture" value="<%= fields.picture %>" /></p>
+    <p>🖼️Image <input name="picture" value="<%= fields.picture %>" /></p>
     <button type="submit">Générer la commande Discord 🖥</button>
   </form>
   <% if (fields.command.length > 0) { %>
@@ -19,10 +19,19 @@
   <% } %>
   <h2>Autres actions :</h2>
   <% if (fields.nation) { %>
-  <div>Quitter sa nation</div>
+  <div>🖕Quitter sa nation :</div>
   <textarea cols="50" rows="1" readonly onClick="this.select();" >$nation brexit</textarea>
   <% } %>
   <% if (!fields.nation) { %>
+  <form id="f2nation" action="/lekelner/explorer/joueurs/editeur/rejoindre?joueur=<%= fields.id %>" method="post">
+    Rejoindre une nation :
+    <select name="nation" form="f2nation">
+      <% fields.nations.forEach(function(nation){ %>
+        <option value="<%= nation.key %>"><%= nation.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">OK 🖥</button>
+  </form>
   <a
     style="
       display: flex;

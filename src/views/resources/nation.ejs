@@ -14,20 +14,11 @@
   </div>
   <hr style="background-color: <%= info.color %>; height: 20px;" />
   <a
-    style="
-      display: flex;
-      font-weight: bold;
-      width: 100px;
-      justify-content: center;
-      background-color: darkred;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 5px;
-      text-decoration: none;
-    "
+    class="ax"
+    style="width: 150px; background-color: darkred;"
     href="<%= info.edit %>"
   >
-    Modifier ✍
+    Administrer ✍
   </a>
   <h3>Superficie</h3>
   <%= info.size %> km²<br />
@@ -72,11 +63,4 @@
     <p><%= desc %></p>
     <% }); %>
   </div>
-
-  <div style="margin-top: 50px; font-weight: bold;">
-    Pour rejoindre la nation :
-  </div>
-  <textarea cols="25" rows="1" readonly onClick="this.select();">
-<%= info.command %></textarea
-  >
 </div>

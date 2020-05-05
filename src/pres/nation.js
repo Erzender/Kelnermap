@@ -3,6 +3,7 @@ const Op = Sequelize.Op;
 
 const data = require("../_model");
 const tiles = require("../../config/regions.json");
+const regions = require("../../config/regionInfo.json");
 
 exports.get = async function (req, res) {
   let nation = await data.Nation.findByPk(req.params.id);
@@ -64,7 +65,6 @@ exports.get = async function (req, res) {
           ? citizen.dataValues.picture
           : "/lekelner/asset/Alex.webp",
     })),
-    command: "$nation rejoindre " + nation.dataValues.id,
   };
 
   res.render("index", {
@@ -121,25 +121,55 @@ exports.getEditor = async function (req, res) {
       },
     });
 
+    let players = (
+      await data.Player.findAll({
+        where: { minecraft: { [Op.ne]: null } },
+      })
+    )
+      .map((elem) => ({
+        id: elem.dataValues.discord,
+        name: elem.dataValues.minecraft,
+      }))
+      .sort((a, b) => a.name && a.name.localeCompare(b.name));
+
     fields.id = nation.dataValues.id;
     fields.title =
       (nation.dataValues.name ? nation.dataValues.name + " | " : "") +
-      "Modifier la nation";
+      "Administrer la nation";
     fields.name = nation.dataValues.name || "";
     fields.description = nation.dataValues.desc;
     fields.picture = nation.dataValues.pic;
     fields.color = nation.dataValues.color;
     fields.anthem = nation.dataValues.hymne;
+    fields.players = players;
     fields.citizenship = {
-      citizens: citizens.map((player) => ({
-        id: player.dataValues.discord,
-        name: player.dataValues.minecraft,
-      })),
-      nonCitizens: nonCitizens.map((player) => ({
-        id: player.dataValues.discord,
-        name: player.dataValues.minecraft,
-      })),
+      citizens: citizens
+        .map((player) => ({
+          id: player.dataValues.discord,
+          name: player.dataValues.minecraft,
+        }))
+        .sort((a, b) => a.name && a.name.localeCompare(b.name)),
+      nonCitizens: nonCitizens
+        .map((player) => ({
+          id: player.dataValues.discord,
+          name: player.dataValues.minecraft,
+        }))
+        .sort((a, b) => a.name && a.name.localeCompare(b.name)),
     };
+    fields.regs = {
+      control: Array.from(new Set(nation.dataValues.regions.split("")))
+        .filter((reg) => !regions[reg].suze)
+        .map((reg) => ({ key: reg, name: regions[reg].n }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+      nonControl: Object.keys(regions)
+        .filter((reg) => !regions[reg].suze)
+        .map((reg) => ({
+          key: reg,
+          name: regions[reg].n,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    };
+
     if (nation.dataValues.stronghold) {
       let coors = nation.dataValues.stronghold.split(" | ");
       fields.x = coors[0].split(" X")[0];
@@ -178,21 +208,12 @@ exports.postEditor = async function (req, res) {
     '" "' +
     req.body.z +
     '"';
-  if (req.body.delete === "on") {
-    command = "$édifice supprimer " + req.body.id;
-  }
-  let fields = {
-    ...req.body,
-    command,
-  };
-  if (req.body.citizenship)
-    fields.citizenship = JSON.parse(req.body.citizenship);
   res.render("index", {
-    route: "nationEdit",
+    route: "command",
     embedTitle: "Editeur",
     embedImage: "",
     embedDesc: "",
-    fields,
+    command,
   });
 };
 
@@ -202,10 +223,13 @@ exports.postExpell = async function (req, res) {
     embedTitle: "Editeur",
     embedImage: "",
     embedDesc: "",
-    command:
-      "$nation radier " +
-      req.body.player +
-      (req.body.nation ? " " + req.body.nation : ""),
+    command: {
+      text:
+        "$nation radier " +
+        req.body.player +
+        (req.body.nation ? " " + req.body.nation : ""),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
   });
 };
 
@@ -215,9 +239,65 @@ exports.postCitizen = async function (req, res) {
     embedTitle: "Editeur",
     embedImage: "",
     embedDesc: "",
-    command:
-      "$nation naturaliser " +
-      req.body.player +
-      (req.body.nation ? " " + req.body.nation : ""),
+    command: {
+      text:
+        "$nation naturaliser " +
+        req.body.player +
+        (req.body.nation ? " " + req.body.nation : ""),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
+  });
+};
+
+exports.addRegion = async function (req, res) {
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: {
+      text:
+        "$région revendiquer " +
+        req.body.region +
+        (req.body.nation ? " " + req.body.nation : ""),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
+  });
+};
+
+exports.delRegion = async function (req, res) {
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: {
+      text:
+        "$région céder " +
+        req.body.region +
+        (req.body.nation ? " " + req.body.nation : ""),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
+  });
+};
+
+exports.dispatchReput = async function (req, res) {
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: {
+      text:
+        "$nation distribuer " +
+        req.body.nation +
+        " " +
+        req.body.amount +
+        " " +
+        (!req.body.players || !req.body.players.reduce
+          ? req.body.players
+          : req.body.players.reduce((res, cur) => res + " " + cur)),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
   });
 };

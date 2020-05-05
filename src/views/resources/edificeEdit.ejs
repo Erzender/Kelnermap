@@ -5,24 +5,24 @@
   <form id="fedifice" action="/lekelner/explorer/edifices/editeur" method="post">
     <input name="id" style="display: none" value="<%= fields.id %>" />
     <input name="title" style="display: none" value="<%= fields.title %>" />
-    <p>Nom <input name="name" value="<%= fields.name %>" /></p>
+    <p>🏷️Nom <input name="name" value="<%= fields.name %>" /></p>
     <p>
-        <div>Description</div>
+        <div>📚Description</div>
         <textarea rows="10" cols="50" height="400px" name="description" form="fedifice" ><%= fields.description %></textarea>
     </p>
-    <p>Image <input name="picture" value="<%= fields.picture %>" /></p>
+    <p>🖼️Image <input name="picture" value="<%= fields.picture %>" /></p>
     <p>
-        Région ou ville <select name="region" form="fedifice" >
+      🗺️Région ou ville <select name="region" form="fedifice" >
             <% regions.forEach(function(region){ %>
                 <option <%= region.key === fields.region ? 'selected' : '' %> value="<%= region.key %>"><%= region.value %></option>
             <% }); %>
         </select>
     </p>
     <p>
-        Lien du post mastodon <input name="mastodon" value="<%= fields.mastodon %>" />
+      💬Lien du post mastodon pour les commentaires <input name="mastodon" value="<%= fields.mastodon %>" />
     </p>
     <% if (fields.id > 0) { %>
-      <p style="color: red;"><input name="delete" type="checkbox" /> Supprimer l'édifice ?</p>
+      <p style="color: red;">🗑️<input name="delete" type="checkbox" /> Supprimer l'édifice ?</p>
     <% } %>
     <button type="submit">Générer la commande Discord 🖥</button>
   </form>

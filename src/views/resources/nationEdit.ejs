@@ -2,20 +2,21 @@
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
   <h1><%= fields.title %></h1>
+  <i>Attention, seules les dirigeantes peuvent administrer la nation.</i>
+  <hr />
   <form id="fnation" action="/lekelner/explorer/nations/editeur/global" method="post">
     <input name="id" style="display: none" value="<%= fields.id %>" />
-    <input name="title" style="display: none" value="<%= fields.title %>" />
-    <input name="citizenship" style="display: none" value="<%= JSON.stringify(fields.citizenship) %>" />
-    <p>Nom <input name="name" value="<%= fields.name %>" /></p>
+    <p>🏷️Nom <input name="name" value="<%= fields.name %>" /></p>
     <p>
-        <div>Description</div>
+        <div>📚Description</div>
         <textarea rows="10" cols="50" height="400px" name="description" form="fnation" ><%= fields.description %></textarea>
     </p>
-    <p>Couleur <input name="color" type="color" value="<%= fields.color %>" /></p>
-    <p>Armoiries (image) <input name="picture" value="<%= fields.picture %>" /></p>
-    <p>Hymne (lien ou identifiant youtube) <input name="anthem" value="<%= fields.anthem %>" /></p>
+    <p>🎨Couleur <input name="color" type="color" value="<%= fields.color %>" /></p>
+    <p>🛡️Armoiries (image) <input name="picture" value="<%= fields.picture %>" /></p>
+    <p>🎼Hymne (lien youtube ou identifiant) <input name="anthem" value="<%= fields.anthem %>" /></p>
     <p>
-        <div>Bastion : le bastion est une salle accessible, qui servira de zone de départ pour les défenseurs de la nation en cas de bataille. Il faut indiquer les coordonnées ici :</div>
+        🏰Bastion :<br/>
+        <i>Le bastion est une salle accessible, qui servira de zone de départ pour la défense de la nation en cas de bataille. Il faut indiquer les coordonnées ici</i><br/>
         X<input type="number" style="width:80px;" name="x" value="<%= fields.x %>" />
         Y<input type="number" style="width:80px;" name="y" value="<%= fields.y %>" />
         Z<input type="number" style="width:80px;" name="z" value="<%= fields.z %>" />
@@ -23,29 +24,68 @@
     <button type="submit">Générer la commande Discord 🖥</button>
   </form>
   <% if (fields.command.length > 0) { %>
+    Commande à copier sur Discord :<br/>
     <textarea cols="50" readonly onClick="this.select();" ><%= fields.command %></textarea>
   <% } %>
   <% if (fields.id >= 0) { %>
+    
+  <hr />
   <h2>Autres commandes :</h2>
-  <form id="f2nation" action="/lekelner/explorer/nations/editeur/expelliarmus?nation=<%= fields.id %>" method="post">
+  <h3>🎖️Dirigeantes</h3>
+  <form id="f2nation" action="/lekelner/explorer/nations/editeur/rm_citizen?nation=<%= fields.id %>" method="post">
     <input name="nation" style="display: none" value="<%= fields.id %>" />
-    Virer un dirigeant : 
+    Virer une dirigeante : 
     <select name="player" form="f2nation">
       <% fields.citizenship.citizens.forEach(function(player){ %>
-        <option value="<%= player.id %>"><%= player.name || "crétin anonyme" %></option>
+        <option value="<%= player.id %>"><%= player.name || "paysanne anonyme" %></option>
       <% }) %>
     </select>
-    <button type="submit">Générer la commande Discord 🖥</button>
+    <button type="submit">OK 🖥</button>
   </form>
-  <form id="f3nation" action="/lekelner/explorer/nations/editeur/citizen" method="post">
+  <form id="f3nation" action="/lekelner/explorer/nations/editeur/add_citizen?nation=<%= fields.id %>" method="post">
     <input name="nation" style="display: none" value="<%= fields.id %>" />
-    Ajouter un dirigeant : 
+    Ajouter une dirigeante : 
     <select name="player" form="f3nation">
       <% fields.citizenship.nonCitizens.forEach(function(player){ %>
-        <option value="<%= player.id %>"><%= player.name || "crétin anonyme" %></option>
+        <option value="<%= player.id %>"><%= player.name || "paysanne anonyme" %></option>
       <% }) %>
     </select>
-    <button type="submit">Générer la commande Discord 🖥</button>
+    <button type="submit">OK 🖥</button>
   </form>
+  <h3>🏳️Régions</h3>
+  <form id="f4nation" action="/lekelner/explorer/nations/editeur/add_region?nation=<%= fields.id %>" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    Revendiquer une région :
+    <select name="region" form="f4nation">
+      <% fields.regs.nonControl.forEach(function(region){ %>
+        <option value="<%= region.key %>"><%= region.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">OK 🖥</button>
+  </form>
+  <form id="f5nation" action="/lekelner/explorer/nations/editeur/rm_region?nation=<%= fields.id %>" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    Céder une région :
+    <select name="region" form="f5nation">
+      <% fields.regs.control.forEach(function(region){ %>
+        <option value="<%= region.key %>"><%= region.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">OK 🖥</button>
+  </form>
+  <h3>⚔️Points de réputation PVP</h3>
+  <div style="border-left: 3px solid gray; padding-left: 5px;">
+  0 points disponibles
+  <form id="f6nation" action="/lekelner/explorer/nations/editeur/dispatch?nation=<%= fields.id %>" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    Distribuer à (ctrl+clic pour en sélectionner plusieurs) :<br/>
+    <select style="height: 200px;" name="players" form="f6nation" multiple>
+      <% fields.players.forEach(function(player){ %>
+        <option value="<%= player.id %>"><%= player.name %></option>
+      <% }) %>
+    </select><br>
+    <input name="amount" value="1" type="number" /> points chacun.
+    <button type="submit">OK 🖥</button>
+  </form></div>
   <% } %>
 </div>

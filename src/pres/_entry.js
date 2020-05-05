@@ -19,13 +19,17 @@ router.get("/regions", region.getAll);
 router.get("/regions/:id", region.get);
 
 router.get("/joueurs/editeur", player.getEditor);
-router.post("/joueurs/editeur", player.postEditor);
+router.post("/joueurs/editeur/global", player.postEditor);
+router.post("/joueurs/editeur/rejoindre", player.joinNation);
 router.get("/joueurs/:id", player.get);
 
 router.get("/nations/editeur", nation.getEditor);
 router.post("/nations/editeur/global", nation.postEditor);
-router.post("/nations/editeur/expelliarmus", nation.postExpell);
-router.post("/nations/editeur/citizen", nation.postCitizen);
+router.post("/nations/editeur/rm_citizen", nation.postExpell);
+router.post("/nations/editeur/add_citizen", nation.postCitizen);
+router.post("/nations/editeur/add_region", nation.addRegion);
+router.post("/nations/editeur/rm_region", nation.delRegion);
+router.post("/nations/editeur/dispatch", nation.dispatchReput);
 router.get("/nations/:id", nation.get);
 
 module.exports = router;
