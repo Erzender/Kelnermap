@@ -7,14 +7,13 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      text-decoration: none;
     "
   >
     <span
       class="bigProfile"
       style="background-image: url('<%= info.picture %>');"
     ></span>
-    <h1 style="color: darkred; flex: 1; text-align: center;">
+    <h1 style="flex: 1; text-align: center;">
       <%= info.name %>
     </h1>
   </a>
@@ -24,17 +23,8 @@
     <% }); %>
   </div>
   <a
-    style="
-      display: flex;
-      font-weight: bold;
-      width: 100px;
-      justify-content: center;
-      background-color: darkred;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 5px;
-      text-decoration: none;
-    "
+    class="ax"
+    style="width: 100px; background-color: darkred;"
     href="<%- info.edit -%>"
   >
     Modifier ✍
@@ -63,23 +53,17 @@
     }); %>
   </div>
   <h2>PVP⚔️</h2>
-  <div><%= info.pvpScore %> points de réputation</div>
+  <div><b><%= info.pvpScore %></b> points de réputation</div>
   <div>
     <b style="font-size: 20px;">#<%= info.pvpRanking %></b> au classement
   </div>
   <hr style="margin-top: 50px;" />
   <h2 style="color: cadetblue;">🏠Edifices : <%= info.edificesNum %></h2>
   <a
+    class="ax"
     style="
-      display: flex;
-      font-weight: bold;
       width: 250px;
-      justify-content: center;
       background-color: cadetblue;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 5px;
-      text-decoration: none;
     "
     href="/lekelner/explorer/edifices/editeur"
   >
