@@ -56,26 +56,3 @@ exports.whitelister = async (client, message, args, player) => {
   }
   channel.send("whitelist reload");
 };
-
-exports.ville = async (client, message, args, player) => {
-  let nations = await data.Nation.findAll();
-  let suzes = Object.keys(regions)
-    .map((reg) => ({
-      reg,
-      vassals: Object.keys(regions).filter(
-        (reg2) => regions[reg2].suze && regions[reg2].suze === reg
-      ),
-    }))
-    .filter((reg) => reg.vassals.length);
-
-  nations.forEach((nation) => {
-    let regs = nation.dataValues.regions;
-
-    suzes.forEach((suze) => {
-      regs = regs.replace(suze.reg, suze.reg + suze.vassals.join(""));
-    });
-    regs = Array.from(new Set(regs.split(""))).join("");
-    nation.update({ regions: regs });
-  });
-  message.channel.send("villes rechargées wéé");
-};

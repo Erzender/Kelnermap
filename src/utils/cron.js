@@ -3,14 +3,13 @@ const data = require("../_model");
 const bot = require("../bot/_entry").client;
 const regions = require("../../config/regionInfo.json");
 
-const initializedBattles = async channel => {
+const initializedBattles = async (channel) => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (!battle) return;
+  console.log(battle.dataValues);
 
   if (
-    moment()
-      .add(1, "hour")
-      .isAfter(battle.dataValues.date) &&
+    moment().add(1, "hour").isAfter(battle.dataValues.date) &&
     moment().isBefore(battle.dataValues.date)
   )
     return channel.send(
@@ -50,7 +49,7 @@ const initializedBattles = async channel => {
   );
 };
 
-const forgottenBattles = async channel => {
+const forgottenBattles = async (channel) => {
   let battle = await data.Battle.findOne({ where: { status: "started" } });
   if (
     !battle ||
@@ -60,7 +59,7 @@ const forgottenBattles = async channel => {
   let winner = await battle.getTarget();
   let reputation = 10 * (await battle.getInvaders()).length + 10;
   await winner.update({
-    reputationPool: winner.dataValues.reputationPool + reputation
+    reputationPool: winner.dataValues.reputationPool + reputation,
   });
   await battle.update({ status: "defeat" });
   await battle.removeInvaders(await battle.getInvaders());

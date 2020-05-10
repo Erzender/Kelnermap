@@ -12,7 +12,6 @@ const regionUtils = require("./utils/regions");
 const cronUtils = require("./utils/cron");
 const resource = require("./pres/_entry");
 
-const cities = require("../config/cities.json");
 const regions = require("../config/regions.json");
 
 try {
@@ -52,7 +51,6 @@ router.get("/mapInfo", async function (req, res, next) {
     war: await regionUtils.getWar(),
     pvp: await regionUtils.getLeaderBoard(),
     nations: await nationUtils.getNationRawList(),
-    cities,
     regions,
   };
   res.json(info);
