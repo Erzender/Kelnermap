@@ -35,10 +35,16 @@ const root = (state = initialState, action) => {
     case "MAP_INFO_SUCCESS":
       let regionInfo = action.res.regionInfo;
       action.res.nations.forEach((nation) =>
-        nation.regions
-          .split("")
-          .forEach((letter) => (regionInfo[letter].nation = nation))
+        nation.regions.forEach((reg) => (regionInfo[reg].nation = nation))
       );
+
+      Object.keys(regionInfo).forEach((region) => {
+        if (regionInfo[region].suze) {
+          regionInfo[region].nation =
+            regionInfo[regionInfo[region].suze].nation;
+        }
+      });
+
       let colorMap = action.res.regions.map((line) =>
         line.map((tile) => {
           return regionInfo[tile] && regionInfo[tile].nation
@@ -52,7 +58,6 @@ const root = (state = initialState, action) => {
         pvp: action.res.pvp,
         regionInfo,
         nationColorMap: colorMap,
-        cities: action.res.cities,
         regions: action.res.regions,
       };
     case "CLICK_TILE":

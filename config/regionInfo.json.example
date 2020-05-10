@@ -1,9 +1,9 @@
 {
   "1": {
-    "n": "Fleuve d'Angle"
+    "n": "Anduin"
   },
   "2": {
-    "n": "Marais d'Angle"
+    "n": "Marais du Palûmortem"
   },
   "3": {
     "n": "Rives-Mortes"
@@ -33,7 +33,7 @@
     "n": "Archipel du Nord"
   },
   "c": {
-    "n": "Miettes-de-Vlappers"
+    "n": "Hydropelagos"
   },
   "d": {
     "n": "Couronne d'Austre"
@@ -145,10 +145,61 @@
   },
   "O": {
     "n": "Lambé",
-    "suze": "8"
+    "suze": "8",
+    "city": {
+      "coor": [-382, 3151],
+      "tag": "LAM",
+      "governor": 261130483667173376
+    }
   },
   "P": {
-    "n": "Jaaj",
-    "suze": "4"
+    "n": "Edoras",
+    "suze": "4",
+    "city": { "coor": [1309, -715], "tag": "EDO" }
+  },
+  "Q": {
+    "n": "Hydropolis",
+    "suze": "c",
+    "city": { "coor": [-2602, 6234], "tag": "HYD" }
+  },
+  "R": {
+    "n": "Erzengrad",
+    "suze": "f",
+    "city": { "coor": [-1325, -1370], "tag": "ERZ" }
+  },
+  "S": {
+    "n": "Grave",
+    "suze": "e",
+    "city": { "coor": [-57, -599], "tag": "GRA" }
+  },
+  "T": {
+    "n": "Aqualonn",
+    "suze": "g",
+    "city": { "coor": [3647, 6161], "tag": "AQU" }
+  },
+  "U": {
+    "n": "Heimsgard",
+    "suze": "f",
+    "city": { "coor": [-1347, -1647], "tag": "HEI" }
+  },
+  "V": {
+    "n": "Forgefer",
+    "suze": "e",
+    "city": { "coor": [-1008, -211], "tag": "FOR" }
+  },
+  "W": {
+    "n": "Mourmansk",
+    "suze": "w",
+    "city": { "coor": [8515, -880], "tag": "MOU" }
+  },
+  "X": {
+    "n": "Хэншадао",
+    "suze": "h",
+    "city": { "coor": [-2662, 8390], "tag": "HEN" }
+  },
+  "Y": {
+    "n": "Bismuth",
+    "suze": "4",
+    "city": { "coor": [957, -568], "tag": "BIS" }
   }
 }

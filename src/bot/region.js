@@ -8,7 +8,7 @@ const regionUtils = require("../utils/regions");
 const checkIsNationCitizen = require("../utils/citizenship")
   .checkIsNationCitizen;
 const getNationCitizens = require("../utils/citizenship").getNationCitizens;
-const regions1 = require("../../config/regionInfo.json");
+const regions = require("../../config/regionInfo.json");
 
 /*
 $région revendiquer [<numéro région>] [--force]
@@ -18,6 +18,7 @@ $région envahie
 $région défendue
 */
 
+/*
 let regions = {};
 Object.keys(regions1).forEach((region) => {
   regions[region] = {
@@ -26,7 +27,7 @@ Object.keys(regions1).forEach((region) => {
       Object.keys(regions1).filter((vas) => regions1[vas].suze === region) +
       [region],
   };
-});
+});*/
 
 const getClaimableRegions = () =>
   Object.keys(regions).filter((id) => !regions[id].suze);
@@ -39,6 +40,7 @@ exports.revendiquer = async (client, message, args, player) => {
   }
 
   if (args.length <= 2) {
+    // Renvoyer la liste des régions contrôlables
     const content = getClaimableRegions().map(
       (id) => id + ": " + regions[id].n
     );
@@ -49,16 +51,17 @@ exports.revendiquer = async (client, message, args, player) => {
     return message.channel.send("C'est non !");
 
   let nation = player.Identity;
-  if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
+  if (args.length > 3 && args[3] != "--force")
+    nation = await data.Nation.findByPk(args[3]);
   if (!nation) return message.channel.send("C'est pour quelle nation wesh ?");
 
   let owner = await data.Nation.findOne({
-    where: { regions: { [Op.substring]: args[2] } },
+    where: { regions: { [Op.substring]: "[" + args[2] + "]" } },
   });
 
   if (owner === null) {
     await nation.update({
-      regions: nation.dataValues.regions + regions[args[2]].keys,
+      regions: nation.dataValues.regions + "[" + args[2] + "]",
     });
     return message.channel.send(
       `**${
@@ -86,12 +89,8 @@ exports.revendiquer = async (client, message, args, player) => {
   if (owner.dataValues.stronghold === null) {
     let citizens = await getNationCitizens(owner);
     citizens = "<@" + citizens.join("><@") + ">";
-    let desowned = owner.dataValues.regions;
-    regions[args[2]].keys
-      .split("")
-      .forEach((key) => (desowned = desowned.replace(key, "")));
     await owner.update({
-      regions: desowned,
+      regions: owner.dataValues.regions.replace("[" + args[2] + "]", ""),
     });
     player = await data.Player.findByPk(message.author.id, {
       include: [
@@ -103,7 +102,7 @@ exports.revendiquer = async (client, message, args, player) => {
       ],
     });
     await nation.update({
-      regions: nation.dataValues.regions + regions[args[2]].keys,
+      regions: nation.dataValues.regions + "[" + args[2] + "]",
     });
 
     return message.channel.send(
@@ -172,12 +171,8 @@ exports.céder = async (client, message, args, player) => {
   if (battle !== null)
     return message.channel.send("Oh bah non hé y'a une bataille dessus.");
 
-  let desowned = nation.dataValues.regions;
-  regions[args[2]].keys
-    .split("")
-    .forEach((key) => (desowned = desowned.replace(key, "")));
   await nation.update({
-    regions: desowned,
+    regions: nation.dataValues.regions.replace("[" + args[2] + "]", ""),
   });
 
   message.channel.send(
@@ -224,7 +219,7 @@ exports.invasion = async (client, message, args, player) => {
         regionUtils.getDateFormatted(battle.dataValues.date) +
         " ! " +
         "Il s'agit de la région de **" +
-        regions1[await battle.dataValues.regionTarget].n +
+        regions[await battle.dataValues.regionTarget].n +
         "** que **" +
         (await battle.getBelligerent()).dataValues.name +
         "** voudrait amputer à **" +
@@ -251,17 +246,17 @@ exports.envahie = async (client, message, args, player) => {
 
   let owner = await battle.getTarget();
   let desowned = owner.dataValues.regions;
-  regions[battle.dataValues.regionTarget].keys
-    .split("")
-    .forEach((key) => (desowned = desowned.replace(key, "")));
   await owner.update({
-    regions: desowned,
+    regions: owner.dataValues.regions.replace(
+      "[" + battle.dataValues.regionTarget + "]",
+      ""
+    ),
   });
   let winner = await battle.getBelligerent();
   let reputation = 10 * (await battle.getDefenders()).length + 10;
   await winner.update({
     regions:
-      winner.dataValues.regions + regions[battle.dataValues.regionTarget].keys,
+      winner.dataValues.regions + "[" + battle.dataValues.regionTarget + "]",
     reputationPool: winner.dataValues.reputationPool + reputation,
   });
   await battle.update({ status: "victory" });

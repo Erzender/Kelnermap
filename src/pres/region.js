@@ -16,14 +16,20 @@ exports.get = async function (req, res) {
   }
   let info = { region: { ...region, key: req.params.id } };
   info.cities = Object.keys(regions)
-    .filter((key) => regions[key].suze && regions[key].suze === info.region.key)
+    .filter((key) => regions[key].city && regions[key].suze === info.region.key)
     .map((reg) => ({
       link: "/lekelner/explorer/regions/" + reg,
       name: regions[reg].n,
     }));
-  console.log(info.cities);
+
   info.domination = await data.Nation.findOne({
-    where: { regions: { [Op.substring]: req.params.id } },
+    where: {
+      regions: {
+        [Op.substring]: region.suze
+          ? "[" + region.suze + "]"
+          : "[" + req.params.id + "]",
+      },
+    },
   });
   info.domination =
     info.domination === null

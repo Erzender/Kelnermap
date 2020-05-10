@@ -210,9 +210,7 @@ const mapStateToProps = (state) => {
             config.cali.zOf
         )
       : state.root.selectedCity
-      ? state.root.cities[state.root.selectedCity].x +
-        ", " +
-        state.root.cities[state.root.selectedCity].z
+      ? state.root.regionInfo[state.root.selectedCity].city.coor.toString()
       : state.root.selectedBattle
       ? state.root.war.stronghold.x + ", " + state.root.war.stronghold.z
       : "",

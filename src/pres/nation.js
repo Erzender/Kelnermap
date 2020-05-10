@@ -158,10 +158,15 @@ exports.getEditor = async function (req, res) {
         .sort((a, b) => a.name && a.name.localeCompare(b.name)),
     };
     fields.regs = {
-      control: Array.from(new Set(nation.dataValues.regions.split("")))
-        .filter((reg) => !regions[reg].suze)
-        .map((reg) => ({ key: reg, name: regions[reg].n }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
+      control:
+        nation.dataValues.regions === ""
+          ? []
+          : nation.dataValues.regions
+              .substr(1, nation.dataValues.regions.length - 2)
+              .split("][")
+              .filter((reg) => !regions[reg].suze)
+              .map((reg) => ({ key: reg, name: regions[reg].n }))
+              .sort((a, b) => a.name.localeCompare(b.name)),
       nonControl: Object.keys(regions)
         .filter((reg) => !regions[reg].suze)
         .map((reg) => ({
