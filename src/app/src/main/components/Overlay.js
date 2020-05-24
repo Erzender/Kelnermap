@@ -54,7 +54,6 @@ const styles = {
     fontSize: 20,
     display: "flex",
     flexDirection: "row",
-    cursor: "pointer",
   },
   nationColor: {
     height: 20,
@@ -91,9 +90,10 @@ const styles = {
     borderRadius: 20,
     display: "flex",
     width: 50,
+    fontSize: 16,
     justifyContent: "center",
-    height: 25,
     margin: 5,
+    fontWeight: "bold",
   },
 };
 
@@ -147,7 +147,7 @@ const Overlay = ({
             )}
           </div>
           {tileInfo && tileInfo.nationName && (
-            <div onClick={onClickNation} style={styles.desc}>
+            <div style={styles.desc}>
               <div
                 style={{
                   ...styles.nationColor,
