@@ -118,3 +118,11 @@ textarea {
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+.pastille {
+  margin-left: 10px;
+  border-radius: 20px;
+  display: flex;
+  width: 50px;
+  justify-content: center;
+}

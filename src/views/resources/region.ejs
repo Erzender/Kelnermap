@@ -8,12 +8,15 @@
     ></div>
     Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b>
 </a>
+  <% if (info.suze !== null) { %>
+    <h2 style="color: orange;">📜Région : <a href="<%- info.suze.link -%>"><%= info.suze.name %></a></h2>
+  <% } %>
   <% if (info.cities.length) { %>
   <h2 style="color: orange;"><%= "📜Villes : " + info.cities.length %></h2>
   <div style="border-left: orange 3px solid; padding-left: 5px;">
     <% info.cities.forEach(function(city){ %>
       <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
-          <a href="<%- city.link -%>"><%= city.name %></a>
+          <a href="<%- city.link -%>"><%= city.name %></a> <% if (city.edifices) { %> <div style="background-color: cadetblue;" class="pastille">🏠<%= city.edifices %></div> <% } %>
       </div>
     <% }); %>
   </div>

@@ -18,9 +18,28 @@ exports.get = async function (req, res) {
   info.cities = Object.keys(regions)
     .filter((key) => regions[key].city && regions[key].suze === info.region.key)
     .map((reg) => ({
+      id: reg,
       link: "/lekelner/explorer/regions/" + reg,
       name: regions[reg].n,
     }));
+  let edificios = await data.Edificio.findAll({
+    where: { region: { [Op.in]: info.cities.map((city) => city.id) } },
+  });
+  info.cities.forEach(
+    (city, i) =>
+      (info.cities[i].edifices = edificios.filter(
+        (elem) => elem.dataValues.region === city.id
+      ).length)
+  );
+
+  info.suze = region.suze
+    ? {
+        name: regions[region.suze].n,
+        link: "/lekelner/explorer/regions/" + region.suze,
+      }
+    : null;
+
+  console.log(info.suze);
 
   info.domination = await data.Nation.findOne({
     where: {

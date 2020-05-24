@@ -63,5 +63,12 @@ exports.getRegionActivity = async () => {
   keys.forEach((key) => {
     ret[key].edifices = edifices.filter((elem) => elem.region === key).length;
   });
+  keys.forEach((key) => {
+    if (regions[key].suze) {
+      ret[regions[key].suze].edifices =
+        ret[regions[key].suze].edifices + ret[key].edifices;
+    }
+  });
+
   return ret;
 };
