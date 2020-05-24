@@ -76,7 +76,7 @@ a {
 
 button {
   font-weight: bold;
-  background-color: black;
+  background-color: darkred;
   color: white;
   cursor: pointer;
   transition: background-color 0.2s, border 0.2s;
@@ -125,4 +125,12 @@ textarea {
   display: flex;
   width: 50px;
   justify-content: center;
+}
+
+#diplomacytab tr {
+  text-align: center;
+}
+
+#diplomacytab th {
+  padding: 5px;
 }

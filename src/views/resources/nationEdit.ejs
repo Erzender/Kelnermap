@@ -87,5 +87,33 @@
     <input name="amount" value="1" type="number" /> points chacun.
     <button type="submit">OK 🖥</button>
   </form></div>
+  <h3>✒️Diplomatie</h3>
+  <form id="f7nation" action="/lekelner/explorer/nations/editeur/diplomatie?nation=<%= fields.id %>" method="post">
+    <input name="nation" style="display: none" value="<%= fields.id %>" />
+    <table id="diplomacytab">
+      <tr>
+        <th>Nation</th>
+        <th>Méfiant 👺</th>
+        <th>Neutre 🗿</th>
+        <th>Amical 🍺</th>
+      </tr>
+      <% fields.diplomacy.forEach(function(diplo) { %>
+      <tr>
+        <td style="text-align: left; display: flex; flex-direction: row; align-items: center;">
+          <div
+            class="miniProfile"
+            style="background-image: url('<%= diplo.pic %>');" >
+          </div>
+          <%= diplo.name %>
+        </td>
+        <td><input type="radio" name="<%= diplo.nation %>" value="MISTRUSTFUL" <%= diplo.diplomacy === "MISTRUSTFUL" ? "checked" : "" %>  /></td>
+        <td><input type="radio" name="<%= diplo.nation %>" value="NEUTRAL" <%= diplo.diplomacy === "NEUTRAL" ? "checked" : "" %> /></td>
+        <td><input type="radio" name="<%= diplo.nation %>" value="FRIENDLY" <%= diplo.diplomacy === "FRIENDLY" ? "checked" : "" %> /></td>
+      </tr>
+      <% }) %>
+    </table>
+    <button type="submit">Valider ce foutoir diplomatique 🖥</button>
+  </form>
+
   <% } %>
 </div>
