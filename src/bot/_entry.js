@@ -169,7 +169,7 @@ const checkConsole = async (client, message) => {
           where: { minecraft: player[0] },
         });
         if (playerObj !== null) {
-          minecraftCommands[args[0]](client, message, args, player);
+          minecraftCommands[args[0]](client, message, args, playerObj);
         }
       }
     }
