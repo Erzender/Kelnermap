@@ -416,3 +416,50 @@ exports.distribuer = async (client, message, args, player) => {
     player
   );
 };
+
+const diplomacyCommands = {
+  méfiant: "MISTRUSTFUL",
+  amical: "FRIENDLY",
+};
+
+exports.diplomatie = async (client, message, args, player) => {
+  if (args.length < 5) {
+    return message.channel.send("Pas compris.");
+  }
+
+  nation = await data.Nation.findOne({
+    where: {
+      [Op.and]: [
+        { id: { [Op.eq]: args[2] } },
+        { id: { [Op.in]: player.Homelands.map((nat) => nat.dataValues.id) } },
+      ],
+    },
+  });
+  if (nation === null)
+    return message.channel.send("Je crois que ça va pas être possible");
+
+  let updates = {};
+  let cur = 0;
+  args.slice(2, args.length).forEach((elem) => {
+    if (diplomacyCommands[elem]) {
+      updates[cur] = diplomacyCommands[elem];
+    } else {
+      cur = elem;
+    }
+  });
+  let nations = data.Nation.findAll({
+    where: { id: { [Op.in]: Object.keys(updates) } },
+  });
+  if (nations.length !== updates.length)
+    return message.channel.send("Y'a des nations qu'on trouve pas là oh.");
+  await data.Diplomacy.destroy({ where: { originId: args[2] } });
+  Object.keys(updates).forEach(async (elem) => {
+    await data.Diplomacy.create({
+      originId: args[2],
+      targetId: elem,
+      type: updates[elem],
+    });
+  });
+
+  return message.channel.send("Et voilà, c'est tout bon !");
+};

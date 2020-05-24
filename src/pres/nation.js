@@ -182,6 +182,29 @@ exports.getEditor = async function (req, res) {
       fields.y = coors[1].split(" Y")[0];
       fields.z = coors[2].split(" Z")[0];
     }
+
+    let diplomacies = (
+      await data.Diplomacy.findAll({
+        where: { originId: nation.dataValues.id },
+      })
+    ).map((elem) => ({ nation: elem.targetId, diplomacy: elem.type }));
+    fields.diplomacy = (await data.Nation.findAll())
+      .map((elem) => {
+        let knownDiplo = diplomacies.findIndex(
+          (diplo) => diplo.nation === elem.id
+        );
+        if (knownDiplo >= 0) {
+          return { ...diplomacies[knownDiplo], name: elem.name, pic: elem.pic };
+        }
+        return {
+          nation: elem.id,
+          diplomacy: "NEUTRAL",
+          name: elem.name,
+          pic: elem.pic,
+        };
+      })
+      .filter((elem) => elem.nation !== nation.id)
+      .sort((a, b) => a.name && a.name.localeCompare(b.name));
   }
 
   res.render("index", {
@@ -303,6 +326,33 @@ exports.dispatchReput = async function (req, res) {
         (!req.body.players || !req.body.players.reduce
           ? req.body.players
           : req.body.players.reduce((res, cur) => res + " " + cur)),
+      back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
+  });
+};
+
+const diplomacyCommands = {
+  MISTRUSTFUL: "méfiant",
+  FRIENDLY: "amical",
+};
+exports.diplomacy = async function (req, res) {
+  let update = Object.keys(req.body).filter(
+    (elem) => elem !== "nation" && req.body[elem] !== "NEUTRAL"
+  );
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: {
+      text:
+        "$nation diplomatie " +
+        req.body["nation"] +
+        update.reduce(
+          (prev, elem) =>
+            prev + " " + elem + " " + diplomacyCommands[req.body[elem]],
+          ""
+        ),
       back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
     },
   });
