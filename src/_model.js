@@ -60,8 +60,20 @@ const Shop = db.sequelize.define("shop", {
 Player.belongsTo(Nation, { as: "Identity" });
 Player.belongsToMany(Nation, { as: "Homelands", through: "Citizenship" });
 
-Diplomacy.belongsTo(Nation, { as: "origin" });
-Diplomacy.belongsTo(Nation, { as: "target" });
+Diplomacy.belongsTo(Nation, {
+  as: "origin",
+  onDelete: "cascade",
+  foreignKey: {
+    allowNull: false,
+  },
+});
+Diplomacy.belongsTo(Nation, {
+  as: "target",
+  onDelete: "cascade",
+  foreignKey: {
+    allowNull: false,
+  },
+});
 
 Battle.belongsTo(Nation, {
   as: "Belligerent",
