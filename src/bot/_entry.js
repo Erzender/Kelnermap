@@ -10,6 +10,7 @@ const commands = {
 };
 
 const adminCommands = require("./admin");
+const minecraftCommands = require("./minecraft");
 
 try {
   client.on("ready", () => {
@@ -52,6 +53,8 @@ try {
 exports.client = client;
 
 const processBotMessage = (message) => {
+  if (message.channel.id === JSON.parse(process.env.KELNER_BOT).console)
+    return checkConsole(client, message);
   if (
     !(
       (message.channel.id === JSON.parse(process.env.KELNER_BOT).channel ||
@@ -131,4 +134,44 @@ const processCommand = async (client, message, args) => {
   } else {
     return message.channel.send("Cette commande n'existe papapapapa.");
   }
+};
+
+const checkConsole = async (client, message) => {
+  let exists = false;
+  Object.keys(minecraftCommands).forEach((cmd) => {
+    if (message.content.search(cmd) >= 0) {
+      exists = true;
+    }
+  });
+  if (!exists) return;
+  let lines = message.content.split("\n");
+  let header = [];
+  let world = [];
+  let player = [];
+  let args = [];
+  let playerObj = null;
+  lines.forEach(async (line) => {
+    header = line.split(" CEST INFO] ");
+    if (
+      header.length === 2 &&
+      (world = header[1].split("[Refuge[21m> ")) &&
+      world.length === 2 &&
+      world[0] === "" &&
+      (player = world[1].split("[21m> ")) &&
+      player.length === 2
+    ) {
+      args = player[1].split(" ");
+      if (
+        Object.keys(minecraftCommands).findIndex((elem) => elem === args[0]) >=
+        0
+      ) {
+        playerObj = await data.Player.findOne({
+          where: { minecraft: player[0] },
+        });
+        if (playerObj !== null) {
+          minecraftCommands[args[0]](client, message, args, player);
+        }
+      }
+    }
+  });
 };
