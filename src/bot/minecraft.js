@@ -77,8 +77,15 @@ exports.ZAAPER = async (client, message, args, player) => {
       },
     },
   });
-  message.channel.send("mvtp Erzender Refuge");
-  message.channel.send("tp Erzender " + city.coor[0] + " 150 " + city.coor[1]);
+  message.channel.send("mvtp " + player.dataValues.minecraft + " Refuge");
+  message.channel.send(
+    "tp " +
+      player.dataValues.minecraft +
+      " " +
+      city.coor[0] +
+      " 150 " +
+      city.coor[1]
+  );
   message.channel.send(
     `title ${player.dataValues.minecraft} subtitle ["",{"text":"${
       governor.dataValues.minecraft
