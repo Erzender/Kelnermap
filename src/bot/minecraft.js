@@ -91,6 +91,7 @@ exports.ZAAPER = async (client, message, args, player) => {
       " 150 " +
       city.coor[1]
   );
+  message.channel.send(`title ${player.dataValues.minecraft} times 20 200 20`);
   message.channel.send(
     `title ${player.dataValues.minecraft} subtitle ["",{"text":"${
       governor.dataValues.minecraft
