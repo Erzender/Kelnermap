@@ -106,8 +106,6 @@ exports.ZAAPER = async (client, message, args, player) => {
   message.channel.send(
     `title ${player.dataValues.minecraft} title {"text":"${
       regions[city.id].n
-    } - ${conquista.name}","bold":true,"color":"${
-      mc.convertColor(conquista.color)[1]
-    }"}`
+    } - ${conquista.name}","color":"${mc.convertColor(conquista.color)[1]}"}`
   );
 };
