@@ -3,6 +3,7 @@ const Op = Sequelize.Op;
 
 const regions = require("../../config/regionInfo.json");
 const data = require("../_model");
+const mc = require("../utils/minecraft");
 
 exports.SERPILLER = async (client, message, args, player) => {
   message.channel.send("weather Theia clear");
@@ -77,6 +78,10 @@ exports.ZAAPER = async (client, message, args, player) => {
       },
     },
   });
+  conquista = {
+    name: conquista ? conquista.dataValues.name : "Territoire libre",
+    color: conquista ? conquista.dataValues.color : "#FFFFFF",
+  };
   message.channel.send("mvtp " + player.dataValues.minecraft + " Refuge");
   message.channel.send(
     "tp " +
@@ -100,6 +105,8 @@ exports.ZAAPER = async (client, message, args, player) => {
   message.channel.send(
     `title ${player.dataValues.minecraft} title {"text":"${
       regions[city.id].n
-    } - ${conquista.dataValues.name}","bold":true,"color":"dark_red"}`
+    } - ${conquista.name}","bold":true,"color":"${
+      mc.convertColor(conquista.color)[1]
+    }"}`
   );
 };
