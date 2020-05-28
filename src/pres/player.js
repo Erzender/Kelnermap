@@ -36,7 +36,7 @@ exports.get = async function (req, res) {
         id: p.dataValues.discord,
         reputation: p.dataValues.reputation,
       }))
-      .sort((p1, p2) => p1.reputation < p2.reputation)
+      .sort((p1, p2) => p2.reputation - p1.reputation)
       .findIndex((p) => p.id === player.dataValues.discord) + 1;
 
   let info = {
