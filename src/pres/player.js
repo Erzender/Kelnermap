@@ -142,7 +142,6 @@ exports.postEditor = async function (req, res) {
 };
 
 exports.joinNation = async function (req, res) {
-  console.log(req.body);
   res.render("index", {
     route: "command",
     embedTitle: "Editeur",

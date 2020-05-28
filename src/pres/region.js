@@ -39,7 +39,14 @@ exports.get = async function (req, res) {
       }
     : null;
 
-  console.log(info.suze);
+  info.city =
+    region.city &&
+    (governor = await data.Player.findByPk(region.city.governor)) &&
+    governor.dataValues.minecraft
+      ? { governor: governor.dataValues.minecraft, governorId: region.city.governor }
+      : null;
+
+  console.log(info.city);
 
   info.domination = await data.Nation.findOne({
     where: {

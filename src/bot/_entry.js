@@ -93,7 +93,6 @@ const processBotMessage = (message) => {
       ? arg.substring(1, arg.length - 1)
       : arg
   );
-  console.log(args);
   processCommand(client, message, args);
 };
 
