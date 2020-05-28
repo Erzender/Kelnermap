@@ -7,8 +7,12 @@
       style="width: 20px; height: 20px; border: 3px solid white; margin-right: 10px; background-color: <%- info.domination.color -%>;"
     ></div>
     Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b>
-</a>
-  <% if (info.suze !== null) { %>
+</a><br/>
+<% if (info.city !== null) { %> <a href="/lekelner/explorer/joueurs/<%= info.city.governorId %>" style="display: flex; flex-direction: row; align-items: center;">
+  Gouverneure : <b style="margin-left: 10px;"><%= info.city.governor %></b>
+</a><br/>
+<% } %>
+<% if (info.suze !== null) { %>
     <h2 style="color: orange;">📜Région : <a href="<%- info.suze.link -%>"><%= info.suze.name %></a></h2>
   <% } %>
   <% if (info.cities.length) { %>

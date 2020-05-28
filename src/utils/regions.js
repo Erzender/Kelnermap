@@ -50,7 +50,6 @@ exports.getLeaderBoard = async () => {
       nationId: player.Identity && player.Identity.dataValues.id,
     }))
     .sort((p1, p2) => p2.reputation - p1.reputation);
-  console.log(leaderBoard);
   return leaderBoard;
 };
 

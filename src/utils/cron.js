@@ -6,7 +6,6 @@ const regions = require("../../config/regionInfo.json");
 const initializedBattles = async (channel) => {
   let battle = await data.Battle.findOne({ where: { status: "initialized" } });
   if (!battle) return;
-  console.log(battle.dataValues);
 
   if (
     moment().add(1, "hour").isAfter(battle.dataValues.date) &&

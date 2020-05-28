@@ -380,7 +380,6 @@ const multiDistri = async (client, message, args, player) => {
       embed.addField(total + " ->", "<@" + players[i] + ">");
     }
   }
-  console.log(players);
   message.channel.send(embed);
 };
 
