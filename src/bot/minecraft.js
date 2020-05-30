@@ -70,6 +70,13 @@ exports.ZAAPER = async (client, message, args, player) => {
     );
   let edifices = (await data.Edificio.findAll({ where: { region: city.id } }))
     .length;
+  let arts = (
+    await data.Art.findAll({
+      include: [
+        { model: data.Edificio, as: "Place", where: { region: city.id } },
+      ],
+    })
+  ).length;
   let conquista = await data.Nation.findOne({
     where: {
       regions: {
@@ -97,7 +104,7 @@ exports.ZAAPER = async (client, message, args, player) => {
       governor.dataValues.minecraft
         ? "Gouverneur : " + governor.dataValues.minecraft + " |"
         : ""
-    }"},{"text":" Edifices : ${edifices}","color":"dark_aqua"},{"text":" ${
+    }"},{"text":" Edifices : ${edifices}","color":"dark_aqua"},{"text":"| Oeuvres : ${arts}","color":"dark_purple"},{"text":" ${
       regions[city.id].suze
         ? "| Région : " + regions[regions[city.id].suze].n
         : ""
