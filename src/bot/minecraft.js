@@ -104,7 +104,7 @@ exports.ZAAPER = async (client, message, args, player) => {
       governor.dataValues.minecraft
         ? "Gouverneur : " + governor.dataValues.minecraft + " |"
         : ""
-    }"},{"text":" Edifices : ${edifices}","color":"dark_aqua"},{"text":"| Oeuvres : ${arts}","color":"dark_purple"},{"text":" ${
+    }"},{"text":" Edifices : ${edifices}","color":"dark_aqua"},{"text":" | Oeuvres : ${arts}","color":"dark_purple"},{"text":" ${
       regions[city.id].suze
         ? "| Région : " + regions[regions[city.id].suze].n
         : ""
