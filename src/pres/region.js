@@ -46,7 +46,7 @@ exports.get = async function (req, res) {
       ? {
           governor: governor.dataValues.minecraft,
           governorId: region.city.governor,
-          pic: governor.dataValues.picture,
+          pic: governor.dataValues.picture || "/lekelner/asset/Alex.webp",
           tag: region.city.tag
         }
       : null;
