@@ -43,10 +43,13 @@ exports.get = async function (req, res) {
     region.city &&
     (governor = await data.Player.findByPk(region.city.governor)) &&
     governor.dataValues.minecraft
-      ? { governor: governor.dataValues.minecraft, governorId: region.city.governor }
+      ? {
+          governor: governor.dataValues.minecraft,
+          governorId: region.city.governor,
+          pic: governor.dataValues.picture,
+          tag: region.city.tag
+        }
       : null;
-
-  console.log(info.city);
 
   info.domination = await data.Nation.findOne({
     where: {
@@ -63,6 +66,7 @@ exports.get = async function (req, res) {
       : {
           name: info.domination.dataValues.name,
           color: info.domination.dataValues.color,
+          pic: info.domination.dataValues.pic || "/lekelner/asset/unknown.png",
           id: info.domination.dataValues.id,
         };
   let edifices = await data.Edificio.findAll({

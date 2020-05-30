@@ -3,11 +3,7 @@
 >
   <a
     href="<%= info.link %> "
-    style="
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    "
+    style="display: flex; flex-direction: row; align-items: center;"
   >
     <span
       class="bigProfile"
@@ -17,11 +13,7 @@
       <%= info.name %>
     </h1>
   </a>
-  <div style="border-left: 3px solid gray; padding-left: 5px;">
-    <% info.desc.forEach(function(desc){ %>
-    <p><%= desc %></p>
-    <% }); %>
-  </div>
+  <hr />
   <a
     class="ax"
     style="width: 100px; background-color: darkred;"
@@ -29,7 +21,11 @@
   >
     Modifier ✍
   </a>
-  <hr style="margin-top: 50px;" />
+  <div style="border-left: 3px solid gray; padding-left: 5px;">
+    <% info.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
   <h2>Nation🏳️</h2>
   <% if (info.nationName && info.nationName.length) { %>
   <a
@@ -46,10 +42,10 @@
     <b><%= info.nationName %> </b>
     <img class="miniProfile" src="<%= info.nationPic %> " />
   </a>
-  <% } %>
-
-  <div>
-    Citoyen de : <% info.citizenship.forEach(function(nat){ %> <%= nat %> | <%
+  <% } %> Dirigeante de :
+  <div style="display: flex; flex-direction: row;">
+    <% info.citizenship.forEach(function(nat){ %>
+    <img class="miniProfile" src="<%= nat.pic %>" title="<%= nat.name %>" /> <%
     }); %>
   </div>
   <h2>PVP⚔️</h2>
@@ -57,14 +53,10 @@
   <div>
     <b style="font-size: 20px;">#<%= info.pvpRanking %></b> au classement
   </div>
-  <hr style="margin-top: 50px;" />
   <h2 style="color: cadetblue;">🏠Edifices : <%= info.edificesNum %></h2>
   <a
     class="ax"
-    style="
-      width: 250px;
-      background-color: cadetblue;
-    "
+    style="width: 250px; background-color: cadetblue;"
     href="/lekelner/explorer/edifices/editeur"
   >
     ＋Enregistrer un édifice

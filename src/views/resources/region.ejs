@@ -2,15 +2,19 @@
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
 <a style="text-decoration: none;" href="<%- "./" + info.region.key -%>"><h1 style="color: orange;">📜<%= info.region.n %></h1></a>
-<a <% if (info.domination.id) { %> href="/lekelner/explorer/nations/<%= info.domination.id %>" <% } %> style="display: flex; flex-direction: row; align-items: center;">
+<% if (info.domination.id) { %>
+<a href="/lekelner/explorer/nations/<%= info.domination.id %>" style="display: flex; flex-direction: row; align-items: center;">
     <div
       style="width: 20px; height: 20px; border: 3px solid white; margin-right: 10px; background-color: <%- info.domination.color -%>;"
     ></div>
-    Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b>
+    Domination : <b style="margin-left: 10px;"><%= info.domination.name %></b><img class="miniProfile" src="<%=info.domination.pic %>" />
 </a><br/>
-<% if (info.city !== null) { %> <a href="/lekelner/explorer/joueurs/<%= info.city.governorId %>" style="display: flex; flex-direction: row; align-items: center;">
-  Gouverneure : <b style="margin-left: 10px;"><%= info.city.governor %></b>
-</a><br/>
+<% } %>
+<% if (info.city !== null) { %>
+  <a href="/lekelner/explorer/joueurs/<%= info.city.governorId %>" style="display: flex; flex-direction: row; align-items: center;">
+    Gouverneure : <b style="margin-left: 10px;"><%= info.city.governor %></b><img class="miniProfile" src="<%=info.city.pic %>" />
+  </a><br/>
+  Gueuler avec conviction pour s'y téléporter : <b style="cursor: help" title="Mais ça fonctionne uniquement pour les dirigeantes des nations amies de la nation où habite la gouverneure.">ZAAPER <%= info.city.tag %></b>
 <% } %>
 <% if (info.suze !== null) { %>
     <h2 style="color: orange;">📜Région : <a href="<%- info.suze.link -%>"><%= info.suze.name %></a></h2>
