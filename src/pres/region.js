@@ -40,14 +40,12 @@ exports.get = async function (req, res) {
     : null;
 
   info.city =
-    region.city &&
-    (governor = await data.Player.findByPk(region.city.governor)) &&
-    governor.dataValues.minecraft
+    region.city && (governor = await data.Player.findByPk(region.city.governor))
       ? {
-          governor: governor.dataValues.minecraft,
+          governor: governor.dataValues.minecraft || "",
           governorId: region.city.governor,
           pic: governor.dataValues.picture || "/lekelner/asset/Alex.webp",
-          tag: region.city.tag
+          tag: region.city.tag,
         }
       : null;
 
