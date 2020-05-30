@@ -95,6 +95,16 @@ const styles = {
     margin: 5,
     fontWeight: "bold",
   },
+  arts: {
+    backgroundColor: "purple",
+    borderRadius: 20,
+    display: "flex",
+    width: 50,
+    fontSize: 16,
+    justifyContent: "center",
+    margin: 5,
+    fontWeight: "bold",
+  },
 };
 
 const Overlay = ({
@@ -144,6 +154,9 @@ const Overlay = ({
           <div style={styles.activity}>
             {tileInfo && tileInfo.edifices !== undefined && (
               <div style={styles.edifices}>🏠{tileInfo.edifices}</div>
+            )}
+            {tileInfo && tileInfo.arts !== undefined && (
+              <div style={styles.arts}>✒️{tileInfo.arts}</div>
             )}
           </div>
           {tileInfo && tileInfo.nationName && (
@@ -195,6 +208,7 @@ const mapStateToProps = (state) => {
       name: info.n,
       region,
       edifices: info.edifices,
+      arts: info.arts,
       nationId: info.nation && info.nation.id,
       nationName: info.nation && info.nation.name,
       nationColor: info.nation && info.nation.color,

@@ -59,14 +59,27 @@ exports.getRegionActivity = async () => {
   let edifices = await data.Edificio.findAll({
     where: { region: { [Op.in]: keys } },
   });
+  let arts = await data.Art.findAll({
+    include: [
+      {
+        model: data.Edificio,
+        as: "Place",
+        where: { region: { [Op.in]: keys } },
+      },
+    ],
+  });
 
   keys.forEach((key) => {
     ret[key].edifices = edifices.filter((elem) => elem.region === key).length;
+    ret[key].arts = arts.filter(
+      (elem) => elem.Place.dataValues.region === key
+    ).length;
   });
   keys.forEach((key) => {
     if (regions[key].suze) {
       ret[regions[key].suze].edifices =
         ret[regions[key].suze].edifices + ret[key].edifices;
+      ret[regions[key].suze].arts = ret[regions[key].suze].arts + ret[key].arts;
     }
   });
 

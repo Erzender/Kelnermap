@@ -1,21 +1,21 @@
 <div
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
-  <h1 style="color: cadetblue;">🏠<%= fields.title %></h1>
-  Vous avez constuit un chouette machin ? Mais de quoi ça s'agit-il ?
-  <form id="fedifice" action="/lekelner/explorer/edifices/editeur" method="post">
+  <h1 style="color: purple;">✒️<%= fields.title %></h1>
+  Un pixel art sur carte, un livre, une statue, ... ? On veut tout savoir.
+  <form id="fart" action="/lekelner/explorer/oeuvres/editeur" method="post">
     <input name="id" style="display: none" value="<%= fields.id %>" />
     <input name="title" style="display: none" value="<%= fields.title %>" />
     <p>🏷️Nom <input name="name" value="<%= fields.name %>" /></p>
     <p>
         <div>📚Description</div>
-        <textarea rows="10" cols="50" height="400px" name="description" form="fedifice" ><%= fields.description %></textarea>
+        <textarea rows="10" cols="50" height="400px" name="description" form="fart" ><%= fields.description %></textarea>
     </p>
     <p>🖼️Image <input name="picture" value="<%= fields.picture %>" /></p>
     <p>
-      🗺️Région ou ville <select name="region" form="fedifice" >
-            <% regions.forEach(function(region){ %>
-                <option <%= region.key === fields.region ? 'selected' : '' %> value="<%= region.key %>"><%= region.value %></option>
+      🏠Edifice d'exposition : <select name="edifice" form="fart" >
+            <% edifices.forEach(function(edifice){ %>
+                <option <%= edifice.id === fields.edifice ? 'selected' : '' %> value="<%= edifice.id %>"><%= edifice.name %></option>
             <% }); %>
         </select>
     </p>
@@ -23,7 +23,7 @@
       💬Lien du post mastodon pour les commentaires <input name="mastodon" value="<%= fields.mastodon %>" />
     </p>
     <% if (fields.id > 0) { %>
-      <p style="color: red;">🗑️<input name="delete" type="checkbox" /> Supprimer l'édifice ?</p>
+      <p style="color: red;">🗑️<input name="delete" type="checkbox" /> Supprimer l'oeuvre ?</p>
     <% } %>
     <button type="submit">Générer la commande Discord 🖥</button>
   </form>

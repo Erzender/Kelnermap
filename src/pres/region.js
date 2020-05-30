@@ -25,10 +25,25 @@ exports.get = async function (req, res) {
   let edificios = await data.Edificio.findAll({
     where: { region: { [Op.in]: info.cities.map((city) => city.id) } },
   });
+  let arts = await data.Art.findAll({
+    include: [
+      {
+        model: data.Edificio,
+        as: "Place",
+        where: { region: { [Op.in]: info.cities.map((city) => city.id) } },
+      },
+    ],
+  });
   info.cities.forEach(
     (city, i) =>
       (info.cities[i].edifices = edificios.filter(
         (elem) => elem.dataValues.region === city.id
+      ).length)
+  );
+  info.cities.forEach(
+    (city, i) =>
+      (info.cities[i].arts = arts.filter(
+        (elem) => elem.Place.dataValues.region === city.id
       ).length)
   );
 
@@ -84,6 +99,23 @@ exports.get = async function (req, res) {
       edifice.dataValues.Creator.dataValues.picture.length
         ? edifice.dataValues.Creator.dataValues.picture
         : "/lekelner/asset/Alex.webp",
+  }));
+  info.arts = await data.Art.findAll({
+    include: [
+      {
+        model: data.Player,
+        as: "Artist",
+      },
+      {
+        model: data.Edificio,
+        as: "Place",
+        where: { region: req.params.id },
+      },
+    ],
+  }).map((art) => ({
+    name: art.name,
+    link: "/lekelner/explorer/oeuvres/" + art.id,
+    player: art.Artist.dataValues.picture || "/lekelner/asset/Alex.webp",
   }));
   res.render("index", {
     route: "region",

@@ -45,8 +45,10 @@
   <body>
     <% if (route === "404") { %> <%- include ('error') %> <% } %>
     <% if (route === "edifice") { %> <%- include ('resources/edifice') %> <% } %>
-    <% if (route === "region") { %> <%- include ('resources/region') %> <% } %>
     <% if (route === "edificeEdit") { %> <%- include ('resources/edificeEdit') %> <% }%>
+    <% if (route === "art") { %> <%- include ('resources/art') %> <% } %>
+    <% if (route === "artEdit") { %> <%- include ('resources/artEdit') %> <% }%>
+    <% if (route === "region") { %> <%- include ('resources/region') %> <% } %>
     <% if (route === "player") { %> <%- include ('resources/player') %> <% }%>
     <% if (route === "playerEdit") { %> <%- include ('resources/playerEdit') %> <% }%>
     <% if (route === "nation") { %> <%- include ('resources/nation') %> <% }%>
