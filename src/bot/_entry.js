@@ -169,10 +169,9 @@ const checkConsole = async (client, message) => {
         });
         if (playerObj !== null) {
           minecraftCommands[args[0]](client, message, args, playerObj);
-        }
-        else {
+        } else {
           return message.channel.send(
-            `tellraw ${player[0]} ["",{"text":"["},{"text":"ZAAPER","bold":true,"color":"dark_red"},{"text":">","bold":true},{"text":" Je n'ai jamais entendu parler de toi. Alors je t'ignore hohoho ! ^_^","color":"gold"}]`
+            `tellraw ${player[0]} ["",{"text":"["},{"text":"${args[0]}","bold":true,"color":"dark_red"},{"text":">","bold":true},{"text":" Je n'ai jamais entendu parler de toi. Alors je t'ignore hohoho ! ^_^","color":"gold"}]`
           );
         }
       }
