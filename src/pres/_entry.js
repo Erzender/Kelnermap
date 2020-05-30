@@ -5,6 +5,7 @@ const edifice = require("./edifice");
 const region = require("./region");
 const player = require("./player");
 const nation = require("./nation");
+const art = require("./art");
 
 router.get("/", function (req, res) {
   res.send("Ouais j'ai pas encore mis de page ici");
@@ -14,6 +15,11 @@ router.get("/edifices", edifice.getAll);
 router.get("/edifices/editeur", edifice.getEditor);
 router.post("/edifices/editeur", edifice.postEditor);
 router.get("/edifices/:id", edifice.get);
+
+router.get("/oeuvres", art.getAll);
+router.get("/oeuvres/editeur", art.getEditor);
+router.post("/oeuvres/editeur", art.postEditor);
+router.get("/oeuvres/:id", art.get);
 
 router.get("/regions", region.getAll);
 router.get("/regions/:id", region.get);

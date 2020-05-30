@@ -11,6 +11,7 @@ exports.get = async function (req, res) {
       },
     ],
   });
+
   if (edifice === null) {
     return res.status(404).render("index", {
       route: "404",
@@ -20,6 +21,19 @@ exports.get = async function (req, res) {
     });
   }
   let mastodon = await mastodonUtils.getComments(edifice.dataValues.mastodon);
+  let arts = await data.Art.findAll({
+    where: { placeId: edifice.id },
+    include: [
+      {
+        model: data.Player,
+        as: "Artist",
+      },
+    ],
+  }).map((art) => ({
+    name: art.dataValues.name,
+    artistPic: art.Artist.dataValues.picture || "/lekelner/asset/Alex.webp",
+    link: "/lekelner/explorer/oeuvres/" + art.dataValues.id,
+  }));
 
   res.render("index", {
     route: "edifice",
@@ -40,6 +54,7 @@ exports.get = async function (req, res) {
         ...regions[edifice.dataValues.region],
         key: edifice.dataValues.region,
       },
+      arts,
     },
   });
 };

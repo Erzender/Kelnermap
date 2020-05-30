@@ -69,4 +69,19 @@
     <div>· <a href="<%- edifice.link -%>"><%= edifice.name %></a></div>
     <% }); %> <% }); %>
   </div>
+  <h2 style="color: purple;">✒️Oeuvres exposées : <%= info.artsNum %></h2>
+  <a
+    class="ax"
+    style="width: 250px; background-color: purple;"
+    href="/lekelner/explorer/oeuvres/editeur"
+  >
+    ＋Enregistrer une oeuvre
+  </a>
+  <div style="border-left: purple 3px solid; padding-left: 5px;">
+    <% info.arts.forEach(function(list){ %>
+    <h3><%= list.region.n %></h3>
+    <% list.arts.forEach(function(art){ %>
+    <div>· <a href="<%- art.link -%>"><%= art.name %></a></div>
+    <% }); %> <% }); %>
+  </div>
 </div>

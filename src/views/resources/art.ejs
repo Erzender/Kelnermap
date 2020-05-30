@@ -1,0 +1,26 @@
+<div
+  style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
+>
+  <a style="text-decoration: none;" target="_blank" href="<%- "./" + art.id -%>"><h1 style="color: purple;">✒️<%= art.name %></h1></a>
+  <% if (art.pic.length > 0) { %><img
+    src="<%- art.pic -%>"
+    style="width: 100%;"
+  /><% } %>
+  <a
+    href="/lekelner/explorer/joueurs/<%= art.Artist.dataValues.discord %> "
+    style="display: flex; flex-direction: row; font-size: 14; align-items: center;"
+  >
+    <img class="miniProfile" src="<%- art.playerPicture -%>" />
+    <b><%= art.Artist.dataValues.minecraft %></b>
+  </a>
+  <div>🏠Exposée ici : <a style="font-weight: bold;" href="<%- "/lekelner/explorer/edifices/" + art.Place.dataValues.id -%>"><%=art.Place.dataValues.name %></a></div>
+  <div style="border-left: 3px solid gray; padding-left: 5px">
+    <% art.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
+  <a class="ax" style="width: 100px; background-color: purple;" href="<%- art.edit -%>">
+    Modifier ✍
+  </a>
+  <%- include ('mastodon') %>
+</div>

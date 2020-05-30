@@ -22,6 +22,15 @@ exports.get = async function (req, res) {
   let edifices = await data.Edificio.findAll({
     where: { CreatorDiscord: player.dataValues.discord },
   });
+  let arts = await data.Art.findAll({
+    where: { ArtistDiscord: player.dataValues.discord },
+    include: [
+      {
+        model: data.Edificio,
+        as: "Place",
+      },
+    ],
+  });
   let players = await data.Player.findAll({
     include: [
       {
@@ -61,6 +70,7 @@ exports.get = async function (req, res) {
     pvpScore: player.dataValues.reputation,
     pvpRanking: ranking,
     edificesNum: edifices.length,
+    artsNum: arts.length,
     edifices: Object.keys(regions)
       .map((key) => ({
         region: { ...regions[key], key },
@@ -75,6 +85,18 @@ exports.get = async function (req, res) {
       .sort((a, b) => {
         return b.edifices.length - a.edifices.length;
       }),
+    arts: Object.keys(regions)
+      .map((key) => ({
+        region: { ...regions[key], key },
+        arts: arts
+          .filter((art) => art.Place.dataValues.region === key)
+          .map((elem) => ({
+            name: elem.dataValues.name,
+            link: "/lekelner/explorer/oeuvres/" + elem.dataValues.id,
+          })),
+      }))
+      .filter((elem) => elem.arts.length > 0)
+      .sort((a, b) => b.arts.length - a.arts.length),
   };
   res.render("index", {
     route: "player",

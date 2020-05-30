@@ -2,6 +2,7 @@
   style="margin-left: auto; margin-right: auto; width: 1000px; max-width: 100%;"
 >
 <a style="text-decoration: none;" target="_blank" href="<%- "./" + info.region.key -%>"><h1 style="color: orange;">📜<%= info.region.n %></h1></a>
+<div style="border-left: white 3px solid; padding-left: 10px;">
 <% if (info.domination.id) { %>
 <a href="/lekelner/explorer/nations/<%= info.domination.id %>" style="display: flex; flex-direction: row; align-items: center;">
     <div
@@ -16,19 +17,22 @@
   </a><br/>
   Gueuler avec conviction pour s'y téléporter : <b style="cursor: help" title="Mais ça fonctionne uniquement pour les dirigeantes des nations amies de la nation où habite la gouverneure.">ZAAPER <%= info.city.tag %></b>
 <% } %>
+</div>
 <% if (info.suze !== null) { %>
     <h2 style="color: orange;">📜Région : <a href="<%- info.suze.link -%>"><%= info.suze.name %></a></h2>
-  <% } %>
-  <% if (info.cities.length) { %>
+<% } %>
+<% if (info.cities.length) { %>
   <h2 style="color: orange;"><%= "📜Villes : " + info.cities.length %></h2>
   <div style="border-left: orange 3px solid; padding-left: 5px;">
     <% info.cities.forEach(function(city){ %>
       <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
-          <a href="<%- city.link -%>"><%= city.name %></a> <% if (city.edifices) { %> <div style="background-color: cadetblue;" class="pastille">🏠<%= city.edifices %></div> <% } %>
+          <a href="<%- city.link -%>"><%= city.name %></a>
+          <% if (city.edifices) { %> <div style="background-color: cadetblue;" class="pastille">🏠<%= city.edifices %></div> <% } %>
+          <% if (city.arts) { %> <div style="background-color: purple;" class="pastille">✒️<%= city.arts %></div> <% } %>
       </div>
     <% }); %>
   </div>
-  <% } %>
+<% } %>
   <h2 style="color: cadetblue;"><%= "🏠Edifices : " + info.edifices.length %></h2>
   <a class="ax" style="width: 250px; background-color: cadetblue;" href="/lekelner/explorer/edifices/editeur?region=<%= info.region.key %>">
     ＋Enregistrer un édifice
@@ -38,6 +42,18 @@
       <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
           <a href="<%- edifice.link -%>"><%= edifice.name %></a>
           <img class="miniProfile" src="<%- edifice.player -%>" />
+      </div>
+    <% }); %>
+  </div>
+  <h2 style="color: purple;"><%= "✒️Oeuvres : " + info.arts.length %></h2>
+  <a class="ax" style="width: 250px; background-color: purple;" href="/lekelner/explorer/oeuvres/editeur">
+    ＋Enregistrer une oeuvre
+  </a>
+  <div style="border-left: purple 3px solid; padding-left: 5px;">
+    <% info.arts.forEach(function(art){ %>
+      <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
+          <a href="<%- art.link -%>"><%= art.name %></a>
+          <img class="miniProfile" src="<%- art.player -%>" />
       </div>
     <% }); %>
   </div>

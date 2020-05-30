@@ -7,6 +7,7 @@ const commands = {
   $nation: require("./nation"),
   $région: require("./region"),
   $édifice: require("./edifice"),
+  $oeuvre: require("./art"),
 };
 
 const adminCommands = require("./admin");
@@ -53,7 +54,11 @@ try {
 exports.client = client;
 
 const processBotMessage = (message) => {
-  if (message.channel.id === JSON.parse(process.env.KELNER_BOT).console)
+  if (
+    message.channel.id === JSON.parse(process.env.KELNER_BOT).console &&
+    message.content.length &&
+    message.content[0] !== "$"
+  )
     return checkConsole(client, message);
   if (
     !(
@@ -93,6 +98,7 @@ const processBotMessage = (message) => {
       ? arg.substring(1, arg.length - 1)
       : arg
   );
+  console.log(args);
   processCommand(client, message, args);
 };
 

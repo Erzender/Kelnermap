@@ -22,5 +22,17 @@
   <a class="ax" style="width: 100px; background-color: cadetblue;" href="<%- edifice.edit -%>">
     Modifier ✍
   </a>
+
+  <% if (edifice.arts.length > 0) { %>
+  <h2 style="color: purple;"><%= "✒️Oeuvres exposées : " + edifice.arts.length %></h2>
+  <div style="border-left: purple 3px solid; padding-left: 5px;">
+    <% edifice.arts.forEach(function(art){ %>
+      <div style="font-weight: bold; display: flex; flex-direction: row; align-items: center;">
+          <a href="<%- art.link -%>"><%= art.name %></a>
+          <img class="miniProfile" src="<%- art.artistPic -%>" />
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
   <%- include ('mastodon') %>
 </div>
