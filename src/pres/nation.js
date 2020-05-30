@@ -67,6 +67,33 @@ exports.get = async function (req, res) {
     })),
   };
 
+  let diplomacy = await data.Diplomacy.findAll({
+    where: {
+      originId: nation.dataValues.id,
+      type: { [Op.in]: ["FRIENDLY", "MISTRUSTFUL"] },
+    },
+    include: [
+      {
+        model: data.Nation,
+        as: "target",
+      },
+    ],
+  });
+  info.friends = diplomacy
+    .filter((elem) => elem.dataValues.type === "FRIENDLY")
+    .map((elem) => ({
+      nation: elem.target.dataValues.id,
+      name: elem.target.dataValues.name,
+      pic: elem.target.dataValues.pic || "/lekelner/asset/unknown.png",
+    }));
+  info.mistrust = diplomacy
+    .filter((elem) => elem.dataValues.type === "MISTRUSTFUL")
+    .map((elem) => ({
+      nation: elem.target.dataValues.id,
+      name: elem.target.dataValues.name,
+      pic: elem.target.dataValues.pic || "/lekelner/asset/unknown.png",
+    }));
+
   res.render("index", {
     route: "nation",
     embedTitle: "Nation : " + nation.dataValues.name,

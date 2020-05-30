@@ -20,6 +20,11 @@
   >
     Administrer ✍
   </a>
+  <div style="border-left: 3px solid gray; padding-left: 5px;">
+    <% info.desc.forEach(function(desc){ %>
+    <p><%= desc %></p>
+    <% }); %>
+  </div>
   <h3>Superficie</h3>
   <%= info.size %> km²<br />
   <% if (info.anthem && info.anthem.length) { %>
@@ -28,6 +33,7 @@
     style="
       background: url('/lekelner/asset/gifnyl.gif') no-repeat;
       background-size: contain;
+      max-width: 100%;
     "
     width="500"
     height="70"
@@ -37,7 +43,7 @@
     allowfullscreen
   ></iframe>
   <% } %>
-  <h3>Dirigeants</h3>
+  <h3>Dirigeantes</h3>
   <div style="display: flex; flex-direction: row;">
     <% info.citizens.forEach(function(player){ %>
     <a
@@ -47,7 +53,7 @@
     ></a>
     <% }); %>
   </div>
-  <h3>Habitants</h3>
+  <h3>Habitantes</h3>
   <div style="display: flex; flex-direction: row;">
     <% info.inhabs.forEach(function(player){ %>
     <a
@@ -57,10 +63,30 @@
     ></a>
     <% }); %>
   </div>
-  <hr />
-  <div style="border-left: 3px solid gray; padding-left: 5px;">
-    <% info.desc.forEach(function(desc){ %>
-    <p><%= desc %></p>
+
+  <% if (info.friends.length > 0) { %>
+  <h3>🍺 Amicale envers :</h3>
+  <div style="display: flex; flex-direction: row;">
+    <% info.friends.forEach(function(nation){ %>
+    <a
+      href="/lekelner/explorer/nations/<%= nation.nation %>"
+      class="miniProfile"
+      title="<%= nation.name %>"
+      style="background-image: url('<%= nation.pic %>');"
+    ></a>
     <% }); %>
   </div>
+  <% } %> <% if (info.mistrust.length > 0) { %>
+  <h3>👺 Méfiante envers :</h3>
+  <div style="display: flex; flex-direction: row;">
+    <% info.mistrust.forEach(function(nation){ %>
+    <a
+      href="/lekelner/explorer/nations/<%= nation.nation %>"
+      class="miniProfile"
+      title="<%= nation.name %>"
+      style="background-image: url('<%= nation.pic %>');"
+    ></a>
+    <% }); %>
+  </div>
+  <% } %>
 </div>

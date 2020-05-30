@@ -103,6 +103,11 @@ textarea {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  transition: transform 0.2s;
+}
+
+.miniProfile:hover {
+  transform: scale(2);
 }
 
 .bigProfile {
@@ -117,6 +122,11 @@ textarea {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  transition: transform 0.2s;
+}
+
+.bigProfile:hover {
+  transform: scale(1.1);
 }
 
 .pastille {

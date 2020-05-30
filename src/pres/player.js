@@ -50,9 +50,14 @@ exports.get = async function (req, res) {
     desc: player.dataValues.desc.split("\n") || [],
     nationId: player.Identity && player.Identity.dataValues.id,
     nationName: player.Identity && player.Identity.dataValues.name,
-    nationPic: player.Identity && player.Identity.dataValues.pic,
+    nationPic:
+      (player.Identity && player.Identity.dataValues.pic) ||
+      "/lekelner/asset/unknown.png",
     nationColor: player.Identity && player.Identity.dataValues.color,
-    citizenship: player.Homelands.map((citizenship) => citizenship.name),
+    citizenship: player.Homelands.map((citizenship) => ({
+      name: citizenship.name,
+      pic: citizenship.pic || "/lekelner/asset/unknown.png",
+    })),
     pvpScore: player.dataValues.reputation,
     pvpRanking: ranking,
     edificesNum: edifices.length,
