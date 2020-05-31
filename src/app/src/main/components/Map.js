@@ -6,6 +6,7 @@ import Grid from "./Grid";
 import Overlay from "./Overlay";
 import Cities from "./Cities";
 import Modal from "./Modal.js";
+import Search from "./Search";
 
 const styles = {
   container: {
@@ -82,6 +83,7 @@ const Map = ({ margins, dimensions, curZoom, zoom }) => (
       </div>
     </div>
     <Overlay />
+    <Search />
     <Modal />
   </div>
 );

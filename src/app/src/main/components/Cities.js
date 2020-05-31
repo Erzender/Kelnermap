@@ -2,11 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 
 import config from "../../../config.json";
+import {geoToImage} from "../utils/geo"
 
+/*
 const geoToImage = (mod, x, z) => ({
   x: config.mapSize.x * mod * ((x - config.cali.xOf) / config.cali.x),
   z: config.mapSize.z * mod * ((z - config.cali.zOf) / config.cali.z),
-});
+});*/
 
 const coors = (mod, cities) =>
   cities.map((city) => {

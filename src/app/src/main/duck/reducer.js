@@ -1,4 +1,5 @@
 import config from "../../../config.json";
+import { geoToImage, imageToTile } from "../utils/geo";
 
 const initialState = {
   selectedTile: null,
@@ -11,6 +12,7 @@ const initialState = {
   cities: {},
   regions: [],
   menuOpened: false,
+  search: { open: false, textMode: false, coor: ["", ""], text: "" },
   settings: {
     nations: true,
     cities: true,
@@ -111,6 +113,11 @@ const root = (state = initialState, action) => {
       };
     case "TOGGLE_PVP":
       return { ...state, modal: { type: "pvp" } };
+    case "TOGGLE_SEARCH":
+      return {
+        ...state,
+        search: { ...state.search, open: !state.search.open },
+      };
     case "TOGGLE_SETTING":
       let storage = localStorage.getItem("settingAutoplay");
       if (action.which === "autoplay") {
@@ -179,6 +186,45 @@ const root = (state = initialState, action) => {
           type: "frame",
           frameLink: config.api + "/lekelner/explorer/nations/" + action.id,
         },
+      };
+    case "SEARCH_TOGGLE_TEXT":
+      return {
+        ...state,
+        search: { ...state.search, textMode: !state.search.textMode },
+      };
+    case "SEARCH_TYPING_TEXT":
+      return {
+        ...state,
+        search: {
+          ...state.search,
+          text: state.search.textMode ? action.fields[0] : state.search.text,
+          coor: state.search.textMode ? state.search.coor : action.fields,
+        },
+      };
+    case "SEARCH_ENTERED":
+      zoom = 3;
+      let pos = geoToImage(
+        1,
+        parseInt(state.search.coor[0]),
+        parseInt(state.search.coor[1])
+      );
+      pos = { x: Math.round(pos.x), z: Math.round(pos.z) };
+      return {
+        ...state,
+        search: { ...state.search, open: state.search.textMode ? true : false },
+        selectedPos: state.search.textMode ? state.selectedPos : pos,
+        mapMargins: state.search.textMode
+          ? state.mapMargins
+          : {
+              x: window.innerWidth / 2 - pos.x * zoom,
+              z: (window.innerHeight - 200) / 2 - pos.z * zoom,
+            },
+        settings: state.search.textMode
+          ? state.settings
+          : { ...state.settings, zoom },
+        selectedTile: state.search.textMode
+          ? state.selectedTile
+          : imageToTile(pos.x, pos.z),
       };
     default:
       return state;
