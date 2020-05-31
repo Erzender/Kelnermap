@@ -116,6 +116,7 @@ const Overlay = ({
   clickNation,
   clickRegion,
   pvpClick,
+  searchClick,
 }) => {
   const onClickNation = () => clickNation(tileInfo.nationId);
   const onClickRegion = () => clickRegion(tileInfo.region);
@@ -123,6 +124,12 @@ const Overlay = ({
     <div style={styles.container}>
       <div style={styles.upperView}>
         <Menu />
+        <div
+          style={{ ...styles.menuButton, marginTop: menu ? -300 : 30 }}
+          onClick={searchClick}
+        >
+          🔍
+        </div>
         <div
           style={{ ...styles.menuButton, marginTop: menu ? -300 : 30 }}
           onClick={pvpClick}
@@ -207,8 +214,8 @@ const mapStateToProps = (state) => {
     tileInfo: info && {
       name: info.n,
       region,
-      edifices: info.edifices,
-      arts: info.arts,
+      edifices: info.edifices > 0 ? info.edifices : undefined,
+      arts: info.arts > 0 ? info.arts : undefined,
       nationId: info.nation && info.nation.id,
       nationName: info.nation && info.nation.name,
       nationColor: info.nation && info.nation.color,
@@ -236,6 +243,7 @@ const mapDispatchToProps = (dispatch) => ({
   clickNation: (id) => id && dispatch({ type: "SHOW_NATION", id }),
   clickRegion: (id) => id && dispatch({ type: "SHOW_REGION", id }),
   pvpClick: () => dispatch({ type: "TOGGLE_PVP" }),
+  searchClick: () => dispatch({ type: "TOGGLE_SEARCH" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overlay);
