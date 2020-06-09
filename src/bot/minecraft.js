@@ -81,7 +81,7 @@ exports.ZAAPER = async (client, message, args, player) => {
     where: {
       regions: {
         [Op.substring]:
-          "[" + regions[city.id].suze ? regions[city.id].suze : city.id + "]",
+          "[" + (regions[city.id].suze ? regions[city.id].suze : city.id) + "]",
       },
     },
   });
