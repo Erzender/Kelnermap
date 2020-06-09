@@ -149,7 +149,7 @@ const checkConsole = async (client, message) => {
     }
   });
   if (!exists) return;
-  let lines = message.content.split("\n");
+  let lines = message.content.replace("\\_", "_").split("\n");
   let header = [];
   let world = [];
   let player = [];
@@ -170,7 +170,6 @@ const checkConsole = async (client, message) => {
         Object.keys(minecraftCommands).findIndex((elem) => elem === args[0]) >=
         0
       ) {
-        console.log(player[0]);
         playerObj = await data.Player.findOne({
           where: { minecraft: player[0] },
         });
