@@ -170,6 +170,7 @@ const checkConsole = async (client, message) => {
         Object.keys(minecraftCommands).findIndex((elem) => elem === args[0]) >=
         0
       ) {
+        console.log(player[0]);
         playerObj = await data.Player.findOne({
           where: { minecraft: player[0] },
         });
