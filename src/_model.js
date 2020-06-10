@@ -57,6 +57,7 @@ const Shop = db.sequelize.define("shop", {
   mastodon: Sequelize.STRING,
 });
 
+Player.belongsTo(Nation, { as: "IdentityRequest" });
 Player.belongsTo(Nation, { as: "Identity" });
 Player.belongsToMany(Nation, { as: "Homelands", through: "Citizenship" });
 

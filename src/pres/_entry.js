@@ -37,6 +37,7 @@ router.post("/nations/editeur/add_region", nation.addRegion);
 router.post("/nations/editeur/rm_region", nation.delRegion);
 router.post("/nations/editeur/dispatch", nation.dispatchReput);
 router.post("/nations/editeur/diplomatie", nation.diplomacy);
+router.get("/nations/editeur/demandes", nation.identityRequest);
 router.get("/nations/:id", nation.get);
 
 module.exports = router;

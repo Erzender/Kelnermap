@@ -64,7 +64,13 @@ exports.ZAAPER = async (client, message, args, player) => {
       },
     ],
   });
-  if (whitelisted === null)
+  let inhabitant = await data.Player.findOne({
+    where: {
+      discord: player.dataValues.discord,
+      identityId: { [Op.in]: whiteliste },
+    },
+  });
+  if (whitelisted === null && inhabitant === null)
     return message.channel.send(
       `tellraw ${player.dataValues.minecraft} ["",{"text":"["},{"text":"ZAAPER","bold":true,"color":"dark_red"},{"text":">","bold":true},{"text":" La Nation du gouverneur de cette ville n'autorise pas ton déplacement. Olala, ce n'est pas possible !","color":"gold"}]`
     );

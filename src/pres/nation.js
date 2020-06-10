@@ -210,6 +210,18 @@ exports.getEditor = async function (req, res) {
       fields.z = coors[2].split(" Z")[0];
     }
 
+    fields.identityRequests = (
+      await data.Player.findAll({
+        where: { identityRequestId: nation.id },
+      })
+    ).map((pl) => ({
+      name: pl.dataValues.minecraft,
+      pic: pl.dataValues.picture,
+      id: pl.dataValues.discord,
+    }));
+
+    console.log(fields.identityRequests);
+
     let diplomacies = (
       await data.Diplomacy.findAll({
         where: { originId: nation.dataValues.id },
@@ -297,7 +309,7 @@ exports.postCitizen = async function (req, res) {
     embedDesc: "",
     command: {
       text:
-        "$nation naturaliser " +
+        "$nation nommer " +
         req.body.player +
         (req.body.nation ? " " + req.body.nation : ""),
       back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
@@ -381,6 +393,19 @@ exports.diplomacy = async function (req, res) {
           ""
         ),
       back: "/lekelner/explorer/nations/editeur?id=" + req.body.nation,
+    },
+  });
+};
+
+exports.identityRequest = async function (req, res) {
+  res.render("index", {
+    route: "command",
+    embedTitle: "Editeur",
+    embedImage: "",
+    embedDesc: "",
+    command: {
+      text: `$nation ${req.query.decision} ${req.query.joueur} ${req.query.nation}`,
+      back: "/lekelner/explorer/nations/editeur?id=" + req.query.nation,
     },
   });
 };
