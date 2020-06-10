@@ -115,5 +115,17 @@
     <button type="submit">Valider ce foutoir diplomatique 🖥</button>
   </form>
 
+  <h3>🙋Demandes de nationalité</h4>
+  <% fields.identityRequests.forEach(function(pl) { %>
+    <div style="display: flex; flex-direction: row; align-items: center;">
+    <a href="editeur/demandes?nation=<%= fields.id %>&decision=naturaliser&joueur=<%= pl.id %>"><button>✔️</button></a>
+    <a href="editeur/demandes?nation=<%= fields.id %>&decision=refuser&joueur=<%= pl.id %>"><button>❌</button></a>
+    <span
+        class="miniProfile"
+        style="background-image: url('<%= pl.pic %>');">
+    </span>
+    <%= pl.name %>
+    </div>
+  <% }) %>
   <% } %>
 </div>

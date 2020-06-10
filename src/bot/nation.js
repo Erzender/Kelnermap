@@ -84,11 +84,11 @@ exports.rejoindre = async (client, message, args, player) => {
   let nation = await data.Nation.findByPk(args[2]);
   if (nation === null)
     return message.channel.send("Pas trouvé, essaye de `$nation lister` déjà.");
-  await player.setIdentity(nation);
+  await player.setIdentityRequest(nation);
   message.channel.send(
-    "<@" +
+    "Après mure réflexion, <@" +
       player.dataValues.discord +
-      "> se revendique désormais de **" +
+      "> voudrait rejoindre **" +
       nation.dataValues.name +
       "**."
   );
@@ -271,10 +271,84 @@ exports.lister = async (client, message, args, player) => {
 };
 
 exports.naturaliser = async (client, message, args, player) => {
+  if (args.length < 4) {
+    return message.channel.send("Pas compris.");
+  }
+  let targetPlayer = await data.Player.findByPk(args[2]);
+  if (targetPlayer === null) {
+    return message.channel.send("Joueur inconnu.");
+  }
+  let nationRequest = await targetPlayer.getIdentityRequest();
+  let nation = await data.Nation.findOne({
+    where: {
+      id: {
+        [Op.and]: {
+          [Op.eq]: args[3],
+          [Op.in]: player.Homelands.map((nat) => nat.id),
+        },
+      },
+    },
+  });
+  if (nation === null)
+    return message.channel.send("Je crois que ça va pas être possible.");
+
+  if (!nationRequest || nationRequest.dataValues.id !== nation.dataValues.id) {
+    return message.channel.send(
+      "Mais enfin c'type ne cherche pas à rejoindre " +
+        nation.dataValues.name +
+        "."
+    );
+  }
+  await targetPlayer.setIdentity(nation);
+  await targetPlayer.setIdentityRequest(null);
+  message.channel.send(
+    "<@" +
+      targetPlayer.dataValues.discord +
+      "> a officiellement rejoint **" +
+      nation.dataValues.name +
+      "**."
+  );
+};
+
+exports.refuser = async (client, message, args, player) => {
+  if (args.length < 4) return message.channel.send("Pas compris.");
+
+  let targetPlayer = await data.Player.findByPk(args[2]);
+  if (targetPlayer === null) return message.channel.send("Joueur inconnu.");
+
+  let nationRequest = await targetPlayer.getIdentityRequest();
+  let nation = await data.Nation.findOne({
+    where: {
+      id: {
+        [Op.and]: {
+          [Op.eq]: args[3],
+          [Op.in]: player.Homelands.map((nat) => nat.id),
+        },
+      },
+    },
+  });
+  if (nation === null)
+    return message.channel.send("Je crois que ça va pas être possible.");
+  if (!nationRequest || nationRequest.dataValues.id !== nation.dataValues.id) {
+    return message.channel.send(
+      "Mais enfin c'type ne cherche pas à rejoindre " +
+        nation.dataValues.name +
+        "."
+    );
+  }
+  await targetPlayer.setIdentityRequest(null);
+  message.channel.send(
+    "<@" +
+      targetPlayer.dataValues.discord +
+      "> se fait refuser la nationalité. T'es pas le bienvenu ici gringo."
+  );
+};
+
+exports.nommer = async (client, message, args, player) => {
   if (args.length < 3) {
     return message.channel.send("Pas compris.");
   }
-  if (!checkIsNationCitizen(player)) {
+  if (args.length > 3 && !checkIsNationCitizen(player)) {
     return message.channel.send("You have no power here.");
   }
   let targetPlayer = await data.Player.findByPk(args[2]);
@@ -298,7 +372,11 @@ exports.naturaliser = async (client, message, args, player) => {
   await targetPlayer.removeHomeland(nation);
   await targetPlayer.addHomeland(nation);
   message.channel.send(
-    "<@" + args[2] + "> est un dirigeant de **" + nation.dataValues.name + "**"
+    "<@" +
+      args[2] +
+      "> est une dirigeante de **" +
+      nation.dataValues.name +
+      "**. Félicitations."
   );
 };
 
@@ -306,7 +384,7 @@ exports.radier = async (client, message, args, player) => {
   if (args.length < 3) {
     return message.channel.send("Pas compris.");
   }
-  if (!checkIsNationCitizen(player)) {
+  if (args.length > 3 && !checkIsNationCitizen(player)) {
     return message.channel.send("You have no power here.");
   }
   let targetPlayer = await data.Player.findByPk(args[2]);
