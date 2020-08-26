@@ -111,7 +111,8 @@ const processCommand = async (client, message, args) => {
           JSON.parse(process.env.KELNER_BOT).adminchannel &&
         adminCommands[args[1]]))
   ) {
-    let player = await data.Player.findByPk(message.author.id, {
+    let player = await data.Player.findOne({
+      where: { discord: message.author.id },
       include: [
         {
           model: data.Nation,

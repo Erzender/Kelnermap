@@ -10,11 +10,7 @@ $profil changer [image, description, minecraft] <nouvelle valeur>
 
 const voir = async (client, message, args, player) => {
   if (args.length >= 3) {
-    let discordId = args[2];
-    //      args[2].length > 4 && args[2][0] === "<"
-    //        ? args[2].split("<@!")[1].split(">")[0]
-    //        : args[2];
-    player = await data.Player.findByPk(discordId, {
+    player = await data.Player.findByPk(args[2], {
       include: [
         {
           model: data.Nation,
@@ -25,7 +21,7 @@ const voir = async (client, message, args, player) => {
     });
     if (player === null) {
       return message.channel.send(
-        "Connais pas. Copie bien l'identifiant discord, pas le nom"
+        "Connais pas. Faut bien mettre l'id par contre."
       );
     }
   }

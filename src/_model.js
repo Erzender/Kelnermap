@@ -2,12 +2,18 @@ const Sequelize = require("sequelize");
 const db = require("./_data");
 
 const Player = db.sequelize.define("player", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   discord: {
     type: Sequelize.STRING,
-    allowNull: false,
     unique: true,
-    primaryKey: true,
+    allowNull: true,
   },
+  password: Sequelize.STRING,
+  securePwd: Sequelize.BOOLEAN,
   minecraft: Sequelize.STRING,
   picture: Sequelize.STRING,
   desc: { type: Sequelize.TEXT, defaultValue: "" },

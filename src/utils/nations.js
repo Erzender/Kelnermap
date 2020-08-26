@@ -36,7 +36,7 @@ exports.nationDesc = async (id) => {
     hymne: nation.dataValues.hymne,
     stronghold: nation.dataValues.stronghold,
     citizens: citizens.map((citizen) => ({
-      id: citizen.dataValues.discord,
+      id: citizen.dataValues.id,
       pic:
         citizen.dataValues.picture !== null && citizen.dataValues.picture.length
           ? citizen.dataValues.picture
