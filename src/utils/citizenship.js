@@ -25,5 +25,5 @@ exports.getNationCitizens = async nation => {
       }
     ]
   });
-  return Object.keys(citizens).map(i => citizens[i].dataValues.discord);
+  return Object.keys(citizens).map(i => citizens[i].dataValues.id);
 };

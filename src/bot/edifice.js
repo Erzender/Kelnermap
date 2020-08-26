@@ -44,7 +44,7 @@ exports.créer = async (client, message, args, player) => {
       desc: args[3],
       pic: args[4],
       region: args[5],
-      CreatorDiscord: player.dataValues.discord,
+      CreatorId: player.dataValues.id,
       mastodon: args[6]
     });
   } catch (err) {
@@ -59,7 +59,7 @@ exports.changer = async (client, message, args, player) => {
 
   let edifice = await data.Edificio.findByPk(args[2]);
   if (!edifice) return message.channel.send("Il existe pas ce truc.");
-  if (edifice.dataValues.CreatorDiscord !== player.dataValues.discord)
+  if (edifice.dataValues.CreatorId !== player.dataValues.id)
     return message.channel.send("C'est pas ta construction wesh.");
   await edifice.update({
     name: args[3],
@@ -76,7 +76,7 @@ exports.supprimer = async (client, message, args, player) => {
 
   let edifice = await data.Edificio.findByPk(args[2]);
   if (!edifice) return message.channel.send("Il existe pas ce truc.");
-  if (edifice.dataValues.CreatorDiscord !== player.dataValues.discord)
+  if (edifice.dataValues.CreatorId !== player.dataValues.id)
     return message.channel.send("C'est pas ta construction wesh.");
   await edifice.destroy();
   return message.channel.send("L'édifice de pute à été éliminé.");

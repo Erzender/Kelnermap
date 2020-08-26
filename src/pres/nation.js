@@ -52,14 +52,14 @@ exports.get = async function (req, res) {
         ? "https://www.invidio.us/embed/" + nation.dataValues.hymne
         : null,
     citizens: citizens.map((citizen) => ({
-      id: citizen.dataValues.discord,
+      id: citizen.dataValues.id,
       pic:
         citizen.dataValues.picture !== null && citizen.dataValues.picture.length
           ? citizen.dataValues.picture
           : "/lekelner/asset/Alex.webp",
     })),
     inhabs: inhabs.map((citizen) => ({
-      id: citizen.dataValues.discord,
+      id: citizen.dataValues.id,
       pic:
         citizen.dataValues.picture !== null && citizen.dataValues.picture.length
           ? citizen.dataValues.picture
@@ -142,8 +142,8 @@ exports.getEditor = async function (req, res) {
     });
     let nonCitizens = await data.Player.findAll({
       where: {
-        discord: {
-          [Op.notIn]: citizens.map((citizen) => citizen.dataValues.discord),
+        id: {
+          [Op.notIn]: citizens.map((citizen) => citizen.dataValues.id),
         },
       },
     });
@@ -154,7 +154,7 @@ exports.getEditor = async function (req, res) {
       })
     )
       .map((elem) => ({
-        id: elem.dataValues.discord,
+        id: elem.dataValues.id,
         name: elem.dataValues.minecraft,
       }))
       .sort((a, b) => a.name && a.name.localeCompare(b.name));
@@ -173,13 +173,13 @@ exports.getEditor = async function (req, res) {
     fields.citizenship = {
       citizens: citizens
         .map((player) => ({
-          id: player.dataValues.discord,
+          id: player.dataValues.id,
           name: player.dataValues.minecraft,
         }))
         .sort((a, b) => a.name && a.name.localeCompare(b.name)),
       nonCitizens: nonCitizens
         .map((player) => ({
-          id: player.dataValues.discord,
+          id: player.dataValues.id,
           name: player.dataValues.minecraft,
         }))
         .sort((a, b) => a.name && a.name.localeCompare(b.name)),
@@ -217,7 +217,7 @@ exports.getEditor = async function (req, res) {
     ).map((pl) => ({
       name: pl.dataValues.minecraft,
       pic: pl.dataValues.picture,
-      id: pl.dataValues.discord,
+      id: pl.dataValues.id,
     }));
 
     console.log(fields.identityRequests);

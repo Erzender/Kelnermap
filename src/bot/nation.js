@@ -373,7 +373,7 @@ exports.nommer = async (client, message, args, player) => {
   await targetPlayer.addHomeland(nation);
   message.channel.send(
     "<@" +
-      args[2] +
+      targetPlayer.dataValues.discord +
       "> est une dirigeante de **" +
       nation.dataValues.name +
       "**. Félicitations."
@@ -394,10 +394,7 @@ exports.radier = async (client, message, args, player) => {
   let nation = player.Identity;
   if (args.length > 3) nation = await data.Nation.findByPk(args[3]);
   if (nation === null) return message.channel.send("Pas trouvé la nation");
-  if (
-    args[2] === player.dataValues.discord &&
-    player.Identity.id === nation.id
-  ) {
+  if (args[2] === player.dataValues.id && player.Identity.id === nation.id) {
     return message.channel.send(
       "Nan ça c'est toi, essaye avec `$nation brexit`"
     );
@@ -405,7 +402,7 @@ exports.radier = async (client, message, args, player) => {
   await targetPlayer.removeHomeland(nation);
   message.channel.send(
     "<@" +
-      args[2] +
+      targetPlayer.dataValues.discord +
       "> n'est plus dirigeant de **" +
       nation.dataValues.name +
       "**"
@@ -455,7 +452,7 @@ const multiDistri = async (client, message, args, player) => {
       await targetPlayer.update({
         reputation: targetPlayer.dataValues.reputation + total,
       });
-      embed.addField(total + " ->", "<@" + players[i] + ">");
+      embed.addField(total + " ->", "<@" + targetPlayer.dataValues.discord + ">");
     }
   }
   message.channel.send(embed);

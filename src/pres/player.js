@@ -20,10 +20,10 @@ exports.get = async function (req, res) {
     });
   }
   let edifices = await data.Edificio.findAll({
-    where: { CreatorDiscord: player.dataValues.discord },
+    where: { CreatorId: player.dataValues.id },
   });
   let arts = await data.Art.findAll({
-    where: { ArtistDiscord: player.dataValues.discord },
+    where: { ArtistId: player.dataValues.id },
     include: [
       {
         model: data.Edificio,
@@ -42,15 +42,15 @@ exports.get = async function (req, res) {
   let ranking =
     players
       .map((p) => ({
-        id: p.dataValues.discord,
+        id: p.dataValues.id,
         reputation: p.dataValues.reputation,
       }))
       .sort((p1, p2) => p2.reputation - p1.reputation)
-      .findIndex((p) => p.id === player.dataValues.discord) + 1;
+      .findIndex((p) => p.id === player.dataValues.id) + 1;
 
   let info = {
-    edit: "/lekelner/explorer/joueurs/editeur?id=" + player.dataValues.discord,
-    link: "/lekelner/explorer/joueurs/" + player.dataValues.discord,
+    edit: "/lekelner/explorer/joueurs/editeur?id=" + player.dataValues.id,
+    link: "/lekelner/explorer/joueurs/" + player.dataValues.id,
     name: player.dataValues.minecraft,
     picture:
       player.dataValues.picture !== null && player.dataValues.picture.length

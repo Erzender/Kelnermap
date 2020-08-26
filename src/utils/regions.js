@@ -38,7 +38,7 @@ exports.getLeaderBoard = async () => {
   });
   let leaderBoard = players
     .map((player) => ({
-      id: player.dataValues.discord,
+      id: player.dataValues.id,
       picture:
         player.dataValues.picture !== null && player.dataValues.picture.length
           ? player.dataValues.picture

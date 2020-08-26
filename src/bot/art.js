@@ -43,7 +43,7 @@ exports.créer = async (client, message, args, player) => {
       name: args[2],
       desc: args[3],
       pic: args[4],
-      ArtistDiscord: player.dataValues.discord,
+      ArtistId: player.dataValues.id,
       mastodon: args[6],
     });
     await art.setPlace(edifice);
@@ -59,7 +59,7 @@ exports.changer = async (client, message, args, player) => {
 
   let art = await data.Art.findByPk(args[2]);
   if (!art) return message.channel.send("Il existe pas ce truc.");
-  if (art.dataValues.ArtistDiscord !== player.dataValues.discord)
+  if (art.dataValues.ArtistId !== player.dataValues.id)
     return message.channel.send("C'est pas ta création ça wesh.");
   await art.update({
     name: args[3],
@@ -76,7 +76,7 @@ exports.supprimer = async (client, message, args, player) => {
 
   let art = await data.Art.findByPk(args[2]);
   if (!art) return message.channel.send("Il existe pas ce truc.");
-  if (art.dataValues.ArtistDiscord !== player.dataValues.discord)
+  if (art.dataValues.ArtistId !== player.dataValues.id)
     return message.channel.send("C'est pas ta création ça wesh.");
   await art.destroy();
   return message.channel.send("La trace de l'oeuvre a été perdue.");
