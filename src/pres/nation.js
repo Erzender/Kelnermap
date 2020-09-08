@@ -49,7 +49,7 @@ exports.get = async function (req, res) {
         .length * 0.25,
     anthem:
       nation.dataValues.hymne && nation.dataValues.hymne.length
-        ? "https://www.invidio.us/embed/" + nation.dataValues.hymne
+        ? "https://invidious.fdn.fr/embed/" + nation.dataValues.hymne
         : null,
     citizens: citizens.map((citizen) => ({
       id: citizen.dataValues.id,
