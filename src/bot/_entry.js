@@ -157,7 +157,7 @@ const checkConsole = async (client, message) => {
   let args = [];
   let playerObj = null;
   lines.forEach(async (line) => {
-    header = line.split(" CEST INFO] ");
+    header = line.split(" INFO] ");
     if (
       header.length === 2 &&
       (world = header[1].split("[Refuge[21m> ")) &&
