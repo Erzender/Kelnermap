@@ -160,10 +160,10 @@ const checkConsole = async (client, message) => {
     header = line.split(" CEST INFO] ");
     if (
       header.length === 2 &&
-      (world = header[1].split("[Refuge[21m> ")) &&
+      (world = header[1].split("[Refuge[21m> ")) &&
       world.length === 2 &&
       world[0] === "" &&
-      (player = world[1].split("[21m> ")) &&
+      (player = world[1].split("[21m> ")) &&
       player.length === 2
     ) {
       args = player[1].split(" ");
