@@ -7,7 +7,7 @@ const commands = {
   $nation: require("./nation"),
   $région: require("./region"),
   $édifice: require("./edifice"),
-  $oeuvre: require("./art"),
+  $oeuvre: require("./art")
 };
 
 const adminCommands = require("./admin");
@@ -30,7 +30,7 @@ try {
 }
 
 try {
-  client.on("message", (message) => {
+  client.on("message", message => {
     processBotMessage(message);
   });
 } catch (err) {
@@ -53,7 +53,7 @@ try {
 
 exports.client = client;
 
-const processBotMessage = (message) => {
+const processBotMessage = message => {
   if (
     message.channel.id === JSON.parse(process.env.KELNER_BOT).console &&
     message.content.length &&
@@ -93,12 +93,12 @@ const processBotMessage = (message) => {
       args = args.concat(rawargs.slice(complexArgPos, i + 1));
     }
   });
-  args = args.map((arg) =>
-    arg.length && arg[0] === "<" && arg[arg.length - 1] === ">"
-      ? arg.substring(1, arg.length - 1)
-      : arg
+  args = args.map(
+    arg =>
+      arg.length && arg[0] === "<" && arg[arg.length - 1] === ">"
+        ? arg.substring(1, arg.length - 1)
+        : arg
   );
-  console.log(args);
   processCommand(client, message, args);
 };
 
@@ -116,10 +116,10 @@ const processCommand = async (client, message, args) => {
       include: [
         {
           model: data.Nation,
-          as: "Identity",
+          as: "Identity"
         },
-        { model: data.Nation, as: "Homelands", through: "Citizenship" },
-      ],
+        { model: data.Nation, as: "Homelands", through: "Citizenship" }
+      ]
     });
     if (player === null) {
       try {
@@ -144,7 +144,7 @@ const processCommand = async (client, message, args) => {
 
 const checkConsole = async (client, message) => {
   let exists = false;
-  Object.keys(minecraftCommands).forEach((cmd) => {
+  Object.keys(minecraftCommands).forEach(cmd => {
     if (message.content.search(cmd) >= 0) {
       exists = true;
     }
@@ -156,23 +156,22 @@ const checkConsole = async (client, message) => {
   let player = [];
   let args = [];
   let playerObj = null;
-  lines.forEach(async (line) => {
-    header = line.split(" INFO] ");
+  lines.forEach(async line => {
+    header = line.split(" INFO] "); // [sam., 11. sept. 2021 20:09:31 CEST INFO] [Refuge> Erzender> ah oui
     if (
       header.length === 2 &&
-      (world = header[1].split("[Refuge[21m> ")) &&
+      (world = header[1].split("[Refuge\\> ")) &&
       world.length === 2 &&
       world[0] === "" &&
-      (player = world[1].split("[21m> ")) &&
+      (player = world[1].split("\\> ")) &&
       player.length === 2
     ) {
       args = player[1].split(" ");
       if (
-        Object.keys(minecraftCommands).findIndex((elem) => elem === args[0]) >=
-        0
+        Object.keys(minecraftCommands).findIndex(elem => elem === args[0]) >= 0
       ) {
         playerObj = await data.Player.findOne({
-          where: { minecraft: player[0] },
+          where: { minecraft: player[0] }
         });
         if (playerObj !== null) {
           minecraftCommands[args[0]](client, message, args, playerObj);
