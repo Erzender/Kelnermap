@@ -1,0 +1,6 @@
+node_modules
+database.sqlite
+config/regionInfo.json
+config/cities.json
+config/regions.json
+whitelist.json

@@ -1,0 +1,6 @@
+ $env:DB_TYPE="mysql"
+ $env:DB="minesr_10166"
+ $env:DB_USERNAME="minesr_10166"
+ $env:DB_PASSWORD="xyJxJyWV"
+ $env:DATABASE_HOST="178.32.113.35"
+ $env:DATABASE_PORT="3306"

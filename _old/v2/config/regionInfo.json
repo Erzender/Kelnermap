@@ -1,0 +1,288 @@
+{
+  "1": {
+    "n": "Anduin"
+  },
+  "2": {
+    "n": "Marais du Palûmortem"
+  },
+  "3": {
+    "n": "Rives-Mortes"
+  },
+  "4": {
+    "n": "Pointe d'Honneur"
+  },
+  "5": {
+    "n": "L'Enclave"
+  },
+  "6": {
+    "n": "Pays Austre"
+  },
+  "7": {
+    "n": "Irrilande"
+  },
+  "8": {
+    "n": "Côtes Franches"
+  },
+  "9": {
+    "n": "L'Estocade"
+  },
+  "a": {
+    "n": "Flanc d'Occident"
+  },
+  "b": {
+    "n": "Archipel du Nord"
+  },
+  "c": {
+    "n": "Hydropelagos"
+  },
+  "d": {
+    "n": "Couronne d'Austre"
+  },
+  "e": {
+    "n": "Déclin"
+  },
+  "f": {
+    "n": "Suidalie"
+  },
+  "g": {
+    "n": "Ceinturée"
+  },
+  "h": {
+    "n": "Île de la Chandeleur"
+  },
+  "i": {
+    "n": "Fierté Nord"
+  },
+  "j": {
+    "n": "Fierté Sud"
+  },
+  "k": {
+    "n": "Nevelande"
+  },
+  "l": {
+    "n": "Midi"
+  },
+  "m": {
+    "n": "Pointe Salvatrice"
+  },
+  "n": {
+    "n": "Pays Nymphosien"
+  },
+  "o": {
+    "n": "Les Fluxées"
+  },
+  "p": {
+    "n": "Ark"
+  },
+  "q": {
+    "n": "Sápmi"
+  },
+  "r": {
+    "n": "Himmelsrand"
+  },
+  "s": {
+    "n": "Rohan"
+  },
+  "t": {
+    "n": "La Sierra Nevada"
+  },
+  "u": {
+    "n": "La Garde"
+  },
+  "v": {
+    "n": "Roches Cernées"
+  },
+  "w": {
+    "n": "Nords d'Etrennes"
+  },
+  "x": {
+    "n": "Animisée"
+  },
+  "y": {
+    "n": "Sables d'Animisée"
+  },
+  "z": {
+    "n": "Flanc-Est"
+  },
+  "A": {
+    "n": "Mesa Suffit"
+  },
+  "B": {
+    "n": "Pyronèse"
+  },
+  "C": {
+    "n": "Lit-de-Nil"
+  },
+  "D": {
+    "n": "Désert d'Outre-Nil"
+  },
+  "E": {
+    "n": "Auvergne"
+  },
+  "F": {
+    "n": "Salines"
+  },
+  "G": {
+    "n": "Creuse-Vente"
+  },
+  "H": {
+    "n": "Sauce"
+  },
+  "I": {
+    "n": "Premier-Rempart"
+  },
+  "K": {
+    "n": "Vallées Promises"
+  },
+  "L": {
+    "n": "Ménisque"
+  },
+  "M": {
+    "n": "Sudanne"
+  },
+  "N": {
+    "n": "Baie-Illumine"
+  },
+  "O": {
+    "n": "Grand-Limne"
+  },
+  "P": {
+    "n": "Edoras",
+    "suze": "4",
+    "city": {
+      "coor": [1309, -715],
+      "tag": "EDO",
+      "governor": ""
+    }
+  },
+  "Q": {
+    "n": "Hydropolis",
+    "suze": "c",
+    "city": {
+      "coor": [-2602, 6234],
+      "tag": "HYD",
+      "governor": "5"
+    }
+  },
+  "R": {
+    "n": "Erzengrad",
+    "suze": "f",
+    "city": {
+      "coor": [-1343, -1378],
+      "tag": "ERZ",
+      "governor": "7"
+    }
+  },
+  "S": {
+    "n": "Grave",
+    "suze": "e",
+    "city": {
+      "coor": [-57, -599],
+      "tag": "GRA",
+      "governor": "4"
+    }
+  },
+  "T": {
+    "n": "Aqualonn",
+    "suze": "g",
+    "city": {
+      "coor": [3413, 6287],
+      "tag": "AQU",
+      "governor": "9"
+    }
+  },
+  "U": {
+    "n": "Heimsgard",
+    "suze": "f",
+    "city": {
+      "coor": [-1347, -1647],
+      "tag": "HEI",
+      "governor": "8"
+    }
+  },
+  "V": {
+    "n": "Forgefer",
+    "suze": "e",
+    "city": { "coor": [-1008, -211], "tag": "FOR" }
+  },
+  "W": {
+    "n": "Mourmansk",
+    "suze": "w",
+    "city": {
+      "coor": [8515, -880],
+      "tag": "MOU",
+      "governor": "6"
+    }
+  },
+  "X": {
+    "n": "Хэншадао",
+    "suze": "h",
+    "city": {
+      "coor": [-2662, 8390],
+      "tag": "HEN",
+      "governor": "17"
+    }
+  },
+  "Y": {
+    "n": "Bismuth",
+    "suze": "4",
+    "city": {
+      "coor": [957, -568],
+      "tag": "BIS",
+      "governor": "15"
+    }
+  },
+  "Z": {
+    "n": "Pellingrad",
+    "suze": "m",
+    "city": {
+      "coor": [7088, 4131],
+      "tag": "PEL",
+      "governor": "26"
+    }
+  },
+  "a1": {
+    "n": "Helgen",
+    "suze": "o",
+    "city": {
+      "coor": [4483, 1886],
+      "tag": "HEL",
+      "governor": "2"
+    }
+  },
+  "a2": {
+    "n": "Mexico",
+    "suze": "F",
+    "city": {
+      "coor": [13200, 4900],
+      "tag": "MEX",
+      "governor": "18"
+    }
+  },
+  "a3": {
+    "n": "Wano Kuni",
+    "city": {
+      "coor": [-1666, -717],
+      "tag": "WAN",
+      "governor": "29"
+    }
+  },
+  "a4": {
+    "n": "Régalec",
+    "suze": "O",
+    "city": {
+      "coor": [7431, 474],
+      "tag": "REG",
+      "governor": "3"
+    }
+  },
+  "a5": {
+    "n": "Lambé",
+    "suze": "8",
+    "city": {
+      "coor": [-466, 3205],
+      "tag": "LAM",
+      "governor": "1"
+    }
+  }
+}

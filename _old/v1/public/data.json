@@ -1,0 +1,309 @@
+{
+  "requests": [
+    {
+      "id": 0,
+      "type": "TERRITORY",
+      "payload": []
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1"
+      },
+      "id": 1
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://s1.qwant.com/thumbr/0x0/2/f/07b6960b07cf13295400fe43e0c2822a5effc4b4591c082a964b8505ed79e9/33505.jpg?u=http%3A%2F%2Femblemsbf.com%2Fimg%2F33505.jpg&q=0&b=1&p=0&a=1"
+      },
+      "id": 2
+    },
+    {
+      "type": "TERRITORY",
+      "payload": [
+        {
+          "x": 7,
+          "z": 20
+        }
+      ],
+      "id": 3
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg"
+      },
+      "id": 4
+    },
+    {
+      "type": "PLAYER",
+      "payload": {
+        "name": "",
+        "nationName": "",
+        "desc": "",
+        "color": "#FF00FF",
+        "soutiens": [],
+        "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg"
+      },
+      "id": 5
+    },
+    {
+      "type": "TERRITORY",
+      "payload": [
+        {
+          "x": 4,
+          "z": 16
+        },
+        {
+          "x": 4,
+          "z": 15
+        },
+        {
+          "x": 4,
+          "z": 17
+        },
+        {
+          "x": 3,
+          "z": 17
+        },
+        {
+          "x": 3,
+          "z": 15
+        },
+        {
+          "x": 1,
+          "z": 15
+        },
+        {
+          "x": 2,
+          "z": 15
+        },
+        {
+          "x": 1,
+          "z": 16
+        },
+        {
+          "x": 1,
+          "z": 17
+        },
+        {
+          "x": 2,
+          "z": 17
+        },
+        {
+          "x": 0,
+          "z": 15
+        },
+        {
+          "x": 0,
+          "z": 16
+        },
+        {
+          "x": 0,
+          "z": 17
+        },
+        {
+          "x": 0,
+          "z": 18
+        },
+        {
+          "x": 1,
+          "z": 18
+        },
+        {
+          "x": 0,
+          "z": 19
+        },
+        {
+          "x": 0,
+          "z": 20
+        },
+        {
+          "x": 1,
+          "z": 19
+        },
+        {
+          "x": 1,
+          "z": 20
+        },
+        {
+          "x": 1,
+          "z": 21
+        },
+        {
+          "x": 2,
+          "z": 21
+        },
+        {
+          "x": 2,
+          "z": 22
+        },
+        {
+          "x": 2,
+          "z": 23
+        },
+        {
+          "x": 2,
+          "z": 24
+        },
+        {
+          "x": 2,
+          "z": 25
+        },
+        {
+          "x": 2,
+          "z": 26
+        },
+        {
+          "x": 1,
+          "z": 26
+        },
+        {
+          "x": 1,
+          "z": 27
+        },
+        {
+          "x": 1,
+          "z": 28
+        }
+      ],
+      "id": 6
+    },
+    {
+      "type": "TERRITORY",
+      "payload": [],
+      "id": 7
+    },
+    {
+      "type": "TERRITORY",
+      "payload": [],
+      "id": 8
+    }
+  ],
+  "nations": [
+    {
+      "id": "403941520048390140",
+      "name": "Le Rohan",
+      "player": "brickzebra",
+      "color": "#990000",
+      "desc": "desc_2",
+      "soutiens": [],
+      "areas": []
+    },
+    {
+      "id": "287297629036085250",
+      "name": "Aqualonde",
+      "player": "X0ran0",
+      "soutiens": [],
+      "color": "#000099",
+      "areas": []
+    },
+    {
+      "id": "278574745228935170",
+      "name": "Hydropolis",
+      "soutiens": [
+        "228204671725076480"
+      ],
+      "player": "Ardamas",
+      "color": "#009999",
+      "desc": "Hydropolis",
+      "areas": []
+    },
+    {
+      "id": "226447741331570700",
+      "name": "The4territoire4",
+      "soutiens": [
+        "228204671725076480"
+      ],
+      "player": "The4clem4",
+      "color": "#009900",
+      "areas": []
+    },
+    {
+      "id": "261639291128643600",
+      "name": "Le Royaume de l'Est-Urgeon",
+      "player": "Fifz",
+      "color": "#005599",
+      "soutiens": [],
+      "areas": []
+    },
+    {
+      "id": "228204671725076480",
+      "name": "Une nation nouvelle",
+      "player": "SireConflexe",
+      "soutiens": [],
+      "color": "#CC4400",
+      "areas": [
+        {
+          "x": 22,
+          "z": 22
+        }
+      ]
+    },
+    {
+      "id": "261130483667173376",
+      "name": "La Bretagne",
+      "color": "#333333",
+      "player": "Erzender",
+      "desc": "",
+      "areas": [
+        {
+          "x": 7,
+          "z": 21
+        },
+        {
+          "x": 8,
+          "z": 21
+        },
+        {
+          "x": 9,
+          "z": 21
+        },
+        {
+          "x": 10,
+          "z": 21
+        },
+        {
+          "x": 10,
+          "z": 20
+        },
+        {
+          "x": 8,
+          "z": 20
+        },
+        {
+          "x": 9,
+          "z": 20
+        },
+        {
+          "x": 7,
+          "z": 20
+        }
+      ],
+      "soutiens": [
+        "261130483667173376",
+        "261639291128643600",
+        "228204671725076480"
+      ],
+      "image": "https://modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg",
+      "leader": "Erzender",
+      "lastClaim": "2018-11-23T11:34:43.801Z"
+    }
+  ]
+}
