@@ -1,7 +1,9 @@
 require("dotenv").config();
+const { cron } = require("./cron");
+const { Commander } = require("./commands");
 const { db } = require("./data");
 
 setTimeout(async () => {
-  res = await db.query("");
-  console.log(res);
+  const commander = new Commander(db);
+  cron(commander);
 }, 2000);
