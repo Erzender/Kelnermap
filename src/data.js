@@ -1,15 +1,14 @@
-const mysql = require("promise-mysql");
+const mysql = require("mysql2/promise");
 let db = {};
 
 const init = async () => {
-  db["connection"] = await mysql.createConnection({
+  db["c"] = await mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT
   });
-  db["query"] = db.connection.query;
 };
 
 init();
@@ -24,7 +23,7 @@ VILLE
 - z
 - admin
 - mine
-- ressource²
+- ressource
 - netherite
 
 BATIMENT

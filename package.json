@@ -19,6 +19,6 @@
   "dependencies": {
     "cron": "^3.1.6",
     "dotenv": "^16.3.1",
-    "promise-mysql": "^5.2.0"
+    "mysql2": "^3.6.4"
   }
 }
