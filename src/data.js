@@ -30,9 +30,9 @@ BATIMENT
 - id*
 - nom
 - x
+- y
 - z
-- taille => {x,z}
-- type
+- type => "maison" | "atelier" | "plateforme" | "chantier" | "academie"
 - specification
 - VILLE
 

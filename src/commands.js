@@ -1,8 +1,11 @@
-const { nouvelleJoueuse } = require("./Data/Joueureuse");
+const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CmdVille } = require("./Commandes/Ville");
+const { CmdBatiment } = require("./Commandes/Batiment");
 
 const commandes = {
-  ville: CmdVille
+  ville: CmdVille,
+  bat: CmdBatiment,
+  batiment: CmdBatiment
 };
 
 const cleanPseudo = (string = "") => {
@@ -58,17 +61,13 @@ class Commander {
   }
 
   async execCommand(command) {
-    let [
-      joueureuse,
-      f
-    ] = await this.c.query("SELECT * FROM Joueureuse WHERE nom = ?;", [
-      command.joueureuse
-    ]);
-    if (joueureuse.length === 0) {
-      joueureuse = await nouvelleJoueuse(this.c, command.joueureuse);
-    }
+    let joueureuse = await obtenirJoueuse(this.c, command.joueureuse);
     if (command.command.length > 0 && commandes[command.command[0]]) {
-      await commandes[command.command[0]](this.c, command, joueureuse);
+      try {
+        await commandes[command.command[0]](this.c, command, joueureuse);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
