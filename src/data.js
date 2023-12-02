@@ -62,6 +62,7 @@ VAISSEAU
 JOUEUREUSE
 - nom*
 - x
+- y
 - z
 - vaisseau => null | VAISSEAU
 - habite => null | VILLE

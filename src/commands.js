@@ -1,11 +1,13 @@
 const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CmdVille } = require("./Commandes/Ville");
 const { CmdBatiment } = require("./Commandes/Batiment");
+const { CmdRefuge } = require("./Commandes/Jeu");
 
 const commandes = {
   ville: CmdVille,
   bat: CmdBatiment,
-  batiment: CmdBatiment
+  batiment: CmdBatiment,
+  refuge: CmdRefuge
 };
 
 const cleanPseudo = (string = "") => {
@@ -55,8 +57,9 @@ const fixJsonShit = string => {
 };
 
 class Commander {
-  constructor(db = {}) {
+  constructor(db = {}, client = {}) {
     this.c = db.c;
+    this.discord = client;
     this.locked = false;
   }
 
@@ -64,7 +67,12 @@ class Commander {
     let joueureuse = await obtenirJoueuse(this.c, command.joueureuse);
     if (command.command.length > 0 && commandes[command.command[0]]) {
       try {
-        await commandes[command.command[0]](this.c, command, joueureuse);
+        await commandes[command.command[0]](
+          this.c,
+          this.discord.channels.cache.get(process.env.DISCORD_COMMAND_CHANNEL),
+          command,
+          joueureuse
+        );
       } catch (err) {
         console.error(err);
       }

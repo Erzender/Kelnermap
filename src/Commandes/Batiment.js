@@ -13,7 +13,7 @@ const creerBatiment = async (c = {}, cmd = {}) => {
   );
 };
 
-const CmdBatiment = async (c = {}, cmd = {}, joueuse = {}) => {
+const CmdBatiment = async (c = {}, discord = {}, cmd = {}, joueuse = {}) => {
   if (cmd.command.length >= 4 && cmd.command[1] === "+") {
     await creerBatiment(c, cmd);
   }

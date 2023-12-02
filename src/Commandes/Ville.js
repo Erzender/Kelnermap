@@ -15,7 +15,7 @@ const deposerVille = async (c = {}, cmd = {}, joueuse = {}) => {
   await depot(c, cmd, joueuse);
 };
 
-const CmdVille = async (c = {}, cmd = {}, joueuse = {}) => {
+const CmdVille = async (c = {}, discord = {}, cmd = {}, joueuse = {}) => {
   if (cmd.command.length >= 3 && cmd.command[1] === "+") {
     await creerVille(c, cmd);
   }

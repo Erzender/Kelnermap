@@ -1,4 +1,4 @@
-const obtenirJoueuse = async (c, nom) => {
+const obtenirJoueuse = async (c, nom = "") => {
   let [joueuse, f] = await c.query("SELECT * FROM Joueureuse WHERE nom = ?;", [
     nom
   ]);
@@ -14,4 +14,9 @@ const obtenirJoueuse = async (c, nom) => {
   return joueuse[0];
 };
 
+const majCoordonnees = async (c, id = 0, x = 0, y = 0, z = 0) => {
+  await c.query("UPDATE Joueureuse SET x = ?, y = ?, z = ? WHERE id = ?;", [x, y, z, id]);
+};
+
 exports.obtenirJoueuse = obtenirJoueuse;
+exports.majCoordonnees = majCoordonnees;
