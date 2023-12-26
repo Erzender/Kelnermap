@@ -18,6 +18,10 @@ client.on("disconnect", () => {
   }, 60000);
 });
 
-client.login(process.env.DISCORD_TOKEN);
+try {
+  client.login(process.env.DISCORD_TOKEN);
+} catch (err) {
+  console.error(err);
+}
 
 exports.client = client;

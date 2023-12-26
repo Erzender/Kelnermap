@@ -67,6 +67,6 @@ JOUEUREUSE
 - vaisseau => null | VAISSEAU
 - habite => null | VILLE
 - inventaire => null | "ressource" | "netherite"
-- travail => null | {BATIMENT, debut, duree}
+- travail => null | {BATIMENT, debut, duree, estTermine}
 
 */

@@ -49,6 +49,9 @@ const nouveauBatiment = async (
       }
       consommation.ressource = 1;
       break;
+    default:
+      console.log("Type inconnu ?");
+      return;
   }
   await c.query(
     "INSERT INTO Batiment (nom, x, y, z, type, ville) VALUES(?, ?, ?, ?, ?, ?)",
@@ -61,4 +64,33 @@ const nouveauBatiment = async (
   );
 };
 
+const travail = async (c, x = 0, y = 0, z = 0) => {
+  let [
+    bat,
+    f
+  ] = await c.query(
+    'SELECT id, nom, SQRT(POW(x - ?, 2) + POW(? - z, 2)) AS distance FROM Batiment WHERE type = "atelier" HAVING distance < 2 ORDER BY distance DESC LIMIT 1;',
+    [x, z]
+  );
+  if (bat.length <= 0) {
+    console.log(
+      "Pas de travail ici, rendez-vous près de l'accueil d'un bâtiment d'atelier !"
+    );
+    return;
+  }
+  let act = {
+    batiment: bat[0].id,
+    debut: new Date().getTime(),
+    duree: 0,
+    estTermine: false
+  };
+  await c.query("UPDATE Joueureuse SET travail = ?;", [JSON.stringify(act)]);
+  console.log(
+    "Activité commencée ici : " +
+      bat[0].nom +
+      " ! Il faut rester dans le coin 1h pour générer une ressource."
+  );
+};
+
 exports.nouveauBatiment = nouveauBatiment;
+exports.travail = travail;

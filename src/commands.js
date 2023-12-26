@@ -1,3 +1,4 @@
+const { MapWatcher } = require("./dynmap");
 const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CmdVille } = require("./Commandes/Ville");
 const { CmdBatiment } = require("./Commandes/Batiment");
@@ -7,7 +8,8 @@ const commandes = {
   ville: CmdVille,
   bat: CmdBatiment,
   batiment: CmdBatiment,
-  refuge: CmdRefuge
+  refuge: CmdRefuge,
+  travail: CmdBatiment
 };
 
 const cleanPseudo = (string = "") => {
@@ -61,6 +63,8 @@ class Commander {
     this.c = db.c;
     this.discord = client;
     this.locked = false;
+    this.map = new MapWatcher();
+    this.joueuses = {};
   }
 
   async execCommand(command) {
@@ -82,6 +86,16 @@ class Commander {
   async exec() {
     if (this.locked) return;
     this.locked = true;
+    let joueuses = await this.map.info();
+    if (joueuses !== null && Object.keys(joueuses).length <= 0) return;
+    if (
+      joueuses !== null &&
+      JSON.stringify(joueuses) !== JSON.stringify(this.joueuses)
+    ) {
+      this.joueuses = joueuses;
+      console.log(joueuses);
+    }
+
     let [res, f] = await this.c.query("SELECT * FROM request;");
 
     if (res.length > 0) {
