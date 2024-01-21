@@ -3,6 +3,7 @@ const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CmdVille } = require("./Commandes/Ville");
 const { CmdBatiment } = require("./Commandes/Batiment");
 const { CmdRefuge } = require("./Commandes/Jeu");
+let { CacheK } = require("./cache");
 
 const commandes = {
   ville: CmdVille,
@@ -83,6 +84,29 @@ class Commander {
     }
   }
 
+  async positionEvent() {
+    let recalculerBatiments = false;
+    if (CacheK["joueuses"] === undefined) {
+      CacheK["joueuses"] = {};
+    }
+    for (joueuse of Object.keys(this.joueuses)) {
+      if (CacheK["joueuses"][joueuse] === undefined)
+        CacheK["joueuses"][joueuse] = {};
+      let position = {
+        monde: this.joueuses[joueuse].monde,
+        tuile: {
+          x: Math.round(this.joueuses[joueuse].x / 1000),
+          z: Math.round(this.joueuses[joueuse].z / 1000)
+        }
+      };
+      if (CacheK["joueuses"][joueuse].position !== position) {
+        CacheK["joueuses"][joueuse]["position"] = position;
+        recalculerBatiments = true;
+      }
+    }
+    console.log(joueuses);
+  }
+
   async exec() {
     if (this.locked) return;
     this.locked = true;
@@ -93,7 +117,7 @@ class Commander {
       JSON.stringify(joueuses) !== JSON.stringify(this.joueuses)
     ) {
       this.joueuses = joueuses;
-      console.log(joueuses);
+      // positionEvent();
     }
 
     let [res, f] = await this.c.query("SELECT * FROM request;");

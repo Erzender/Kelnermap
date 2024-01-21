@@ -49,7 +49,7 @@ VAISSEAU
 - x
 - z
 - entree => {x,y,z}
-- modules => [{x1,y1,z1,x2,y2,z2,type,utilisation}]
+- modules => [{x,y,z,type,utilisation}]
 - hyperdrive => bool
 - ressource
 - netherite
@@ -65,8 +65,7 @@ JOUEUREUSE
 - y
 - z
 - vaisseau => null | VAISSEAU
-- habite => null | VILLE
+- habite => null | BATIMENT
 - inventaire => null | "ressource" | "netherite"
-- travail => null | {BATIMENT, debut, duree, estTermine}
 
 */

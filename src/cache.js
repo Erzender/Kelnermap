@@ -1,2 +1,2 @@
-let cache = {};
-exports.cache = cache;
+let CacheK = {};
+exports.CacheK = CacheK;

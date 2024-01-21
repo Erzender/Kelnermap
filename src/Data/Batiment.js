@@ -78,17 +78,16 @@ const travail = async (c, x = 0, y = 0, z = 0) => {
     );
     return;
   }
-  let act = {
-    batiment: bat[0].id,
-    debut: new Date().getTime(),
-    duree: 0,
-    estTermine: false
-  };
-  await c.query("UPDATE Joueureuse SET travail = ?;", [JSON.stringify(act)]);
+  let metier = bat[0].id;
+  let metierProchain = new Date().getTime() + 86400000;
+  await c.query("UPDATE Joueureuse SET metier = ?, metierProchain = ?;", [
+    metier,
+    metierProchain
+  ]);
   console.log(
     "Activité commencée ici : " +
       bat[0].nom +
-      " ! Il faut rester dans le coin 1h pour générer une ressource."
+      " ! Il suffit de revenir au bout de 24h pour récupérer 1 ressource."
   );
 };
 
