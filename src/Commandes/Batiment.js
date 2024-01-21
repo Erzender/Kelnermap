@@ -3,11 +3,12 @@ let { CacheK } = require("../cache");
 
 const creerBatiment = async (c = {}, cmd = {}) => {
   if (cmd.monde !== process.env.OVERWORLD) return;
+  console.log(cmd.command);
   await nouveauBatiment(
     c,
     cmd.command[2],
     cmd.command[3],
-    cmd.command.slice(4, cmd.length - 1),
+    cmd.command.slice(4, cmd.length),
     cmd.x,
     cmd.y,
     cmd.z

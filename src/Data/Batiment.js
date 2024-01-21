@@ -1,5 +1,13 @@
 const { maisonsDisponiblesDansVille } = require("./Ville");
 
+const PLATEFORME_TYPES_RESSOURCES = {
+  8: 1,
+  16: 4,
+  32: 16,
+  64: 64,
+  128: 256
+};
+
 const nouveauBatiment = async (
   c,
   type = "",
@@ -49,6 +57,35 @@ const nouveauBatiment = async (
       }
       consommation.ressource = 1;
       break;
+    case "plateforme":
+      console.log(specification);
+      if (
+        specification.length === 0 ||
+        !Object.keys(PLATEFORME_TYPES_RESSOURCES).includes(specification[0])
+      ) {
+        console.log(
+          "Il faut indiquer le type de plateforme entre 8, 16, 32, 64, ou 128 (une plateforme de type 8 fait 8x16 cubes, une de type 16 fait 16x32, etc)"
+        );
+        return;
+      }
+      if (
+        ville.ressource < PLATEFORME_TYPES_RESSOURCES[specification[0]] ||
+        maisonsDisponibles <= 0
+      ) {
+        console.log(
+          "Il faut au moins " +
+            PLATEFORME_TYPES_RESSOURCES[specification[0]] +
+            " ressources dans la ville ainsi qu'une maison disponible pour construire ce type de plateforme. Actuellement il y a : " +
+            ville.ressource +
+            " ressources et " +
+            maisonsDisponibles +
+            " maisons disponibles à " +
+            ville.nom
+        );
+        return;
+      }
+      consommation.ressource = 1;
+      break;
     default:
       console.log("Type inconnu ?");
       return;
@@ -64,6 +101,7 @@ const nouveauBatiment = async (
   );
 };
 
+// on le garde ça ?
 const travail = async (c, x = 0, y = 0, z = 0) => {
   let [
     bat,

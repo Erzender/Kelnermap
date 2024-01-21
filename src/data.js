@@ -32,20 +32,13 @@ BATIMENT
 - x
 - y
 - z
-- type => "maison" | "atelier" | "plateforme" | "chantier" | "academie"
+- type => "maison" | "atelier" | "plateforme"
 - specification
 - VILLE
-
-MODELE
-- nom*
-- type
-- entree => {x,y,z}
-- modules => [{x1,y1,z1,x2,y2,z2,type}]
 
 VAISSEAU
 - id*
 - nom
-- modele
 - x
 - z
 - entree => {x,y,z}
