@@ -2,6 +2,7 @@ const { MapWatcher } = require("./dynmap");
 const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CmdVille } = require("./Commandes/Ville");
 const { CmdBatiment } = require("./Commandes/Batiment");
+const { CmdVaisseau } = require("./Commandes/Vaisseau");
 const { CmdRefuge } = require("./Commandes/Jeu");
 let { CacheK } = require("./cache");
 
@@ -10,7 +11,8 @@ const commandes = {
   bat: CmdBatiment,
   batiment: CmdBatiment,
   refuge: CmdRefuge,
-  travail: CmdBatiment
+  travail: CmdBatiment,
+  vaisseau: CmdVaisseau
 };
 
 const cleanPseudo = (string = "") => {
@@ -66,15 +68,16 @@ class Commander {
     this.locked = false;
     this.map = new MapWatcher();
     this.joueuses = {};
+    CacheK["discord"] = client.channels.cache.get(process.env.DISCORD_COMMAND_CHANNEL);
   }
 
   async execCommand(command) {
     let joueureuse = await obtenirJoueuse(this.c, command.joueureuse);
+    console.log(command);
     if (command.command.length > 0 && commandes[command.command[0]]) {
       try {
         await commandes[command.command[0]](
           this.c,
-          this.discord.channels.cache.get(process.env.DISCORD_COMMAND_CHANNEL),
           command,
           joueureuse
         );

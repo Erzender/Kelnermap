@@ -21,7 +21,7 @@ const commencerTravail = async (c = {}, cmd = {}) => {
   await travail(c, cmd.x, cmd.y, cmd.z);
 };
 
-const CmdBatiment = async (c = {}, discord = {}, cmd = {}, joueuse = {}) => {
+const CmdBatiment = async (c = {}, cmd = {}, joueuse = {}) => {
   // if (cmd.command[0] === "travail") {
   //   await commencerTravail(c, cmd);
   // }

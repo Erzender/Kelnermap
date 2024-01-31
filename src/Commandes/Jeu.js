@@ -1,6 +1,6 @@
 const { majCoordonnees } = require("../Data/Joueureuse");
 
-const CmdRefuge = async (c = {}, discord = {}, cmd = {}, joueuse = {}) => {
+const CmdRefuge = async (c = {}, cmd = {}, joueuse = {}) => {
   console.log(joueuse);
   if (cmd.monde === process.env.OVERWORLD) {
     await majCoordonnees(c, joueuse.id, cmd.x, cmd.y, cmd.z);
