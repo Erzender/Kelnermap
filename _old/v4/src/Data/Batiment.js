@@ -32,6 +32,7 @@ const nouveauBatiment = async (
   }
   let maisonsDisponibles = await maisonsDisponiblesDansVille(c, ville.id);
 
+  let spec = null;
   let consommation = { ressource: 0, netherite: 0 };
   switch (type) {
     case "maison":
@@ -58,7 +59,6 @@ const nouveauBatiment = async (
       consommation.ressource = 1;
       break;
     case "plateforme":
-      console.log(specification);
       if (
         specification.length === 0 ||
         !Object.keys(PLATEFORME_TYPES_RESSOURCES).includes(specification[0])
@@ -85,14 +85,15 @@ const nouveauBatiment = async (
         return;
       }
       consommation.ressource = 1;
+      spec = JSON.stringify({ type: specification[0] });
       break;
     default:
       console.log("Type inconnu ?");
       return;
   }
   await c.query(
-    "INSERT INTO Batiment (nom, x, y, z, type, ville) VALUES(?, ?, ?, ?, ?, ?)",
-    [nom, x, y, z, type, ville.id]
+    "INSERT INTO Batiment (nom, x, y, z, type, ville, specification) VALUES(?, ?, ?, ?, ?, ?, ?)",
+    [nom, x, y, z, type, ville.id, spec]
   );
 
   await c.query(
