@@ -1,9 +1,6 @@
 const { db } = require("./data");
 const { MapWatcher } = require("./dynmap");
-const { obtenirJoueuse } = require("./Data/Joueureuse");
 const { CronJob } = require("cron");
-
-let { CacheK } = require("./cache");
 
 const cleanPseudo = (string = "") => {
   let pseudo = "";
